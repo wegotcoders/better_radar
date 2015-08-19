@@ -9,9 +9,16 @@ RSpec.describe BetterRadar::Parser do
       }
     end
 
+    let(:match_data) do
+      {
+        competitors: ["Burnley FC", "Brentford FC"]
+      }
+    end
+
     let(:mock_handler) do
       mock_handler = mock
       mock_handler.expects(:handle_tournament).with(tournament_data).once
+      mock_handler.expects(:handle_match).with(match_data).once
       mock_handler
     end
 

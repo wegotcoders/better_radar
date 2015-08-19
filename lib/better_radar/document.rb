@@ -6,30 +6,42 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def start_element(name, attributes)
     case name
-    when 'Tournament', 'Match'
-      instance_variable_set("@last_#{name.downcase}", {
+    when 'Tournament'
+      @tournament = {
         texts: []
-      })
+      }
+    when 'Match'
+      @match = {
+        competitors: []
+      }
+    when 'Competitors'
+      @inside_competitors = true
     when 'Text'
       @inside_text = true
     end
   end
 
   def characters(text)
-    if @inside_text && @last_tournament && !@last_match
-      content = text.strip.chomp
-      @last_tournament[:texts] << content unless content.empty?
+    content = text.strip.chomp
+    if @inside_text && !content.empty?
+      @tournament[:texts] << content if @tournament && !@match
+      @match[:competitors] << content if @match && @inside_competitors
     end
   end
 
 
   def end_element(name)
     case name
-    when 'Tournament', 'Match', 'Odds'
-      method_name = "handle_#{name.downcase}"
-      @handler.send(method_name, @last_tournament) if @handler.respond_to? method_name
+    when 'Tournament'
+      @handler.send(:handle_tournament, @tournament) if @handler.respond_to? :handle_tournament
+    when 'Match'
+      # TODO - This belongs elsewhere...
+      @match[:competitors].uniq!
+      @handler.send(:handle_match, @match) if @handler.respond_to? :handle_match
     when 'Text'
       @inside_text = false
+     when 'Competitors'
+      @inside_competitors = false
     end
   end
 end
