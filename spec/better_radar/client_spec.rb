@@ -19,7 +19,7 @@ RSpec.describe BetterRadar::Client do
 
     it "should include bet radar data" do
       dom = Nokogiri::XML::Document.parse(xml_data.open.read)
-      binding.pry
+
       expect(dom.root.name).to eq("BetradarBetData")
       expect(dom.xpath("//Sports")).to_not be_empty
     end
