@@ -1,17 +1,15 @@
 source 'https://rubygems.org'
 
 # Specify your gem's dependencies in better_radar.gemspec
+gem 'nokogiri'
 
-group :test do
+group :devlopment do
   gem 'rspec', '~> 3.0'
   gem 'vcr'
   gem 'webmock'
   gem 'pry'
   gem 'pry-byebug'
+  gem 'jeweler'
 end
 
-group :test, :development do
-  gem 'nokogiri'
-end
-
-# gemspec
+gemspec
