@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     better_radar (0.0.0)
+      better_radar
       nokogiri
 
 GEM
@@ -42,8 +43,11 @@ GEM
       rdoc
     json (1.8.3)
     jwt (1.5.1)
+    metaclass (0.0.4)
     method_source (0.8.2)
     mini_portile (0.6.2)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -93,6 +97,7 @@ PLATFORMS
 DEPENDENCIES
   better_radar!
   jeweler
+  mocha
   nokogiri
   pry
   pry-byebug

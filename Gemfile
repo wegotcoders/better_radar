@@ -10,6 +10,7 @@ group :devlopment do
   gem 'pry'
   gem 'pry-byebug'
   gem 'jeweler'
+  gem 'mocha'
 end
 
 gemspec
