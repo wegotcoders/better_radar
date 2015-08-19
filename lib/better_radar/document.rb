@@ -14,10 +14,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       @match = {
         competitors: []
       }
-    when 'Competitors'
-      @inside_competitors = true
-    when 'Text'
-      @inside_text = true
+    when 'Text', 'Competitors'
+      instance_variable_set("@inside_#{name.downcase}", true)
     end
   end
 
@@ -29,7 +27,6 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     end
   end
 
-
   def end_element(name)
     case name
     when 'Tournament'
@@ -38,10 +35,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       # TODO - This belongs elsewhere...
       @match[:competitors].uniq!
       @handler.send(:handle_match, @match) if @handler.respond_to? :handle_match
-    when 'Text'
-      @inside_text = false
-     when 'Competitors'
-      @inside_competitors = false
+    when 'Text', 'Competitors'
+      instance_variable_set("@inside_#{name.downcase}", false)
     end
   end
 end
