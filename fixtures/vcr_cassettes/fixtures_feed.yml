@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.betradar.com/betradar/getXmlFeed.php?bookmakerName=username&deleteAfterTransfer=no&key=123456&xmlFeedName=Fixtures
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.2.1
+      Date:
+      - Wed, 19 Aug 2015 14:08:50 GMT
+      Content-Type:
+      - text/html
+      Content-Length:
+      - '589'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=0, must-revalidate
+      X-Srv:
+      - core-prod-wwwvarnish3.ch.sportradar.ag
+      X-Sbe:
+      - getxml1
+      Accept-Ranges:
+      - bytes
+      X-Varnish:
+      - '779787360'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+    body:
+      encoding: UTF-8
+      string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\r\n<html
+        xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\r\n\t<head>\r\n\t\t<title>Betradar
+        Authentication Error</title>\r\n\t\t<meta http-equiv=\"Content-Style-Type\"
+        content=\"text/css\"/>\r\n\t</head>\r\n\t<body>\t\t<table style=\"width: 100%;\">\r\n\t\t\t<tr>\r\n\t\t\t\t<td
+        style=\"text-align: center;\"><div style=\"background-color: #ffffff; color:
+        #000000; width: 600; margin: 10px;\">\r\n\r\n\t<div style=\"position: relative;
+        padding: 10px;\">\r\n\t<span style=\"color: red; font-family: helvetica;\">Error:</span>
+        You are not authorized to view this file. It could be that your account has
+        expired, or that it has been wrongly set up. If you know that you should be
+        allowed to view this file, please send an email to <a href=\"mailto:support@betradar.com\">support@betradar.com</a>
+        explaining this, and we will look into it immediatly.\r\n\t</div>\r\n\r\n</div>\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t</table>\t</body>\r\n</html>"
+    http_version: 
+  recorded_at: Wed, 19 Aug 2015 14:08:51 GMT
+recorded_with: VCR 2.9.3
