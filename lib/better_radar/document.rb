@@ -13,22 +13,36 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   # need to notify the handler of this so they can prepare for nested elements?
   def start_element(name, attributes)
+    @current_element = name
     descend_level(name)
     case name
-    when 'Sport', 'Category', 'Tournament', 'Match'
+    when 'Sport', 'Category', 'Tournament'
       instance_variable_set("@#{name.downcase}", { texts: [] })
       assign_attributes(name, attributes)
-    when 'Text'
-      instance_variable_set("@inside_#{name.downcase}", true)
-      current_level_data[:texts] << {}
+    when 'Match'
+      instance_variable_set("@match",
+        {
+          fixture: { competitors: nil},
+          match_odds: [],
+          result: {},
+          goals: [],
+          cards: []
+        }
+      )
       assign_attributes(name, attributes)
-    end
-  end
-
-  def characters(text)
-    content = text.strip.chomp
-    if @inside_text && !content.empty?
-      current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil?
+    when 'Competitors'
+      @inside_competitors = true
+      @competitors = []
+      assign_attributes(name, attributes)
+    when 'Text'
+      @inside_text = true
+      if @inside_competitors
+        @competitors << {}
+        assign_attributes(name, attributes)
+      else
+        current_level_data[:texts] << {} if current_level_data[:texts]
+        assign_attributes(name, attributes)
+      end
     end
   end
 
@@ -37,27 +51,48 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Sport', 'Category', 'Tournament', 'Match'
       method_name = "handle_#{current_level_name}".to_sym
       @handler.send(method_name, current_level_data) if @handler.respond_to? method_name
+    when 'Competitors'
+      @match[:fixture][:competitors] = @competitors if @competitors && !@match.empty?
+      @inside_competitors = false
     when 'Text'
-      instance_variable_set("@inside_#{name.downcase}", false)
+      @inside_text =  false
     end
     ascend_level(name)
   end
+
+  def characters(text)
+    content = text.strip.chomp
+    if @inside_text && !content.empty?
+      if @inside_competitors
+        @competitors.last.merge!({ name: content })
+      else
+        #to fix
+        current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil? || current_level_data[:texts].nil?
+      end
+    end
+  end
+
 
   private
 
     #attributes are stored as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
   def assign_attributes(element, attrs)
     unless attrs.empty?
-      case element
+
+      path = case element
       when 'Text'
-        attrs.each do |assoc_list|
-          current_level_data[:texts].last.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+        if @inside_competitors
+          @competitors.last
+        else
+          current_level_data[:texts].last
         end
       else
-        attrs.each do |assoc_list|
-          current_level_data.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
-        end
+        current_level_data
       end
+      attrs.each do |assoc_list|
+        path.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+      end
+
     end
   end
 
