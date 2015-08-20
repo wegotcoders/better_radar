@@ -32,14 +32,15 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       }
     when 'Text'
       instance_variable_set("@inside_#{name.downcase}", true)
+      current_level_data[:texts] << {}
+      assign_attributes(attributes)
     end
   end
 
   def characters(text)
     content = text.strip.chomp
     if @inside_text && !content.empty?
-      level = instance_variable_get("@#{@current_levels.last.downcase}")
-      level[:texts] << content unless level.nil?
+      current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil?
     end
   end
 
@@ -59,11 +60,27 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     end
   end
 
+  private
+
+    #attributes are stored as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
+  def assign_attributes(attrs)
+    unless attrs.empty?
+      attrs.each do |assoc_list|
+        current_level_data[:texts].last.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+      end
+    end
+  end
+
+  def current_level_data
+    instance_variable_get("@#{@current_level.last.downcase}")
+  end
+
+
   def descend_level(element_name)
-    @levels << element_name if HIERARCHY_LEVELS.include?(element_name.to_sym)
+    @current_level << element_name if HIERARCHY_LEVELS.include?(element_name.to_sym)
   end
 
   def ascend_level(element_name)
-    @levels.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
+    @current_level.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
   end
 end

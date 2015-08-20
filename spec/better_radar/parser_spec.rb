@@ -6,19 +6,31 @@ RSpec.describe BetterRadar::Parser do
 
     let(:sport_data) do
       {
-      texts: %w(Soccer Soccer)
+      texts:
+        [
+          {language: "BET", name: "Soccer"},
+          {language: "en", name: "Soccer",}
+        ]
       }
     end
 
     let(:tournament_data) do
       {
-        texts: %w(Championship Championship)
+        texts:
+        [
+          {:language => 'BET', :name => 'Championship'},
+          {:language  => 'en', :name => 'Championship'}
+        ]
       }
     end
 
     let(:category_data) do
       {
-        texts: %w(England England)
+        texts:
+        [
+          {:language => 'BET', :name => 'England'},
+          {:language => 'en', :name => 'England'}
+        ]
       }
     end
 
@@ -35,7 +47,7 @@ RSpec.describe BetterRadar::Parser do
       @xml = File.read('spec/fixtures/example.xml')
     end
 
-    it "should handle tournaments" do
+    it "should handle the main hierarchical elements" do
       BetterRadar::Parser.parse(@xml, mock_handler)
     end
   end
