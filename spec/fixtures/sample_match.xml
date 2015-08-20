@@ -1,0 +1,79 @@
+<Match BetradarMatchID="109379">
+  <Fixture>
+    <Competitors>
+      <Texts>
+        <Text ID="9373" SUPERID="9243" Type="1">
+          <Value>1. FC BRNO</Value>
+        </Text>
+      </Texts>
+      <Texts>
+        <Text ID="371400" SUPERID="1452" Type="2">
+          <Value>FC SLOVACKO</Value>
+        </Text>
+      </Texts>
+    </Competitors>
+    <DateInfo>
+      <MatchDate>2004 − 8 − 23T16:40:00</MatchDate>
+    </DateInfo>
+    <StatusInfo>
+      <Off>0</Off>
+    </StatusInfo>
+    <HasStatistics>
+      <Value>1</Value>
+    </HasStatistics>
+    <NeutralGround>
+      <Value>0</Value>
+    </NeutralGround>
+    <LiveMultiCast>0</LiveMultiCast>
+    <LiveScore>0</LiveScore>
+    <RoundInfo>
+      <Round>19</Round>
+    </RoundInfo>
+  </Fixture>
+  <MatchOdds>
+    <Bet OddsType="10">
+      <Odds OutCome="1">2,15</Odds>
+      <Odds OutCome="X">2,85</Odds>
+      <Odds OutCome="2">2,9</Odds>
+    </Bet>
+  </MatchOdds>
+  <Result>
+    <ScoreInfo>
+      <Score Type="FT">1:0</Score>
+      <Score Type="HT">0:0</Score>
+    </ScoreInfo>
+    <Comment>
+      <Texts>
+        <Text>
+          <Value>1:0(62.)Luis Fabiano</Value>
+        </Text>
+      </Texts>
+    </Comment>
+  </Result>
+  <BetfairIDs>
+    <SportID>1</SportID>
+    <EventID>20436589</EventID>
+    <Runner1>879210</Runner1>
+    <Runner2>2293061</Runner2>
+  </BetfairIDs>
+  <TVChannelInfo>
+    <MatchOnTV>
+      <ChannelID>12731</ChannelID>
+      <ChannelName>Eurosport − Astra 1C...Astra − 3407</ChannelName>
+      <StartDate>2007 − 6 − 6T20:30:00</StartDate>
+    </MatchOnTV>
+  </TVChannelInfo>
+  <Goals>
+    <Goal Id="4199894" ScoringTeam="1" Team1="1" Team2="0" Time="62:00">
+      <Player Id="17149" Name="Luís Fabiano"/>
+    </Goal>
+  </Goals>
+  <Cards>
+    <Card Id="4199983" Time="42:00" Type="Yellow">
+      <Player Id="39586" Name="Petrovi, Radosav"/>
+    </Card>
+    <Card Id="4200011" Time="45:00" Type="Yellow">
+      <Player Id="39584" Name="Lazic, Djordje"/>
+    </Card>
+  </Cards>
+</Match>
