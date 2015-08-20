@@ -6,6 +6,7 @@ RSpec.describe BetterRadar::Parser do
 
     let(:sport_data) do
       {
+      :betradarsportid => '1',
       texts:
         [
           {language: "BET", name: "Soccer"},
@@ -16,6 +17,7 @@ RSpec.describe BetterRadar::Parser do
 
     let(:tournament_data) do
       {
+        :betradartournamentid => '2',
         texts:
         [
           {:language => 'BET', :name => 'Championship'},
@@ -26,6 +28,7 @@ RSpec.describe BetterRadar::Parser do
 
     let(:category_data) do
       {
+        :betradarcategoryid => '1',
         texts:
         [
           {:language => 'BET', :name => 'England'},

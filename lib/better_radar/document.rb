@@ -8,32 +8,20 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def start_document
-    @current_level = []
+    @traversal_list = []
   end
 
+  # need to notify the handler of this so they can prepare for nested elements?
   def start_element(name, attributes)
     descend_level(name)
     case name
-    when 'Sport'
-      @sport = {
-        texts: []
-      }
-    when 'Category'
-      @category = {
-        texts: []
-      }
-    when 'Tournament'
-      @tournament = {
-        texts: []
-      }
-    when 'Match'
-      @match = {
-        texts: []
-      }
+    when 'Sport', 'Category', 'Tournament', 'Match'
+      instance_variable_set("@#{name.downcase}", { texts: [] })
+      assign_attributes(name, attributes)
     when 'Text'
       instance_variable_set("@inside_#{name.downcase}", true)
       current_level_data[:texts] << {}
-      assign_attributes(attributes)
+      assign_attributes(name, attributes)
     end
   end
 
@@ -45,42 +33,48 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def end_element(name)
-    ascend_level(name)
     case name
-    when 'Sport'
-      @handler.send(:handle_sport, @sport) if @handler.respond_to? :handle_sport
-    when 'Tournament'
-      @handler.send(:handle_tournament, @tournament) if @handler.respond_to? :handle_tournament
-    when 'Category'
-      @handler.send(:handle_category, @category) if @handler.respond_to? :handle_category
-    when 'Match'
-      @handler.send(:handle_match, @match) if @handler.respond_to? :handle_match
+    when 'Sport', 'Category', 'Tournament', 'Match'
+      method_name = "handle_#{current_level_name}".to_sym
+      @handler.send(method_name, current_level_data) if @handler.respond_to? method_name
     when 'Text'
       instance_variable_set("@inside_#{name.downcase}", false)
     end
+    ascend_level(name)
   end
 
   private
 
     #attributes are stored as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
-  def assign_attributes(attrs)
+  def assign_attributes(element, attrs)
     unless attrs.empty?
-      attrs.each do |assoc_list|
-        current_level_data[:texts].last.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+      case element
+      when 'Text'
+        attrs.each do |assoc_list|
+          current_level_data[:texts].last.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+        end
+      else
+        attrs.each do |assoc_list|
+          current_level_data.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+        end
       end
     end
   end
 
   def current_level_data
-    instance_variable_get("@#{@current_level.last.downcase}")
+    instance_variable_get("@#{@traversal_list.last.downcase}")
+  end
+
+  def current_level_name
+    @traversal_list.last.downcase
   end
 
 
   def descend_level(element_name)
-    @current_level << element_name if HIERARCHY_LEVELS.include?(element_name.to_sym)
+    @traversal_list << element_name if HIERARCHY_LEVELS.include?(element_name.to_sym)
   end
 
   def ascend_level(element_name)
-    @current_level.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
+    @traversal_list.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
   end
 end
