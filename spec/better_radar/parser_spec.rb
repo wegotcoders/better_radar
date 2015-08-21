@@ -81,7 +81,19 @@ RSpec.describe BetterRadar::Parser do
               }
             ]
           },
-          match_odds: [],
+          match_odds:
+            [
+              {
+                odds:
+                [
+                  { outcome: "1", value: "2,15" },
+                  { outcome: "X", value: "2,85" },
+                  { outcome: "2", value: "2,9" }
+                ],
+
+                oddstype: "10"
+              }
+            ],
           result: {},
           goals: [],
           cards: [],

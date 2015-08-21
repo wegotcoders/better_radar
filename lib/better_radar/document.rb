@@ -22,7 +22,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Match'
       instance_variable_set("@match",
         {
-          fixture: { competitors: nil},
+          fixture: { competitors: nil },
           match_odds: [],
           result: {},
           goals: [],
@@ -34,11 +34,30 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       @inside_competitors = true
       @competitors = []
       assign_attributes(name, attributes)
+    when 'MatchOdds'
+      @inside_match_odds = true
+      @match_odds = []
+    when 'Bet'
+      @inside_bet = true
+      @bet = { odds: [] }
+      if @inside_match_odds
+        @match_odds << @bet
+      end
+      assign_attributes(name, attributes)
+    when 'Odds'
+      @inside_odds = true
+      @odds = {}
+      if @inside_match_odds
+        @bet[:odds] << @odds
+      end
+      assign_attributes(name, attributes)
     when 'Text'
       @inside_text = true
       if @inside_competitors
         @competitors << {}
         assign_attributes(name, attributes)
+      elsif @inside_match_odds
+        @match_odds << {}
       else
         current_level_data[:texts] << {} if current_level_data[:texts]
         assign_attributes(name, attributes)
@@ -54,6 +73,13 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Competitors'
       @match[:fixture][:competitors] = @competitors if @competitors && !@match.empty?
       @inside_competitors = false
+    when 'MatchOdds'
+      @match[:match_odds] = @match_odds if @match_odds && !@match.empty?
+      @inside_match_odds = false
+    when 'Bet'
+      @inside_bet = false
+    when 'Odd'
+      @inside_odds = false
     when 'Text'
       @inside_text =  false
     end
@@ -62,9 +88,13 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def characters(text)
     content = text.strip.chomp
-    if @inside_text && !content.empty?
+    if @inside_text && !content.empty? || @inside_match_odds && !content.empty?
       if @inside_competitors
         @competitors.last.merge!({ name: content })
+      elsif @inside_match_odds
+        #ewww
+        #match odds with many bets, with many odds
+         @bet[:odds].last.merge!({ value: content })
       else
         #to fix
         current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil? || current_level_data[:texts].nil?
@@ -86,6 +116,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         else
           current_level_data[:texts].last
         end
+      when 'Bet'
+        @bet
+      when 'Odds'
+        @odds
       else
         current_level_data
       end
