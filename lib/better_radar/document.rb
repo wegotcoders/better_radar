@@ -34,6 +34,11 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       @inside_competitors = true
       @competitors = []
       assign_attributes(name, attributes)
+    when 'DateInfo'
+      @inside_date_info = true
+      @match[:fixture][:dateinfo] = {}
+    when 'MatchDate'
+      @inside_match_date = true
     when 'MatchOdds'
       @inside_match_odds = true
       @match_odds = []
@@ -71,8 +76,14 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       method_name = "handle_#{current_level_name}".to_sym
       @handler.send(method_name, current_level_data) if @handler.respond_to? method_name
     when 'Competitors'
-      @match[:fixture][:competitors] = @competitors if @competitors && !@match.empty?
       @inside_competitors = false
+    when 'DateInfo'
+      @inside_date_info = false
+    when 'MatchDate'
+      @inside_match_date = false
+    when 'Fixture'
+      @match[:fixture][:competitors] = @competitors if @competitors && !@match.empty?
+      @match[:fixture][:dateinfo][:matchdate] = @match_date if @match_date && !@match.empty?
     when 'MatchOdds'
       @match[:match_odds] = @match_odds if @match_odds && !@match.empty?
       @inside_match_odds = false
@@ -88,13 +99,15 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def characters(text)
     content = text.strip.chomp
-    if @inside_text && !content.empty? || @inside_match_odds && !content.empty?
+    unless content.empty?
       if @inside_competitors
         @competitors.last.merge!({ name: content })
       elsif @inside_match_odds
         #ewww
         #match odds with many bets, with many odds
          @bet[:odds].last.merge!({ value: content })
+      elsif @inside_match_date
+        @match_date.nil? ? @match_date = "#{content} " : @match_date << content
       else
         #to fix
         current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil? || current_level_data[:texts].nil?

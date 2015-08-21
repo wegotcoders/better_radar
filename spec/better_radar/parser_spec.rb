@@ -79,7 +79,8 @@ RSpec.describe BetterRadar::Parser do
                 type: "2",
                 name:'FC SLOVACKO'
               }
-            ]
+            ],
+            dateinfo: { matchdate: "2004 − 8 − 23T16:40:00" }
           },
           match_odds:
             [
