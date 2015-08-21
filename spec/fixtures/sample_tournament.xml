@@ -1,0 +1,10 @@
+<Tournament BetradarTournamentID="2">
+  <Texts>
+    <Text Language="BET">
+      <Value>Championship</Value>
+    </Text>
+    <Text Language="en">
+      <Value>Championship</Value>
+    </Text>
+  </Texts>
+</Tournament>
