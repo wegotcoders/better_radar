@@ -8,7 +8,7 @@ RSpec.describe BetterRadar::Parser do
       let(:sport_data) do
         {
         :betradarsportid => '1',
-        texts:
+        names:
           [
             {language: "BET", name: "Soccer"},
             {language: "en", name: "Soccer",}
@@ -19,7 +19,7 @@ RSpec.describe BetterRadar::Parser do
       let(:tournament_data) do
         {
           :betradartournamentid => '2',
-          texts:
+          names:
           [
             {:language => 'BET', :name => 'Championship'},
             {:language  => 'en', :name => 'Championship'}
@@ -30,7 +30,7 @@ RSpec.describe BetterRadar::Parser do
       let(:category_data) do
         {
           :betradarcategoryid => '1',
-          texts:
+          names:
           [
             {:language => 'BET', :name => 'England'},
             {:language => 'en', :name => 'England'}
@@ -41,8 +41,8 @@ RSpec.describe BetterRadar::Parser do
       let(:mock_handler) do
         mock_handler = mock
         mock_handler.expects(:handle_sport).with(sport_data).once
-        mock_handler.expects(:handle_tournament).with(tournament_data).once
         mock_handler.expects(:handle_category).with(category_data).once
+        mock_handler.expects(:handle_tournament).with(tournament_data).once
         mock_handler.expects(:handle_match).once
         mock_handler
       end
@@ -80,7 +80,7 @@ RSpec.describe BetterRadar::Parser do
                 name:'FC SLOVACKO'
               }
             ],
-            dateinfo: { matchdate: "2004 − 8 − 23T16:40:00" }
+            date_info: { match_date: "2004 − 8 − 23T16:40:00" }
           },
           match_odds:
             [
@@ -95,9 +95,6 @@ RSpec.describe BetterRadar::Parser do
                 oddstype: "10"
               }
             ],
-          result: {},
-          goals: [],
-          cards: [],
           betradarmatchid: '109379'
         }
       end
