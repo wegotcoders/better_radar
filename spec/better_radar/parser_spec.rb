@@ -80,17 +80,18 @@ RSpec.describe BetterRadar::Parser do
 
     let(:outright_data) do
       {
-        fixure: {:competitors =>
+        betradaroutrightid: '2332',
+        fixture: {competitors:
           [
             {
-              :id => '4891',
-              :superid => '1645',
-              :name => 'Girondins Bordeaux'
+              id: '4891',
+              superid: '1645',
+              name: 'Girondins Bordeaux'
             },
             {
-              :id => '5380',
-              :superid => '1641',
-              :name => 'Olympique Marseille'
+              id: '5380',
+              superid: '1641',
+              name: 'Olympique Marseille'
             }
           ]
         }
@@ -122,7 +123,7 @@ RSpec.describe BetterRadar::Parser do
     describe "parsing an outright" do
       before do
         @xml = File.read('spec/fixtures/sample_outright.xml')
-        mock_handler.expects(:handle_outright) #.with(outright_data).once
+        mock_handler.expects(:handle_outright).with(outright_data).once
       end
 
       it "should handle handle the outright and return back the data" do
