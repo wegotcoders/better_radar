@@ -60,6 +60,7 @@ RSpec.describe BetterRadar::Parser do
           ],
           date_info: { match_date: "2004 − 8 − 23T16:40:00" }
         },
+
         match_odds:
           [
             {
@@ -81,7 +82,9 @@ RSpec.describe BetterRadar::Parser do
     let(:outright_data) do
       {
         betradaroutrightid: '2332',
-        fixture: {competitors:
+        fixture: {
+          event_info: {event_date: '2012−5−30T21:00:00'},
+          competitors:
           [
             {
               id: '4891',

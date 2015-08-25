@@ -35,6 +35,9 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       elsif @inside_outright
         @outright[:fixture] = @fixture
       end
+    when 'EventInfo'
+      @event_info = {}
+      @fixture[:event_info] = @event_info
     when 'Competitors'
       @competitors = []
       if @inside_fixture
@@ -85,6 +88,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Sport', 'Category', 'Tournament', 'Match', 'Outright'
       method_name = "handle_#{current_level_name}".to_sym
       @handler.send(method_name, current_level_data) if @handler.respond_to? method_name
+      # TODO TAKE THESE OUT
     when 'Fixture'
       if @inside_match
         @match[:fixture] = @fixture
@@ -123,6 +127,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @competitors.last.merge!({ name: content })
       elsif @inside_matchodds
         @odds.merge!({ value: content })
+      elsif @inside_eventdate
+        @event_info[:event_date].nil? ? @event_info[:event_date] = "#{content}" : @event_info[:event_date] << content
       elsif @inside_statusinfo
         #TODO
       elsif @inside_neutralground
