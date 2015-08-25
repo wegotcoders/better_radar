@@ -86,7 +86,9 @@ RSpec.describe BetterRadar::Parser do
           event_info:
             {
               event_date: '2012−5−30T21:00:00',
-              event_name: 'France Ligue 1 2011/12 − Outright Winner'
+              event_name: 'France Ligue 1 2011/12 − Outright Winner',
+              off: '0',
+              tournamentid: '17'
             },
           competitors:
           [

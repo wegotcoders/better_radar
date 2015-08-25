@@ -131,6 +131,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @event_info[:event_date].nil? ? @event_info[:event_date] = "#{content}" : @event_info[:event_date] << content
       elsif @inside_eventname
         @event_info[:event_name].nil? ? @event_info[:event_name] = "#{content} " : @event_info[:event_name] << content
+      elsif @inside_off && !@inside_match # only for outrights
+        @event_info[:off] = content
+      elsif @inside_tournamentid
+        @event_info[:tournamentid] = content
       elsif @inside_statusinfo
         #TODO
       elsif @inside_neutralground
