@@ -1,7 +1,7 @@
 class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   # Main hierarchy of the data, these should be the focus of what to handle
-  HIERARCHY_LEVELS = [:Sport, :Category, :Tournament, :Match]
+  HIERARCHY_LEVELS = [:Sport, :Category, :Outright, :Tournament, :Match]
 
   def initialize(handler)
     @handler = handler
@@ -24,12 +24,16 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       @category = {}
     when 'Tournament'
       @tournament = {}
+    when 'Outright'
+      @outright = {}
     when 'Match'
       @match = {}
     when 'Fixture'
       @fixture = {}
       if @inside_match
         @match[:fixture] = @fixture
+      elsif @inside_outright
+        @outright[:fixture] = @fixture
       end
     when 'Competitors'
       @competitors = []
@@ -78,7 +82,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def end_element(name)
     case name
-    when 'Sport', 'Category', 'Tournament', 'Match'
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Outright'
       method_name = "handle_#{current_level_name}".to_sym
       @handler.send(method_name, current_level_data) if @handler.respond_to? method_name
     when 'Fixture'
