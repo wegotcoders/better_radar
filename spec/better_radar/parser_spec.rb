@@ -42,24 +42,24 @@ RSpec.describe BetterRadar::Parser do
     let(:match_data) do
       {
         fixture:
-        {
-          competitors:
-          [
-            {
-              id: "9373",
-              superid: "9243",
-              type: "1",
-              name:'1. FC BRNO'
-            },
-            {
-              id: "371400",
-              superid: "1452",
-              type: "2",
-              name:'FC SLOVACKO'
-            }
-          ],
-          date_info: { match_date: "2004 − 8 − 23T16:40:00" }
-        },
+          {
+            competitors:
+            [
+              {
+                id: "9373",
+                superid: "9243",
+                type: "1",
+                name:'1. FC BRNO'
+              },
+              {
+                id: "371400",
+                superid: "1452",
+                type: "2",
+                name:'FC SLOVACKO'
+              }
+            ],
+            date_info: { match_date: "2004 − 8 − 23T16:40:00" }
+          },
         match_odds:
           [
             {
@@ -75,14 +75,22 @@ RSpec.describe BetterRadar::Parser do
           ],
         betradarmatchid: '109379',
         result:
-        {
-          score_info:
+          {
+            score_info:
+            [
+              { score: "1:0", type: "FT" },
+              { score: "0:0", type: "HT" }
+            ],
+            comment: "1:0(62.)Luis Fabiano"
+          },
+        goals:
           [
-            { score: "1:0", type: "FT" },
-            { score: "0:0", type: "HT" }
-          ],
-          comment: "1:0(62.)Luis Fabiano"
-        }
+            id: "4199894", scoringteam: "1", team1: "1", team2: "0", time: "62:00", player:
+              {
+                id: "17149", name: "Luís Fabiano"
+              }
+          ]
+
       }
     end
 
