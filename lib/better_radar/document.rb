@@ -13,61 +13,67 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   # need to notify the handler of this so they can prepare for nested elements?
   def start_element(name, attributes)
-    @current_element = name
+    @current_element_name = name
     descend_level(name)
+    instance_variable_set("@inside_#{name.downcase}", true)
+
     case name
-    when 'Sport', 'Category', 'Tournament'
-      instance_variable_set("@#{name.downcase}", { texts: [] })
-      assign_attributes(name, attributes)
+    when 'Sport'
+      @sport = {}
+    when 'Category'
+      @category = {}
+    when 'Tournament'
+      @tournament = {}
     when 'Match'
-      instance_variable_set("@match",
-        {
-          fixture: { competitors: nil },
-          match_odds: [],
-          result: {},
-          goals: [],
-          cards: []
-        }
-      )
-      assign_attributes(name, attributes)
+      @match = {}
+    when 'Fixture'
+      @fixture = {}
+      if @inside_match
+        @match[:fixture] = @fixture
+      end
     when 'Competitors'
-      @inside_competitors = true
       @competitors = []
-      assign_attributes(name, attributes)
+      if @inside_fixture
+        @fixture[:competitors] = @competitors
+      end
     when 'DateInfo'
-      @inside_date_info = true
-      @match[:fixture][:dateinfo] = {}
+      @date_info = {}
+      if @inside_fixture
+        @fixture[:date_info] = @date_info
+      end
     when 'MatchDate'
-      @inside_match_date = true
+      @match_date = nil
+      @date_info[:match_date] = @match_date
     when 'MatchOdds'
-      @inside_match_odds = true
       @match_odds = []
+      @match[:match_odds] = @match_odds
     when 'Bet'
-      @inside_bet = true
-      @bet = { odds: [] }
-      if @inside_match_odds
+      @bet = {}
+      if @inside_match
         @match_odds << @bet
       end
-      assign_attributes(name, attributes)
     when 'Odds'
-      @inside_odds = true
       @odds = {}
-      if @inside_match_odds
+      if @inside_bet
+        @bet[:odds] ||= []
         @bet[:odds] << @odds
       end
-      assign_attributes(name, attributes)
     when 'Text'
-      @inside_text = true
+      # most nested first
       if @inside_competitors
         @competitors << {}
-        assign_attributes(name, attributes)
-      elsif @inside_match_odds
-        @match_odds << {}
-      else
-        current_level_data[:texts] << {} if current_level_data[:texts]
-        assign_attributes(name, attributes)
+      elsif @inside_tournament
+        @tournament[:names] ||= []
+        @tournament[:names] << {}
+      elsif @inside_category
+        @category[:names] ||= []
+        @category[:names] << {}
+      elsif @inside_sport
+        @sport[:names] ||= []
+        @sport[:names] << {}
       end
     end
+    assign_attributes(name, attributes)
   end
 
   def end_element(name)
@@ -75,25 +81,34 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Sport', 'Category', 'Tournament', 'Match'
       method_name = "handle_#{current_level_name}".to_sym
       @handler.send(method_name, current_level_data) if @handler.respond_to? method_name
-    when 'Competitors'
-      @inside_competitors = false
-    when 'DateInfo'
-      @inside_date_info = false
-    when 'MatchDate'
-      @inside_match_date = false
     when 'Fixture'
-      @match[:fixture][:competitors] = @competitors if @competitors && !@match.empty?
-      @match[:fixture][:dateinfo][:matchdate] = @match_date if @match_date && !@match.empty?
+      if @inside_match
+        @match[:fixture] = @fixture
+      end
+    when 'Competitors'
+      if @inside_fixture
+        @fixture[:competitors] = @competitors
+      end
+    when 'DateInfo'
+      if @inside_fixture
+        @fixture[:date_info] = @date_info
+      end
+    when 'MatchDate'
+      @date_info[:match_date] = @match_date
     when 'MatchOdds'
-      @match[:match_odds] = @match_odds if @match_odds && !@match.empty?
-      @inside_match_odds = false
+      @match[:match_odds] = @match_odds
     when 'Bet'
-      @inside_bet = false
+      #
     when 'Odd'
-      @inside_odds = false
+      if @inside_bet
+        @bet[:odds] << @odds
+      end
     when 'Text'
-      @inside_text =  false
+      # Needed?
     end
+
+    instance_variable_set("@inside_#{name.downcase}", false)
+    instance_variable_set("@#{name.downcase}", nil)
     ascend_level(name)
   end
 
@@ -102,15 +117,27 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     unless content.empty?
       if @inside_competitors
         @competitors.last.merge!({ name: content })
-      elsif @inside_match_odds
-        #ewww
-        #match odds with many bets, with many odds
-         @bet[:odds].last.merge!({ value: content })
-      elsif @inside_match_date
+      elsif @inside_matchodds
+        @odds.merge!({ value: content })
+      elsif @inside_statusinfo
+        #TODO
+      elsif @inside_neutralground
+        #TODO
+      elsif @inside_round
+        #TODO
+      elsif @inside_probabilities
+        #TODO
+      elsif @inside_matchdate
         @match_date.nil? ? @match_date = "#{content} " : @match_date << content
+      elsif @inside_tournament
+        @tournament[:names].last.merge!({ name: content })
+      elsif @inside_category
+        @category[:names].last.merge!({ name: content })
+      elsif @inside_sport
+        @sport[:names].last.merge!({ name: content })
       else
         #to fix
-        current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil? || current_level_data[:texts].nil?
+        # current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil? || current_level_data[:texts].nil?
       end
     end
   end
@@ -119,27 +146,27 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   private
 
     #attributes are stored as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
-  def assign_attributes(element, attrs)
+  def assign_attributes(name, attrs)
     unless attrs.empty?
-
-      path = case element
+      path = case name
       when 'Text'
         if @inside_competitors
           @competitors.last
-        else
-          current_level_data[:texts].last
+        elsif @inside_tournament
+          @tournament[:names].last
+        elsif @inside_category
+          @category[:names].last
+        elsif @inside_sport
+          @sport[:names].last
         end
-      when 'Bet'
-        @bet
-      when 'Odds'
-        @odds
       else
-        current_level_data
+        v = instance_variable_get("@#{name.downcase}")
+        return if v.nil?
+        v
       end
       attrs.each do |assoc_list|
         path.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
       end
-
     end
   end
 

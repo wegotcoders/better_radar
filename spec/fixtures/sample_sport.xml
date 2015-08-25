@@ -1,0 +1,12 @@
+<Sports>
+  <Sport BetradarSportID="1">
+    <Texts>
+      <Text Language="BET">
+        <Value>Soccer</Value>
+      </Text>
+      <Text Language="en">
+        <Value>Soccer</Value>
+      </Text>
+    </Texts>
+  </Sport>
+</Sports>
