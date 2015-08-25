@@ -58,6 +58,22 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @bet[:odds] ||= []
         @bet[:odds] << @odds
       end
+    when 'Result'
+      @result = {}
+      if @inside_match
+        @match[:result] = @result
+      end
+    when 'ScoreInfo'
+      @score_info = []
+      @result[:score_info] = @score_info
+    when 'Score'
+      @score = {}
+      @score_info << @score
+    when 'Comment'
+      @comment = nil
+      if @inside_result
+        @result[:comment] = @comment
+      end
     when 'Text'
       # most nested first
       if @inside_competitors
@@ -161,6 +177,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         end
       else
         v = instance_variable_get("@#{name.downcase}")
+        puts "#{v} path not found"
         return if v.nil?
         v
       end

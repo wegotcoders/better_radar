@@ -73,7 +73,16 @@ RSpec.describe BetterRadar::Parser do
               oddstype: "10"
             }
           ],
-        betradarmatchid: '109379'
+        betradarmatchid: '109379',
+        result:
+        {
+          score_info:
+          [
+            { score: "1:0", type: "FT" },
+            { score: "0:0", type: "HT" }
+          ],
+          comment: "1:0(62.)Luis Fabiano"
+        }
       }
     end
 
