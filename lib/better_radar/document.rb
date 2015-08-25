@@ -136,6 +136,11 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       elsif @inside_matchodds
         @odds.merge!({ value: content })
       elsif @inside_statusinfo
+      elsif @inside_score
+        # been trying to avoid this type of referencing..
+        @result[:score_info].last[:score] =  content
+      elsif @inside_comment
+        @result[:comment] = content
         #TODO
       elsif @inside_neutralground
         #TODO
