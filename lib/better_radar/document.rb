@@ -82,6 +82,12 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Player'
       @player = { id: nil, name: nil }
       @goal[:player] = @player if @inside_goals
+      @card[:player] = @player if @inside_cards
+    when 'Cards'
+      @match[:cards] = []
+    when 'Card'
+      @card = { id: nil, time: nil, type: nil, player: {}}
+      @match[:cards] << @card
     when 'Text'
       # most nested first
       if @inside_competitors
@@ -191,8 +197,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       when 'Player'
         if @inside_goal
           @goal[:player]
-        else
-          return
+        elsif @inside_card
+          @card[:player]
         end
       else
         v = instance_variable_get("@#{name.downcase}")

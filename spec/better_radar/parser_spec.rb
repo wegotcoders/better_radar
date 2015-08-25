@@ -89,6 +89,19 @@ RSpec.describe BetterRadar::Parser do
               {
                 id: "17149", name: "Luís Fabiano"
               }
+          ],
+        cards:
+          [
+            { id: "4199983", time: "42:00", type: "Yellow", player:
+              {
+                id: "39586", name: "Petrovi, Radosav"
+              }
+            },
+            { id: "4200011", time: "45:00", type: "Yellow", player:
+              {
+                id: "39584", name: "Lazic, Djordje"
+              }
+            }
           ]
 
       }
