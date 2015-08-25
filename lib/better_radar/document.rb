@@ -129,6 +129,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @odds.merge!({ value: content })
       elsif @inside_eventdate
         @event_info[:event_date].nil? ? @event_info[:event_date] = "#{content}" : @event_info[:event_date] << content
+      elsif @inside_eventname
+        @event_info[:event_name].nil? ? @event_info[:event_name] = "#{content} " : @event_info[:event_name] << content
       elsif @inside_statusinfo
         #TODO
       elsif @inside_neutralground
