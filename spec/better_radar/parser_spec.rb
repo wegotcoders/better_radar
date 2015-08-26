@@ -44,15 +44,17 @@ RSpec.describe BetterRadar::Parser do
     end
 
     describe "parsing an outright" do
+
+      let(:xml) { File.read('spec/fixtures/sample_outright.xml') }
+
       before do
-        @xml = File.read('spec/fixtures/sample_outright.xml')
         allow(handler).to receive(:handle_outright).once do |outright|
-          expect(outright.class).to eq BetterRadar::Element::outright
+          expect(outright.class).to eq BetterRadar::Element::Outright
         end
       end
 
       it "should handle handle the outright and return back the data" do
-        BetterRadar::Parser.parse(@xml, mock_handler)
+        BetterRadar::Parser.parse(xml, handler)
       end
     end
 
