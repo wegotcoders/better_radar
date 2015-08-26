@@ -6,7 +6,7 @@ class BetterRadar::Element::Category < BetterRadar::Element::Base
     self.names = []
   end
 
-  def assign_attributes(attributes)
+  def assign_attributes(attributes, current_element = nil)
     attributes.each do |attribute|
       case attribute.first
       when "BetradarCategoryID"
