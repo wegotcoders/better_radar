@@ -11,6 +11,16 @@ module BetterRadar::Element
         BetterRadar::Element::Tournament.new
       when 'Match'
         BetterRadar::Element::Match.new
+      when 'Card'
+        BetterRadar::Card.new
+      when 'Goal'
+        BetterRadar::Goal.new
+      when 'Player'
+        BetterRadar::Player.new
+      when 'Bet'
+        BetterRadar::Bet.new
+      when 'Odds'
+        BetterRadar::Odds.new
       when 'Outright'
         #TODO
       end

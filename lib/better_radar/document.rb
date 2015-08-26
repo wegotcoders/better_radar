@@ -17,62 +17,12 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     @current_element = name
     @traversal_list << @current_element
 
+    create_variable(name)
+    define_association(name)
+
     descend_level(name)
     instance_variable_set("@inside_#{name.downcase}", true)
 
-    case name
-    when 'Sport', 'Category', 'Tournament', 'Match'
-      instance_variable_set("@#{name.downcase}", BetterRadar::Element::Base.create_from_name(name))
-    when 'Competitors'
-      if @inside_match
-        @competitors = @match.competitors
-      elsif @inside_tournament
-        @competitors = @tournament.competitors
-      end
-    when 'Bet'
-      @bet = BetterRadar::Bet.new
-      if @inside_match
-        @match.bets << @bet
-      end
-    when 'Odds'
-      @odds = BetterRadar::Odds.new
-      if @inside_bet
-        @bet.odds << @odds
-      end
-    when 'Score'
-      @score = {}
-      if @inside_match
-        @match.scores << @score
-      end
-    when 'Goal'
-      @goal = BetterRadar::Goal.new
-      if @inside_match
-        @match.goals << @goal
-      end
-    when 'Player'
-      @player = BetterRadar::Player.new
-      if @inside_goals
-        @goal.player = @player
-      elsif @inside_cards
-        @card.player = @player
-      end
-    when 'Card'
-      @card = BetterRadar::Card.new
-      if @inside_match
-        @match.cards << @card
-      end
-    when 'Text'
-      # most nested first
-      if @inside_competitors
-        @competitors << {}
-      elsif @inside_tournament
-        @tournament.names << {}
-      elsif @inside_category
-        @category.names << {}
-      elsif @inside_sport
-        @sport.names << {}
-      end
-    end
     assign_attributes(name, attributes)
   end
 
@@ -125,5 +75,62 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def ascend_level(element_name)
     @hierarchy_levels.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
+  end
+
+  def create_variable(name)
+    case name
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Bet', 'Odds', 'Goal', 'Player', 'Card'
+      instance_variable_set("@#{name.downcase}", BetterRadar::Element::Base.create_from_name(name))
+    when 'Score', 'Bet', 'Competitors'
+      instance_variable_set("@#{name.downcase}", {})
+    end
+  end
+
+  def define_association(name)
+    case name
+    when 'Competitors'
+      if @inside_match
+        @competitors = @match.competitors
+      elsif @inside_tournament
+        @competitors = @tournament.competitors
+      end
+    when 'Bet'
+      if @inside_match
+        @match.bets << @bet
+      end
+    when 'Odds'
+      if @inside_bet
+        @bet.odds << @odds
+      end
+    when 'Score'
+      if @inside_match
+        @match.scores << @score
+      end
+    when 'Goal'
+      if @inside_match
+        @match.goals << @goal
+      end
+    when 'Player'
+      if @inside_goals
+        @goal.player = @player
+      elsif @inside_cards
+        @card.player = @player
+      end
+    when 'Card'
+      if @inside_match
+        @match.cards << @card
+      end
+    when 'Text'
+      # most nested first
+      if @inside_competitors
+        @competitors << {}
+      elsif @inside_tournament
+        @tournament.names << {}
+      elsif @inside_category
+        @category.names << {}
+      elsif @inside_sport
+        @sport.names << {}
+      end
+    end
   end
 end
