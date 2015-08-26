@@ -23,13 +23,6 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     case name
     when 'Sport', 'Category', 'Tournament', 'Match'
       instance_variable_set("@#{name.downcase}", BetterRadar::Element::Base.create_from_name(name))
-      @sport = BetterRadar::Element::Sport.new
-    when 'Category'
-      @category = BetterRadar::Element::Category.new
-    when 'Tournament'
-      @tournament = BetterRadar::Element::Tournament.new
-    when 'Match'
-      @match = BetterRadar::Element::Match.new
     when 'Competitors'
       if @inside_match
         @competitors = @match.competitors
