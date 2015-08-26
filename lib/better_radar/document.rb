@@ -66,7 +66,6 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       @card = BetterRadar::Card.new
       if @inside_match
         @match.cards << @card
-        binding.pry
       end
     when 'Text'
       # most nested first
@@ -91,7 +90,6 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     end
 
     instance_variable_set("@inside_#{name.downcase}", false)
-    instance_variable_set("@#{name.downcase}", nil)
     @traversal_list.pop
     ascend_level(name)
   end
