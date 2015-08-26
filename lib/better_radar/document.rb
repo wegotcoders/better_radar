@@ -19,7 +19,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
     case name
     when 'Sport'
-      @sport = {}
+      @sport = BetterRadar::Element::Sport.new
     when 'Category'
       @category = {}
     when 'Tournament'
@@ -99,8 +99,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @category[:names] ||= []
         @category[:names] << {}
       elsif @inside_sport
-        @sport[:names] ||= []
-        @sport[:names] << {}
+        @sport.names << {}
       end
     end
     assign_attributes(name, attributes)
@@ -169,7 +168,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       elsif @inside_category
         @category[:names].last.merge!({ name: content })
       elsif @inside_sport
-        @sport[:names].last.merge!({ name: content })
+        @sport.assign_content({ name: content })
       else
         #to fix
         # current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil? || current_level_data[:texts].nil?
@@ -181,8 +180,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   private
 
     #attributes are stored as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
-  def assign_attributes(name, attrs)
-    unless attrs.empty?
+  def assign_attributes(name, attributes)
+    unless attributes.empty?
       path = case name
       when 'Text'
         if @inside_competitors
@@ -192,7 +191,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         elsif @inside_category
           @category[:names].last
         elsif @inside_sport
-          @sport[:names].last
+          @sport.names.last
         end
       when 'Player'
         if @inside_goal
@@ -201,13 +200,17 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
           @card[:player]
         end
       else
-        v = instance_variable_get("@#{name.downcase}")
-        puts "#{v} path not found"
-        return if v.nil?
-        v
+        @element = instance_variable_get("@#{name.downcase}")
+        return if @element.nil?
+        @element
       end
-      attrs.each do |assoc_list|
-        path.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+
+      if @element.respond_to?(:assign_attributes)
+        @element.assign_attributes(attributes)
+      else
+        attributes.each do |assoc_list|
+          path.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+        end
       end
     end
   end
