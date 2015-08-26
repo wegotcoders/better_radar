@@ -4,18 +4,7 @@ RSpec.describe BetterRadar::Parser do
 
   describe "parse method" do
 
-    let(:mock_handler) { mock }
-
-    let(:sport_data) do
-      {
-      :betradarsportid => '1',
-      names:
-        [
-          {language: "BET", name: "Soccer"},
-          {language: "en", name: "Soccer",}
-        ]
-      }
-    end
+    let(:handler) { double }
 
     let(:category_data) do
       {
@@ -108,62 +97,70 @@ RSpec.describe BetterRadar::Parser do
     end
 
     describe "parsing a sport" do
+
+      let(:xml) { File.read('spec/fixtures/sample_sport.xml') }
+
       before do
-        @xml = File.read('spec/fixtures/sample_sport.xml')
-        mock_handler.expects(:handle_sport).with(sport_data).once
+        allow(handler).to receive(:handle_sport) do |sport|
+          expect(sport.class).to eq BetterRadar::Element::Sport
+          expect(sport.betradar_sport_id).to eq "1"
+          expect(sport.names.count).to eq 2
+          expect(sport.names.first).to eq({ language: "BET", name: "Soccer" })
+          expect(sport.names.last).to eq({ language: "en", name: "Soccer" })
+        end
       end
 
       it "should handle handle the sport and return back the data" do
-        BetterRadar::Parser.parse(@xml, mock_handler)
+        BetterRadar::Parser.parse(xml, handler)
       end
     end
 
-    describe "parsing a tournament" do
-      before do
-        @xml = File.read('spec/fixtures/sample_tournament.xml')
-        mock_handler.expects(:handle_tournament).with(tournament_data).once
-      end
+    # describe "parsing a tournament" do
+    #   before do
+    #     @xml = File.read('spec/fixtures/sample_tournament.xml')
+    #     mock_handler.expects(:handle_tournament).with(tournament_data).once
+    #   end
 
-      it "should handle handle the sport and return back the data" do
-        BetterRadar::Parser.parse(@xml, mock_handler)
-      end
-    end
+    #   it "should handle handle the sport and return back the data" do
+    #     BetterRadar::Parser.parse(@xml, mock_handler)
+    #   end
+    # end
 
-    describe "parsing a category" do
-      before do
-        @xml = File.read('spec/fixtures/sample_category.xml')
-        mock_handler.expects(:handle_category).with(category_data).once
-      end
+    # describe "parsing a category" do
+    #   before do
+    #     @xml = File.read('spec/fixtures/sample_category.xml')
+    #     mock_handler.expects(:handle_category).with(category_data).once
+    #   end
 
-      it "should handle handle the sport and return back the data" do
-        BetterRadar::Parser.parse(@xml, mock_handler)
-      end
-    end
+    #   it "should handle handle the sport and return back the data" do
+    #     BetterRadar::Parser.parse(@xml, mock_handler)
+    #   end
+    # end
 
-    describe "parsing a match" do
+    # describe "parsing a match" do
 
-      before do
-        @xml = File.read('spec/fixtures/sample_match.xml')
-        mock_handler.expects(:handle_match).with(match_data).once
-      end
+    #   before do
+    #     @xml = File.read('spec/fixtures/sample_match.xml')
+    #     mock_handler.expects(:handle_match).with(match_data).once
+    #   end
 
-      it "should notify the handler to handle a match" do
-        BetterRadar::Parser.parse(@xml, mock_handler)
-      end
-    end
+    #   it "should notify the handler to handle a match" do
+    #     BetterRadar::Parser.parse(@xml, mock_handler)
+    #   end
+    # end
 
-    describe "parsing a feed" do
-      before do
-        @xml = File.read('spec/fixtures/example_feed.xml')
-        mock_handler.expects(:handle_sport).with(sport_data).once
-        mock_handler.expects(:handle_category).with(category_data).once
-        mock_handler.expects(:handle_tournament).with(tournament_data).once
-        # mock_handler.expects(:handle_match_data).with(match_data).once
-      end
+    # describe "parsing a feed" do
+    #   before do
+    #     @xml = File.read('spec/fixtures/example_feed.xml')
+    #     mock_handler.expects(:handle_sport).with(sport_data).once
+    #     mock_handler.expects(:handle_category).with(category_data).once
+    #     mock_handler.expects(:handle_tournament).with(tournament_data).once
+    #     # mock_handler.expects(:handle_match_data).with(match_data).once
+    #   end
 
-      it "should handle handle the sport and return back the data" do
-        BetterRadar::Parser.parse(@xml, mock_handler)
-      end
-    end
+    #   it "should handle handle the sport and return back the data" do
+    #     BetterRadar::Parser.parse(@xml, mock_handler)
+    #   end
+    # end
   end
 end
