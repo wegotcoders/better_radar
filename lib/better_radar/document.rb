@@ -21,7 +21,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Sport'
       @sport = BetterRadar::Element::Sport.new
     when 'Category'
-      @category = {}
+      @category = BetterRadar::Element::Category.new
     when 'Tournament'
       @tournament = BetterRadar::Element::Tournament.new
     when 'Match'
@@ -95,8 +95,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       elsif @inside_tournament
         @tournament.names << {}
       elsif @inside_category
-        @category[:names] ||= []
-        @category[:names] << {}
+        @category.names << {}
       elsif @inside_sport
         @sport.names << {}
       end
@@ -165,7 +164,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       elsif @inside_tournament
         @tournament.assign_content({ name: content })
       elsif @inside_category
-        @category[:names].last.merge!({ name: content })
+        @category.assign_content({ name: content })
       elsif @inside_sport
         @sport.assign_content({ name: content })
       else
@@ -188,7 +187,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         elsif @inside_tournament
           @tournament.names.last
         elsif @inside_category
-          @category[:names].last
+          @category.names.last
         elsif @inside_sport
           @sport.names.last
         end

@@ -1,6 +1,6 @@
-class BetterRadar::Element::Tournament < BetterRadar::Element::Base
+class BetterRadar::Element::Category < BetterRadar::Element::Base
 
-  attr_accessor :names, :betradar_tournament_id
+  attr_accessor :betradar_category_id, :names
 
   def initialize
     self.names = []
@@ -9,8 +9,8 @@ class BetterRadar::Element::Tournament < BetterRadar::Element::Base
   def assign_attributes(attributes)
     attributes.each do |attribute|
       case attribute.first
-      when "BetradarTournamentID"
-        self.betradar_tournament_id = attribute.last
+      when "BetradarCategoryID"
+        self.betradar_category_id = attribute.last
       when "Language"
         self.names.last.merge!(language: attribute.last)
       when "name"
@@ -28,4 +28,6 @@ class BetterRadar::Element::Tournament < BetterRadar::Element::Base
       end
     end
   end
+
+
 end
