@@ -135,6 +135,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @event_info[:off] = content
       elsif @inside_tournamentid
         @event_info[:tournamentid] = content
+      elsif @inside_aamsoutrightid
+        @outright[:aamsoutrightid] = content
       elsif @inside_statusinfo
         #TODO
       elsif @inside_neutralground

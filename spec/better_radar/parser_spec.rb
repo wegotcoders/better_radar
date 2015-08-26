@@ -103,7 +103,8 @@ RSpec.describe BetterRadar::Parser do
               name: 'Olympique Marseille'
             }
           ]
-        }
+        },
+        aamsoutrightid: '10697.120'
       }
     end
 
