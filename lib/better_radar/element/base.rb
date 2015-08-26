@@ -8,6 +8,7 @@ module BetterRadar::Element
     end
 
     def assign_content(content)
+      warn "TODO: implement in subclass"
       nil
     end
   end
