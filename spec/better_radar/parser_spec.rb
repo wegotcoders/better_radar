@@ -101,7 +101,7 @@ RSpec.describe BetterRadar::Parser do
       let(:xml) { File.read('spec/fixtures/sample_sport.xml') }
 
       before do
-        allow(handler).to receive(:handle_sport) do |sport|
+        allow(handler).to receive(:handle_sport).once do |sport|
           expect(sport.class).to eq BetterRadar::Element::Sport
           expect(sport.betradar_sport_id).to eq "1"
           expect(sport.names.count).to eq 2
@@ -115,16 +115,24 @@ RSpec.describe BetterRadar::Parser do
       end
     end
 
-    # describe "parsing a tournament" do
-    #   before do
-    #     @xml = File.read('spec/fixtures/sample_tournament.xml')
-    #     mock_handler.expects(:handle_tournament).with(tournament_data).once
-    #   end
+    describe "parsing a tournament" do
 
-    #   it "should handle handle the sport and return back the data" do
-    #     BetterRadar::Parser.parse(@xml, mock_handler)
-    #   end
-    # end
+      let(:xml) { File.read('spec/fixtures/sample_tournament.xml') }
+
+      before do
+        allow(handler).to receive(:handle_sport).once do |tournament|
+          expect(tournament.class).to eq BetterRadar::Element::Tournament
+          expect(tournament.betradar_tournament_id).to eq "2"
+          expect(tournament.names.count).to eq 2
+          expect(tournament.names.first).to eq({ language: "BET", name: "Championship" })
+          expect(tournament.names.last).to eq({ language: "en", name: "Championship" })
+        end
+      end
+
+      it "should handle handle the sport and return back the data" do
+        BetterRadar::Parser.parse(xml, handler)
+      end
+    end
 
     # describe "parsing a category" do
     #   before do

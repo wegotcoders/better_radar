@@ -3,6 +3,7 @@ module BetterRadar::Element
 
     # implement in subclasses
     def assign_attributes(attributes)
+      warn "TODO: implement in subclass"
       nil
     end
 
