@@ -35,7 +35,6 @@ class BetterRadar::Element::Match < BetterRadar::Element::Base
         if current_element == "Goal"
           self.goals.last.id = attribute.last
         elsif current_element == "Card"
-          binding.pry
           self.cards.last.id = attribute.last
         elsif current_element == "Player"
           if context.include?("Goal")

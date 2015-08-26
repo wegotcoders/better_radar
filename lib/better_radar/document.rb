@@ -66,7 +66,6 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       @card = BetterRadar::Card.new
       if @inside_match
         @match.cards << @card
-        binding.pry
       end
     when 'Text'
       # most nested first
