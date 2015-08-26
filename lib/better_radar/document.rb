@@ -35,6 +35,9 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       elsif @inside_outright
         @outright[:fixture] = @fixture
       end
+    when 'OutrightOdds'
+      @outright[:outrightodds] = {}
+      @outright[:outrightodds][:odds_collection] = []
     when 'EventInfo'
       @event_info = {}
       @fixture[:event_info] = @event_info
@@ -64,6 +67,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       if @inside_bet
         @bet[:odds] ||= []
         @bet[:odds] << @odds
+      elsif @inside_outrightodds
+        @outright[:outrightodds][:odds_collection] << @odds
       end
     when 'Text'
       # most nested first
@@ -137,6 +142,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @event_info[:tournamentid] = content
       elsif @inside_aamsoutrightid
         @outright[:aamsoutrightid] = content
+      elsif @inside_outrightodds
+        @odds[:value] = content
       elsif @inside_statusinfo
         #TODO
       elsif @inside_neutralground

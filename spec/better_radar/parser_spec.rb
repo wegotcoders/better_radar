@@ -104,7 +104,14 @@ RSpec.describe BetterRadar::Parser do
             }
           ]
         },
-        aamsoutrightid: '10697.120'
+        aamsoutrightid: '10697.120',
+        outrightodds: {
+          #oddstype: 'C',
+          odds_collection: [
+            {id: '4891', value: '1,12'},
+            {id: '5380', value: '6,5'}
+          ]
+        }
       }
     end
 
