@@ -8,6 +8,8 @@ class BetterRadar::Element::Factory
       BetterRadar::Element::Category.new
     when 'Tournament'
       BetterRadar::Element::Tournament.new
+    when 'Outright'
+      BetterRadar::Element::Outright.new
     when 'Match'
       BetterRadar::Element::Match.new
     when 'Card'
@@ -16,12 +18,10 @@ class BetterRadar::Element::Factory
       BetterRadar::Element::Goal.new
     when 'Player'
       BetterRadar::Element::Player.new
-    when 'Bet'
+    when 'Bet', 'OutrightOdds'
       BetterRadar::Element::Bet.new
     when 'Odds'
       BetterRadar::Element::Odds.new
-    when 'Outright'
-      #TODO
     when 'PR'
       BetterRadar::Element::BetProbability.new
     when 'W'

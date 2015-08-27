@@ -1,0 +1,36 @@
+<Outright BetradarOutrightID="2332">
+  <Fixture>
+    <EventInfo>
+      <EventDate>2012 − 5 − 30T21:00:00</EventDate>
+      <EventName>
+        <Texts>
+          <Value>France Ligue 1 2011/12 − Outright Winner</Value>
+        </Texts>
+      </EventName>
+      <Off>0</Off>
+      <TournamentId>17</TournamentId>
+    </EventInfo>
+    <Competitors>
+      <Texts>
+        <Text ID="4891" SUPERID="1645">
+          <Value>Girondins Bordeaux</Value>
+        </Text>
+      </Texts>
+      <Texts>
+        <Text ID="5380" SUPERID="1641">
+          <Value>Olympique Marseille</Value>
+        </Text>
+      </Texts>
+    </Competitors>
+  </Fixture>
+  <AAMSOutrightIDs>
+    <AAMSOutrightId>10697.120</AAMSOutrightId>
+  </AAMSOutrightIDs>
+  <OutrightOdds OddsType="30">
+    <Odds ID="4891">1,12</Odds>
+    <Odds ID="5380">6,5</Odds>
+  </OutrightOdds>
+  <OutrightResult>
+    <Result ID="C"/>
+  </OutrightResult>
+</Outright>

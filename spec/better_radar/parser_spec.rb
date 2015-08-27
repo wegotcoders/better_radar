@@ -12,6 +12,7 @@ RSpec.describe BetterRadar::Parser do
 
       before do
         allow(handler).to receive(:handle_sport).once do |sport|
+
           expect(sport.class).to eq BetterRadar::Element::Sport
           expect(sport.betradar_sport_id).to eq "1"
           expect(sport.names.count).to eq 2
@@ -169,5 +170,21 @@ RSpec.describe BetterRadar::Parser do
         BetterRadar::Parser.parse(xml, handler)
       end
     end
+
+    describe "parsing an outright" do
+
+      let(:xml) { File.read('spec/fixtures/sample_outright.xml') }
+
+      before do
+        allow(handler).to receive(:handle_outright).once do |category|
+          expect(outright.betradar_outright_id).to eq "2332"
+        end
+      end
+
+      it "should handle handle the outright and return back the data" do
+        BetterRadar::Parser.parse(xml, handler)
+      end
+    end
+
   end
 end

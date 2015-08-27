@@ -85,7 +85,6 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.probabilities.last.outcome_probabilities.last[:special_value] = attribute.last
         end
       when "Status"
-
         self.bet_results.last.status = attribute.last
       when "VoidFactor"
         self.bet_results.last.void_factor = attribute.last

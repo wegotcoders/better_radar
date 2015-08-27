@@ -1,7 +1,7 @@
 class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   # Main hierarchy of the data, these should be the focus of what to handle
-  HIERARCHY_LEVELS = [:Sport, :Category, :Tournament, :Match]
+  HIERARCHY_LEVELS = [:Sport, :Category, :Tournament, :Outright, :Match]
 
   def initialize(handler)
     @handler = handler
@@ -82,9 +82,9 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     variable_name = "@#{element_name.downcase}"
 
     case element_name
-    when 'Sport', 'Category', 'Tournament', 'Match', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR'
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Outright', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR', 'OutrightOdds'
       instance_variable_set(variable_name, BetterRadar::Element::Factory.create_from_name(element_name))
-    when 'Score', 'Bet', 'Competitors', 'P'
+    when 'Score', 'Bet', 'Competitors', 'P', 'Value'
       instance_variable_set("@#{element_name.downcase}", {})
     end
   end
@@ -96,7 +96,11 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @competitors = @match.competitors
       elsif @inside_tournament
         @competitors = @tournament.competitors
+      elsif @inside_outright
+        @competitors = @outright.competitors
       end
+    when 'OutrightOdds'
+      @outright.bet = @outrightodds
     when 'Bet'
       if @inside_match
         @match.bets << @bet
@@ -104,6 +108,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Odds'
       if @inside_bet
         @bet.odds << @odds
+      elsif @inside_outrightodds
+        @outright.bet.odds << @odds
       end
     when 'Score'
       if @inside_match
@@ -143,6 +149,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         @category.names << {}
       elsif @inside_sport
         @sport.names << {}
+      end
+    when 'Value'
+      if @inside_eventname
+        @outright.event_names << @value
       end
     end
   end
