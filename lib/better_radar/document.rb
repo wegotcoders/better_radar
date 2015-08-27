@@ -79,16 +79,12 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def create_variable(element_name)
 
-    unless element_name == "W"
-      variable_name = "@#{element_name.downcase}"
-    else
-      variable_name = "@bet_result"
-    end
+    variable_name = "@#{element_name.downcase}"
 
     case element_name
-    when 'Sport', 'Category', 'Tournament', 'Match', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W'
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR'
       instance_variable_set(variable_name, BetterRadar::Element::Factory.create_from_name(element_name))
-    when 'Score', 'Bet', 'Competitors'
+    when 'Score', 'Bet', 'Competitors', 'P'
       instance_variable_set("@#{element_name.downcase}", {})
     end
   end
@@ -129,8 +125,14 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       end
     when 'W'
       if @inside_match
-        @match.bet_results << @bet_result
+        @match.bet_results << @w
       end
+    when 'PR'
+      if @inside_match
+        @match.probabilities << @pr
+      end
+    when 'P'
+      @pr.outcome_probabilities << @p
     when 'Text'
       # most nested first
       if @inside_competitors

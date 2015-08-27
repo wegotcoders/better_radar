@@ -22,6 +22,8 @@ class BetterRadar::Element::Factory
       BetterRadar::Element::Odds.new
     when 'Outright'
       #TODO
+    when 'PR'
+      BetterRadar::Element::BetProbability.new
     when 'W'
       BetterRadar::Element::BetResult.new
     else

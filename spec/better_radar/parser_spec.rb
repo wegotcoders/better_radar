@@ -152,6 +152,16 @@ RSpec.describe BetterRadar::Parser do
           expect(match.bet_results.last.outcome).to eq "Over"
           expect(match.bet_results.last.special_value).to eq "1,25"
 
+          expect(match.probabilities.count).to eq 3
+          expect(match.probabilities.first.class).to eq BetterRadar::Element::BetProbability
+
+          expect(match.probabilities.first.type).to eq "01"
+          expect(match.probabilities.first.outcome_probabilities.count).to eq 3
+          expect(match.probabilities.first.outcome_probabilities.first).to eq({ outcome: "1", special_value: "1:0", value: "0,609" })
+
+          expect(match.probabilities.last.type).to eq "60"
+          expect(match.probabilities.last.outcome_probabilities.count).to eq 2
+          expect(match.probabilities.last.outcome_probabilities.last).to eq({ outcome: "Under", special_value: "2,5", value: "0,4775" })
         end
       end
 

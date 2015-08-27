@@ -1,6 +1,6 @@
 class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
-  attr_accessor :betradar_match_id, :competitors, :bets, :bet_results, :date, :scores, :result_comment, :goals, :cards
+  attr_accessor :betradar_match_id, :competitors, :bets, :bet_results, :date, :scores, :result_comment, :goals, :cards, :probabilities
 
   def initialize
     self.competitors = []
@@ -9,6 +9,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     self.goals = []
     self.cards = []
     self.bet_results = []
+    self.probabilities = []
   end
 
    # Oh good good refactor this
@@ -29,18 +30,23 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.scores.last[:type] = attribute.last
         elsif context.include?("Card")
           self.cards.last.type = attribute.last
+        elsif context.include?("PR")
         end
       when "OddsType"
         if context.include?("MatchOdds")
           self.bets.last.type = attribute.last
         elsif context.include?("BetResult")
           self.bet_results.last.type = attribute.last
+        elsif context.include?("PR")
+          self.probabilities.last.type = attribute.last
         end
       when "OutCome"
         if context.include?("MatchOdds")
           self.bets.last.odds.last.outcome = attribute.last
         elsif context.include?("BetResult")
           self.bet_results.last.outcome = attribute.last
+        elsif context.include?("P")
+          self.probabilities.last.outcome_probabilities.last[:outcome] = attribute.last
         end
       when "Id"
         if current_element == "Goal"
@@ -73,7 +79,11 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.cards.last.player.name = attribute.last
         end
       when "SpecialBetValue"
-        self.bet_results.last.special_value = attribute.last
+        if context.include?("BetResult")
+          self.bet_results.last.special_value = attribute.last
+        elsif context.include?("Probabilities")
+          self.probabilities.last.outcome_probabilities.last[:special_value] = attribute.last
+        end
       when "Status"
 
         self.bet_results.last.status = attribute.last
@@ -99,10 +109,11 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       end
     when "MatchDate"
       self.date.nil? ? self.date = "#{content} " : self.date << content
+    when "P"
+      self.probabilities.last.outcome_probabilities.last[:value] = content
     else
       warn "#{current_element} - #{content} not assigned"
     end
-    # @match_date.nil? ? @match_date = "#{content} " : @match_date << content
   end
 
 end
