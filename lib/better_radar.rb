@@ -14,6 +14,7 @@ require "better_radar/element/odds"
 require "better_radar/element/goal"
 require "better_radar/element/card"
 require "better_radar/element/player"
+require "better_radar/element/bet_result"
 
 require "better_radar/client"
 require "better_radar/parser"

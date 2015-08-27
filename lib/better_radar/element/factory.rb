@@ -22,6 +22,10 @@ class BetterRadar::Element::Factory
       BetterRadar::Element::Odds.new
     when 'Outright'
       #TODO
+    when 'W'
+      BetterRadar::Element::BetResult.new
+    else
+      raise "Element Not Supported"
     end
   end
 end

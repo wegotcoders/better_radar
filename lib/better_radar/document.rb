@@ -77,12 +77,19 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     @hierarchy_levels.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
   end
 
-  def create_variable(name)
-    case name
-    when 'Sport', 'Category', 'Tournament', 'Match', 'Bet', 'Odds', 'Goal', 'Player', 'Card'
-      instance_variable_set("@#{name.downcase}", BetterRadar::Element::Factory.create_from_name(name))
+  def create_variable(element_name)
+
+    unless element_name == "W"
+      variable_name = "@#{element_name.downcase}"
+    else
+      variable_name = "@bet_result"
+    end
+
+    case element_name
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W'
+      instance_variable_set(variable_name, BetterRadar::Element::Factory.create_from_name(element_name))
     when 'Score', 'Bet', 'Competitors'
-      instance_variable_set("@#{name.downcase}", {})
+      instance_variable_set("@#{element_name.downcase}", {})
     end
   end
 
@@ -119,6 +126,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Card'
       if @inside_match
         @match.cards << @card
+      end
+    when 'W'
+      if @inside_match
+        @match.bet_results << @bet_result
       end
     when 'Text'
       # most nested first

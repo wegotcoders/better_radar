@@ -76,4 +76,33 @@
       <Player Id="39584" Name="Lazic, Djordje"/>
     </Card>
   </Cards>
+  <BetResult>
+    <W OddsType="01" OutCome="X" SpecialBetValue="0:1"/>
+    <W OddsType="02" OutCome="3:2"/>
+    <W OddsType="10" OutCome="1"/>
+    <W OddsType="60" OutCome="Over" SpecialBetValue="2.5"/>
+    <W OddsType="41" OutCome="2"/>
+    <W OddsType="42" OutCome="2"/>
+    <W OddsType="43" OutCome="Yes"/>
+    <W OddsType="44" OutCome="2/1"/>
+    <W OddsType="45" OutCome="Odd"/>
+    <W OddsType="46" OutCome="1X"/>
+    <W OddsType="46" OutCome="12"/>
+    <W OddsType="47" OutCome="1"/>
+    <W OddsType="48" OutCome="3+"/>
+    <W OddsType="49" OutCome="2"/>
+    <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,75" Status="W" VoidFactor="0,5"/>
+    <W OddsType="51" OutCome="2" SpecialBetValue=" − 0,75" Status="L" VoidFactor="0,5"/>
+    <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,5"/>
+    <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,25"/>
+    <W OddsType="52" OutCome="Over" SpecialBetValue="2"/>
+    <W OddsType="52" OutCome="Over" SpecialBetValue="2,25"/>
+    <W OddsType="52" OutCome="Over" SpecialBetValue="2,5"/>
+    <W OddsType="53" OutCome="2" SpecialBetValue="0"/>
+    <W OddsType="53" OutCome="2" SpecialBetValue=" − 0,5"/>
+    <W OddsType="53" OutCome="2" SpecialBetValue=" − 0,25"/>
+    <W OddsType="54" OutCome="Over" SpecialBetValue="0,75"/>
+    <W OddsType="54" OutCome="Over" SpecialBetValue="1"/>
+    <W OddsType="54" OutCome="Over" SpecialBetValue="1,25"/>
+  </BetResult>
 </Match>

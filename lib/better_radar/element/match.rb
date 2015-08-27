@@ -1,6 +1,6 @@
 class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
-  attr_accessor :betradar_match_id, :competitors, :bets, :date, :scores, :result_comment, :goals, :cards
+  attr_accessor :betradar_match_id, :competitors, :bets, :bet_results, :date, :scores, :result_comment, :goals, :cards
 
   def initialize
     self.competitors = []
@@ -8,7 +8,10 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     self.scores = []
     self.goals = []
     self.cards = []
+    self.bet_results = []
   end
+
+   # Oh good good refactor this
 
   def assign_attributes(attributes, current_element = nil, context = nil)
     attributes.each do |attribute|
@@ -28,9 +31,17 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.cards.last.type = attribute.last
         end
       when "OddsType"
-        self.bets.last.type = attribute.last
+        if context.include?("MatchOdds")
+          self.bets.last.type = attribute.last
+        elsif context.include?("BetResult")
+          self.bet_results.last.type = attribute.last
+        end
       when "OutCome"
-        self.bets.last.odds.last.outcome = attribute.last
+        if context.include?("MatchOdds")
+          self.bets.last.odds.last.outcome = attribute.last
+        elsif context.include?("BetResult")
+          self.bet_results.last.outcome = attribute.last
+        end
       when "Id"
         if current_element == "Goal"
           self.goals.last.id = attribute.last
@@ -61,6 +72,13 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         elsif context.include?("Card")
           self.cards.last.player.name = attribute.last
         end
+      when "SpecialBetValue"
+        self.bet_results.last.special_value = attribute.last
+      when "Status"
+
+        self.bet_results.last.status = attribute.last
+      when "VoidFactor"
+        self.bet_results.last.void_factor = attribute.last
       else
         raise "attribute #{attribute.first} not supported"
       end
