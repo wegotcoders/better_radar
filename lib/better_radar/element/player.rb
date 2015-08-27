@@ -1,4 +1,4 @@
-class BetterRadar::Player
+class BetterRadar::Element::Player
 
   attr_accessor :name, :id
 

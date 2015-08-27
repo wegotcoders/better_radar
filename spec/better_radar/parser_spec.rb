@@ -86,11 +86,11 @@ RSpec.describe BetterRadar::Parser do
           expect(match.date).to eq "2004 − 8 − 23T16:40:00"
 
           expect(match.bets.count).to eq 1
-          expect(match.bets.first.class).to eq BetterRadar::Bet
+          expect(match.bets.first.class).to eq BetterRadar::Element::Bet
           expect(match.bets.first.type).to eq "10"
 
           expect(match.bets.first.odds.count).to eq 3
-          expect(match.bets.first.odds.first.class).to eq BetterRadar::Odds
+          expect(match.bets.first.odds.first.class).to eq BetterRadar::Element::Odds
 
           expect(match.bets.first.odds[0].outcome).to eq "1"
           expect(match.bets.first.odds[0].value).to eq "2,15"
@@ -115,7 +115,7 @@ RSpec.describe BetterRadar::Parser do
           expect(goal.team2). to eq "0"
           expect(goal.time). to eq "62:00"
 
-          expect(goal.player.class). to eq BetterRadar::Player
+          expect(goal.player.class). to eq BetterRadar::Element::Player
           expect(goal.player.id).to eq "17149"
           expect(goal.player.name).to eq "Luís Fabiano"
 
@@ -124,7 +124,7 @@ RSpec.describe BetterRadar::Parser do
           expect(match.cards.first.time).to eq "42:00"
           expect(match.cards.first.type).to eq "Yellow"
 
-          expect(match.cards.first.player.class).to eq BetterRadar::Player
+          expect(match.cards.first.player.class).to eq BetterRadar::Element::Player
           expect(match.cards.first.player.id).to eq "39586"
           expect(match.cards.first.player.name).to eq "Petrovi, Radosav"
 
@@ -132,7 +132,7 @@ RSpec.describe BetterRadar::Parser do
           expect(match.cards.last.time).to eq "45:00"
           expect(match.cards.last.type).to eq "Yellow"
 
-          expect(match.cards.last.player.class).to eq BetterRadar::Player
+          expect(match.cards.last.player.class).to eq BetterRadar::Element::Player
           expect(match.cards.last.player.id).to eq "39584"
           expect(match.cards.last.player.name).to eq "Lazic, Djordje"
         end

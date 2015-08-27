@@ -1,4 +1,4 @@
-class BetterRadar::Element::Match < BetterRadar::Element::Base
+class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
   attr_accessor :betradar_match_id, :competitors, :bets, :date, :scores, :result_comment, :goals, :cards
 

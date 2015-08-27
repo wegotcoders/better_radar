@@ -80,7 +80,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   def create_variable(name)
     case name
     when 'Sport', 'Category', 'Tournament', 'Match', 'Bet', 'Odds', 'Goal', 'Player', 'Card'
-      instance_variable_set("@#{name.downcase}", BetterRadar::Element::Base.create_from_name(name))
+      instance_variable_set("@#{name.downcase}", BetterRadar::Element::Factory.create_from_name(name))
     when 'Score', 'Bet', 'Competitors'
       instance_variable_set("@#{name.downcase}", {})
     end

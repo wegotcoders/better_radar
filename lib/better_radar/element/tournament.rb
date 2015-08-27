@@ -1,4 +1,4 @@
-class BetterRadar::Element::Tournament < BetterRadar::Element::Base
+class BetterRadar::Element::Tournament < BetterRadar::Element::Entity
 
   attr_accessor :names, :betradar_tournament_id
 

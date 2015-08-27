@@ -1,5 +1,4 @@
-class BetterRadar::Element::Category < BetterRadar::Element::Base
-
+class BetterRadar::Element::Category < BetterRadar::Element::Entity
   attr_accessor :betradar_category_id, :names
 
   def initialize
