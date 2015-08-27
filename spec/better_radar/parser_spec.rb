@@ -138,6 +138,20 @@ RSpec.describe BetterRadar::Parser do
 
           expect(match.bet_results.count).to eq 27
           expect(match.bet_results.first.class).to eq BetterRadar::Element::BetResult
+
+          expect(match.bet_results.first.type).to eq "01"
+          expect(match.bet_results.first.outcome).to eq "X"
+          expect(match.bet_results.first.special_value).to eq "0:1"
+
+
+          expect(match.bet_results[10].type).to eq "46"
+          expect(match.bet_results[10].outcome).to eq "12"
+          expect(match.bet_results[10].special_value).to eq nil
+
+          expect(match.bet_results.last.type).to eq "54"
+          expect(match.bet_results.last.outcome).to eq "Over"
+          expect(match.bet_results.last.special_value).to eq "1,25"
+
         end
       end
 
