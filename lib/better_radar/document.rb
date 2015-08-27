@@ -18,7 +18,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     @traversal_list << @current_element
 
     create_variable(name)
-    define_association(name)
+    establish_assocation(name)
 
     descend_level(name)
     instance_variable_set("@inside_#{name.downcase}", true)
@@ -86,7 +86,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     end
   end
 
-  def define_association(name)
+  def establish_assocation(name)
     case name
     when 'Competitors'
       if @inside_match

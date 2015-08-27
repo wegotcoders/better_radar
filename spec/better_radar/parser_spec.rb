@@ -135,6 +135,9 @@ RSpec.describe BetterRadar::Parser do
           expect(match.cards.last.player.class).to eq BetterRadar::Element::Player
           expect(match.cards.last.player.id).to eq "39584"
           expect(match.cards.last.player.name).to eq "Lazic, Djordje"
+
+          expect(match.bet_results.count).to eq 27
+          expect(match.bet_results.first.class).to eq BetterRadar::Element::BetResult
         end
       end
 
