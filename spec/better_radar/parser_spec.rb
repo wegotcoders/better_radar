@@ -58,7 +58,7 @@ RSpec.describe BetterRadar::Parser do
         end
       end
 
-      it "should handle handle the sport and return back the data" do
+      it "should handle handle the tournament and return back the data" do
         BetterRadar::Parser.parse(xml, handler)
       end
     end
