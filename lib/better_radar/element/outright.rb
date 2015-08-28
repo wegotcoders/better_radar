@@ -1,6 +1,6 @@
 class BetterRadar::Element::Outright < BetterRadar::Element::Entity
 
-  attr_accessor :off, :tournament_id, :betradar_outright_id, :competitors, :bet, :result, :event_date, :event_names, :aams_outright_ids
+  attr_accessor :off, :tournament_id, :betradar_outright_id, :competitors, :bet, :result, :event_date, :event_end_date, :event_names, :aams_outright_ids
 
   def initialize
     self.competitors = []
@@ -35,7 +35,9 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
     case current_element
     when "EventDate"
       # why do I need a space after the first part?
-      self.event_date.nil? ? self.event_date = "#{content} " : self.event_date << content
+      self.event_date.nil? ? self.event_date = "#{content}" : self.event_date << content
+    when "EventEndDate"
+      self.event_end_date.nil? ? self.event_end_date = "#{content}" : self.event_end_date << content
     when "Value"
       if context.include?("EventName")
         self.event_names.last[:value].nil? ? self.event_names.last[:value] = "#{content} " : self.event_names.last[:value] << content
@@ -51,6 +53,8 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       self.tournament_id = content
     when "Odds"
       self.bet.odds.last.value = content
+    when "Off"
+      self.off = content
     else
       warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end

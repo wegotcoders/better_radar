@@ -1,6 +1,6 @@
 class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
-  attr_accessor :betradar_match_id, :competitors, :bets, :bet_results, :date, :scores, :result_comment, :goals, :cards, :probabilities
+  attr_accessor :betradar_match_id, :off, :sport_id, :round, :live_multi_cast, :live_score, :competitors, :bets, :bet_results, :date, :scores, :result_comment, :goals, :cards, :probabilities, :neutral_ground
 
   def initialize
     self.competitors = []
@@ -19,8 +19,10 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       case attribute.first
       when "BetradarMatchID"
         self.betradar_match_id = attribute.last
-      when "ID", "SUPERID"
-        self.competitors.last[attribute.first.downcase.to_sym] = attribute.last
+      when "ID", "SUPERID", "Language"
+        if context.include?("Competitors")
+          self.competitors.last[attribute.first.downcase.to_sym] = attribute.last
+        end
       when "Type"
         if context.include?("Goal")
           self.goals.last.type = attribute.last
@@ -110,6 +112,16 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       self.date.nil? ? self.date = "#{content} " : self.date << content
     when "P"
       self.probabilities.last.outcome_probabilities.last[:value] = content
+    when "Off"
+      self.off = content
+    when "LiveMultiCast"
+      self.live_multi_cast = content
+    when "LiveScore"
+      self.live_score = content
+    when "Round"
+      self.round = content
+    when "NeutralGround"
+      self.neutral_ground = content
     else
       warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
