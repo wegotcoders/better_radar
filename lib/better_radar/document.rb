@@ -18,14 +18,19 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   def start_element(name, attributes)
     @current_element = name
     @traversal_list << @current_element
-
-    create_variable(name)
-    establish_assocation(name)
-
     descend_level(name)
     instance_variable_set("@inside_#{name.downcase}", true)
 
-    assign_attributes(name, attributes)
+    case @current_element
+    when "Timestamp", "Sports"
+      #skip
+    else
+      create_variable(name)
+      establish_assocation(name)
+      assign_attributes(name, attributes)
+    end
+
+
   end
 
   def end_element(name)
@@ -63,6 +68,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def current_level_data
+    binding.pry if @hierarchy_levels.last.nil?
     instance_variable_get("@#{@hierarchy_levels.last.downcase}")
   end
 

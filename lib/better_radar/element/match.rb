@@ -13,7 +13,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
   end
 
    # Oh good good refactor this
-
+   # at the very least case the element not the attribute
   def assign_attributes(attributes, current_element, context)
     attributes.each do |attribute|
       case attribute.first
