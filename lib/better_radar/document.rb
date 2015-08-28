@@ -1,7 +1,9 @@
 class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   # Main hierarchy of the data, these should be the focus of what to handle
-  HIERARCHY_LEVELS = [:Sport, :Category, :Tournament, :Outright, :Match]
+
+  HIERARCHY_LEVELS = [:Sport, :Category, :Outright, :Tournament, :Match]
+
 
   def initialize(handler)
     @handler = handler
