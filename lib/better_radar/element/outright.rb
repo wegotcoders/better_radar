@@ -26,7 +26,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       when "Result"
         self.result = value
       else
-        raise "attribute #{name} not supported on #{current_element}"
+        warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
     end
   end
@@ -52,7 +52,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
     when "Odds"
       self.bet.odds.last.value = content
     else
-      raise "#{content} in #{current_element} not yet supported"
+      warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
   end
 end

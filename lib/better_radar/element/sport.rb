@@ -6,7 +6,7 @@ class BetterRadar::Element::Sport < BetterRadar::Element::Entity
     self.names = []
   end
 
-  def assign_attributes(attributes, current_element = nil, context = nil)
+  def assign_attributes(attributes, current_element, context)
     attributes.each do |attribute|
       case attribute.first
       when "BetradarSportID"
@@ -14,7 +14,7 @@ class BetterRadar::Element::Sport < BetterRadar::Element::Entity
       when "Language"
         self.names.last.merge!(language: attribute.last)
       else
-        raise "attribute #{attribute.first} not supported"
+        warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
     end
   end
@@ -23,6 +23,8 @@ class BetterRadar::Element::Sport < BetterRadar::Element::Entity
     case current_element
     when "Value"
       self.names.last[:name] =  content
+    else
+      warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
   end
 

@@ -14,7 +14,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
    # Oh good good refactor this
 
-  def assign_attributes(attributes, current_element = nil, context = nil)
+  def assign_attributes(attributes, current_element, context)
     attributes.each do |attribute|
       case attribute.first
       when "BetradarMatchID"
@@ -89,12 +89,12 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       when "VoidFactor"
         self.bet_results.last.void_factor = attribute.last
       else
-        raise "attribute #{attribute.first} not supported"
+        warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
     end
   end
 
-  def assign_content(content, current_element = nil, context = nil)
+  def assign_content(content, current_element, context)
     case current_element
     when "Odds"
       self.bets.last.odds.last.value = content
@@ -111,7 +111,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     when "P"
       self.probabilities.last.outcome_probabilities.last[:value] = content
     else
-      warn "#{current_element} - #{content} not assigned"
+      warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
   end
 

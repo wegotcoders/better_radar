@@ -5,7 +5,7 @@ class BetterRadar::Element::Category < BetterRadar::Element::Entity
     self.names = []
   end
 
-  def assign_attributes(attributes, current_element = nil, context = nil)
+  def assign_attributes(attributes, current_element, context)
     attributes.each do |attribute|
       case attribute.first
       when "BetradarCategoryID"
@@ -14,15 +14,17 @@ class BetterRadar::Element::Category < BetterRadar::Element::Entity
         self.names.last.merge!(language: attribute.last)
       when "name"
       else
-        raise "attribute #{attribute.first} not supported"
+        warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
     end
   end
 
-  def assign_content(content, current_element = nil, context = nil)
+  def assign_content(content, current_element, context)
     case current_element
     when "Value"
       self.names.last[:name] =  content
+    else
+      warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
   end
 
