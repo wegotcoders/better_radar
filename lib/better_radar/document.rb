@@ -28,7 +28,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def end_element(name)
     case name
-    when 'Sport', 'Category', 'Tournament', 'Match'
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Outright'
       method_name = "handle_#{current_level_name}".to_sym
       @handler.send(method_name, current_level_data)
     end

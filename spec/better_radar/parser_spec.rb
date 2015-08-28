@@ -176,8 +176,35 @@ RSpec.describe BetterRadar::Parser do
       let(:xml) { File.read('spec/fixtures/sample_outright.xml') }
 
       before do
-        allow(handler).to receive(:handle_outright).once do |category|
+        allow(handler).to receive(:handle_outright).once do |outright|
           expect(outright.betradar_outright_id).to eq "2332"
+          expect(outright.event_date).to eq "2012 − 5 − 30T21:00:00"
+          expect(outright.event_names.first[:value]).to eq "France Ligue 1 2011/12 − Outright Winner"
+
+          expect(outright.competitors.count).to eq 2
+
+          expect(outright.competitors.first[:name]).to eq "Girondins Bordeaux"
+          expect(outright.competitors.first[:id]).to eq "4891"
+          expect(outright.competitors.first[:superid]).to eq "1645"
+
+          expect(outright.competitors.last[:name]).to eq "Olympique Marseille"
+          expect(outright.competitors.last[:id]).to eq "5380"
+          expect(outright.competitors.last[:superid]).to eq "1641"
+
+          expect(outright.aams_outright_ids.count).to eq 1
+          expect(outright.aams_outright_ids.first).to eq "10697.120"
+
+          expect(outright.bet.class).to eq BetterRadar::Element::Bet
+          expect(outright.bet.odds.count).to eq 2
+
+          expect(outright.bet.type).to eq "30"
+          expect(outright.bet.odds.first.id).to eq "4891"
+          expect(outright.bet.odds.first.value).to eq "1,12"
+          expect(outright.bet.odds.last.id).to eq "5380"
+          expect(outright.bet.odds.last.value).to eq "6,5"
+
+          expect(outright.result).to eq "C"
+
         end
       end
 

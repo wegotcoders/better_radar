@@ -16,7 +16,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
 
       case current_element
       when "Outright"
-        self.betradar_outright_id = name if name == "BetradarOutrightID"
+        self.betradar_outright_id = value if name == "BetradarOutrightID"
       when "Text"
         self.competitors.last[name.downcase.to_sym] = value if context.include?("Competitors")
       when "OutrightOdds"
@@ -34,12 +34,14 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
   def assign_content(content, current_element, context)
     case current_element
     when "EventDate"
-      self.event_date.nil? ? self.event_date = content : self.event_date << content
+      # why do I need a space after the first part?
+      self.event_date.nil? ? self.event_date = "#{content} " : self.event_date << content
     when "Value"
       if context.include?("EventName")
-        self.event_names.last.merge!(value: content)
+        self.event_names.last[:value].nil? ? self.event_names.last[:value] = "#{content} " : self.event_names.last[:value] << content
       elsif context.include?("Competitors")
-        self.event_names.last.merge!(name: content)
+        # but not here
+        self.competitors.last[:name].nil? ? self.competitors.last[:name] = "#{content}" : self.event_names.last[:value] << content
       end
     when "AAMSOutrightId"
       self.aams_outright_ids << content
