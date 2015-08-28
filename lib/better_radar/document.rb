@@ -1,48 +1,28 @@
 class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
-  # Main hierarchy of the data, these should be the focus of what to handle
+  # These elements have their own classes to container their respective data
 
-  HIERARCHY_LEVELS = [:Sport, :Category, :Outright, :Tournament, :Match]
-
+  ENTITY_ELEMENTS = [:Sport, :Category, :Outright, :Tournament, :Match]
 
   def initialize(handler)
     @handler = handler
   end
+
+  # Parsing Events
 
   def start_document
     @hierarchy_levels = []
     @traversal_list = []
   end
 
-  # need to notify the handler of this so they can prepare for nested elements?
   def start_element(name, attributes)
-    @current_element = name
-    @traversal_list << @current_element
-    descend_level(name)
-    instance_variable_set("@inside_#{name.downcase}", true)
-
-    case @current_element
-    when "Timestamp", "Sports"
-      #skip
-    else
-      create_variable(name)
-      establish_assocation(name)
-      assign_attributes(name, attributes)
-    end
-
-
+    descend_into_element(name)
+    handle_element(name, attributes)
   end
 
   def end_element(name)
-    case name
-    when 'Sport', 'Category', 'Tournament', 'Match', 'Outright'
-      method_name = "handle_#{current_level_name}".to_sym
-      @handler.send(method_name, current_level_data)
-    end
-
-    instance_variable_set("@inside_#{name.downcase}", false)
-    @traversal_list.pop
-    ascend_level(name)
+    send_handler_data(name)
+    ascend_depth(name)
   end
 
   def characters(text)
@@ -54,7 +34,37 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   private
 
-    #attributes are stored as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
+  # Traversal representations
+
+  def descend_into_element(name)
+    @current_element = name
+    instance_variable_set("@inside_#{@current_element.downcase}", true)
+    @traversal_list << @current_element
+    @hierarchy_levels << @current_element if ENTITY_ELEMENTS.include?(@current_element.to_sym)
+  end
+
+  def ascend_depth(name)
+    instance_variable_set("@inside_#{name.downcase}", false)
+    @traversal_list.pop
+    @hierarchy_levels.pop if ENTITY_ELEMENTS.include?(@current_element.to_sym)
+  end
+
+  # Establishing data structures
+
+  def handle_element(name, attributes)
+    case name
+    when "Timestamp", "Sports"
+      #skip?
+    else
+      create_variable(name)
+      establish_assocation(name)
+      assign_attributes(name, attributes)
+    end
+  end
+
+  # Attributes are parsed as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
+  # TODO: convert to hash for easier use?
+
   def assign_attributes(name, attributes)
     unless attributes.empty?
       @element = current_level_data
@@ -68,21 +78,11 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def current_level_data
-    binding.pry if @hierarchy_levels.last.nil?
     instance_variable_get("@#{@hierarchy_levels.last.downcase}")
   end
 
   def current_level_name
     @hierarchy_levels.last.downcase
-  end
-
-
-  def descend_level(element_name)
-    @hierarchy_levels << element_name if HIERARCHY_LEVELS.include?(element_name.to_sym)
-  end
-
-  def ascend_level(element_name)
-    @hierarchy_levels.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
   end
 
   def create_variable(element_name)
@@ -97,6 +97,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     end
   end
 
+  # TODO: Refactor approach to this
   def establish_assocation(name)
     case name
     when 'Competitors'
@@ -162,6 +163,13 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       if @inside_eventname
         @outright.event_names << @value
       end
+    end
+  end
+
+  def send_handler_data(name)
+    if ENTITY_ELEMENTS.include?(name)
+      method_name = "handle_#{current_level_name}".to_sym
+      @handler.send(method_name, current_level_data)
     end
   end
 end
