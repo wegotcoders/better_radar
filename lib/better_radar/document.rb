@@ -21,8 +21,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def end_element(name)
-    send_handler_data(name)
     ascend_depth(name)
+    send_handler_data(name)
   end
 
   def characters(text)
@@ -167,9 +167,9 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def send_handler_data(name)
-    if ENTITY_ELEMENTS.include?(name)
-      method_name = "handle_#{current_level_name}".to_sym
-      @handler.send(method_name, current_level_data)
+    if ENTITY_ELEMENTS.include?(name.to_sym)
+      method_name = "handle_#{name.downcase}".to_sym
+      @handler.send(method_name, instance_variable_get("@#{name.downcase}"))
     end
   end
 end

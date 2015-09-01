@@ -87,7 +87,7 @@ RSpec.describe BetterRadar::Parser do
           expect(match.competitors.last[:type]).to eq "2"
           expect(match.competitors.last[:name]).to eq "FC SLOVACKO"
 
-          expect(match.date).to eq "2004 − 8 − 23T16:40:00"
+          expect(match.date).to eq "2004−8−23T16:40:00"
 
           expect(match.bets.count).to eq 1
           expect(match.bets.first.class).to eq BetterRadar::Element::Bet
