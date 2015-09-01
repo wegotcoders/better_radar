@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe BetterRadar::Parser do
 
-  describe "parse method" do
+  describe "#parse" do
 
     let(:handler) { double }
 
@@ -12,7 +12,6 @@ RSpec.describe BetterRadar::Parser do
 
       before do
         allow(handler).to receive(:handle_sport).once do |sport|
-
           expect(sport.class).to eq BetterRadar::Element::Sport
           expect(sport.betradar_sport_id).to eq "1"
           expect(sport.names.count).to eq 2
