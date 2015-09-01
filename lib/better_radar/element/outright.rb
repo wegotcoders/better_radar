@@ -11,20 +11,20 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
   def assign_attributes(attributes, current_element, context)
     # trying new format
     attributes.each do |attribute|
-      name = attribute.first
-      value = attribute.last
+      attribute_name = attribute.first
+      attribute_value = attribute.last
 
       case current_element
       when "Outright"
-        self.betradar_outright_id = value if name == "BetradarOutrightID"
+        self.betradar_outright_id = attribute_value if attribute_name == "BetradarOutrightID"
       when "Text"
-        self.competitors.last[name.downcase.to_sym] = value if context.include?("Competitors")
+        self.competitors.last[attribute_name.downcase.to_sym] = attribute_value if context.include?("Competitors")
       when "OutrightOdds"
-        self.bet.type = value if name == "OddsType"
+        self.bet.type = attribute_value if attribute_name == "OddsType"
       when "Odds"
-        self.bet.odds.last.id = value if name == "ID"
+        self.bet.odds.last.id = attribute_value if attribute_name == "ID"
       when "Result"
-        self.result = value
+        self.result = attribute_value
       else
         warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
