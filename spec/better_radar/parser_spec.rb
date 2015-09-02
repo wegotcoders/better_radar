@@ -207,8 +207,10 @@ RSpec.describe BetterRadar::Parser do
           expect(outright.bet.odds.last.id).to eq "5380"
           expect(outright.bet.odds.last.value).to eq "6,5"
 
-          expect(outright.result).to eq "C"
-
+          expect(outright.results.first[:id]).to eq "135998"
+          expect(outright.results.first[:position]).to eq "1"
+          expect(outright.results.last[:id]).to eq "938682"
+          expect(outright.results.last[:position]).to eq "3"
         end
       end
 

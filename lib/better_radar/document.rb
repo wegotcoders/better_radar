@@ -159,6 +159,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       elsif @inside_sport
         @sport.names << {}
       end
+    when 'Result'
+      if @inside_outrightresult
+        @outright.results << {}
+      end
     when 'Value'
       if @inside_eventname
         @outright.event_names << @value

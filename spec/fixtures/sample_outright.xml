@@ -32,6 +32,8 @@
     <Odds ID="5380">6,5</Odds>
   </OutrightOdds>
   <OutrightResult>
-    <Result ID="C"/>
+    <Result ID="135998">1</Result>
+    <Result ID="134185">2</Result>
+    <Result ID="938682">3</Result>
   </OutrightResult>
 </Outright>

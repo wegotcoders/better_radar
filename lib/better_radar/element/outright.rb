@@ -1,11 +1,12 @@
 class BetterRadar::Element::Outright < BetterRadar::Element::Entity
 
-  attr_accessor :off, :tournament_id, :betradar_outright_id, :competitors, :bet, :result, :event_date, :event_end_date, :event_names, :aams_outright_ids
+  attr_accessor :off, :tournament_id, :betradar_outright_id, :competitors, :bet, :results, :event_date, :event_end_date, :event_names, :aams_outright_ids
 
   def initialize
     self.competitors = []
     self.event_names = []
     self.aams_outright_ids = []
+    self.results = []
   end
 
   def assign_attributes(attributes, current_element, context)
@@ -24,7 +25,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       when "Odds"
         self.bet.odds.last.id = attribute_value if attribute_name == "ID"
       when "Result"
-        self.result = attribute_value
+        self.results.last[:id] = attribute_value if attribute_name =="ID"
       else
         warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
@@ -55,6 +56,8 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       self.bet.odds.last.value = content
     when "Off"
       self.off = content
+    when "Result"
+      self.results.last[:position] = content
     else
       warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
