@@ -12,4 +12,7 @@ module BetterRadar
     @config ||= BetterRadar::Configuration.new
   end
 
+  def self.reset
+    @config = BetterRadar::Configuration.new
+  end
 end
