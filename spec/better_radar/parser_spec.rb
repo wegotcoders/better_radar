@@ -75,6 +75,13 @@ RSpec.describe BetterRadar::Parser do
           expect(match.live_multi_cast).to eq "0"
           expect(match.live_score).to eq "0"
 
+          expect(match.betfair_ids.length).to eq 4
+
+          expect(match.betfair_ids[:sport_id]).to eq "1"
+          expect(match.betfair_ids[:event_id]).to eq "20436589"
+          expect(match.betfair_ids[:runner1]).to eq "879210"
+          expect(match.betfair_ids[:runner2]).to eq "2293061"
+
           expect(match.round).to_not be nil
           expect(match.round.class).to be BetterRadar::Element::Round
           expect(match.round.number).to eq "19"

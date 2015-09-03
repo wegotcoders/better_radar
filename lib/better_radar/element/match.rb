@@ -15,7 +15,8 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
                 :goals,
                 :cards,
                 :probabilities,
-                :neutral_ground
+                :neutral_ground,
+                :betfair_ids
 
   def initialize
     self.competitors = []
@@ -26,6 +27,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     self.bet_results = []
     self.probabilities = []
     self.round = {}
+    self.betfair_ids = {}
   end
 
    # Oh good god refactor this
@@ -161,6 +163,14 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       self.round.cup_round = content
     when "NeutralGround"
       self.neutral_ground = content
+    when "SportID"
+      self.betfair_ids[:sport_id] = content
+    when "EventID"
+      self.betfair_ids[:event_id] = content
+    when "Runner1"
+      self.betfair_ids[:runner1] = content
+    when "Runner2"
+      self.betfair_ids[:runner2] = content
     else
       warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
