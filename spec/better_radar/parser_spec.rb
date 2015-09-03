@@ -82,15 +82,16 @@ RSpec.describe BetterRadar::Parser do
           expect(match.round.cup_round).to eq "Round 1"
 
           expect(match.competitors.count).to eq 2
-          expect(match.competitors.first[:id]).to eq "9373"
-          expect(match.competitors.first[:superid]).to eq "9243"
-          expect(match.competitors.first[:type]).to eq "1"
-          expect(match.competitors.first[:name]).to eq "1. FC BRNO"
+          expect(match.competitors.first.class).to eq BetterRadar::Element::Competitor
+          expect(match.competitors.first.id).to eq "9373"
+          expect(match.competitors.first.superid).to eq "9243"
+          expect(match.competitors.first.type).to eq "1"
+          expect(match.competitors.first.names.first[:name]).to eq "1. FC BRNO"
 
-          expect(match.competitors.last[:id]).to eq "371400"
-          expect(match.competitors.last[:superid]).to eq "1452"
-          expect(match.competitors.last[:type]).to eq "2"
-          expect(match.competitors.last[:name]).to eq "FC SLOVACKO"
+          expect(match.competitors.last.id).to eq "371400"
+          expect(match.competitors.last.superid).to eq "1452"
+          expect(match.competitors.last.type).to eq "2"
+          expect(match.competitors.last.names.first[:name]).to eq "FC SLOVACKO"
 
           expect(match.date).to eq "2004−8−23T16:40:00"
 
@@ -196,13 +197,13 @@ RSpec.describe BetterRadar::Parser do
 
           expect(outright.competitors.count).to eq 2
 
-          expect(outright.competitors.first[:name]).to eq "Girondins Bordeaux"
-          expect(outright.competitors.first[:id]).to eq "4891"
-          expect(outright.competitors.first[:superid]).to eq "1645"
+          expect(outright.competitors.first.names.first[:name]).to eq "Girondins Bordeaux"
+          expect(outright.competitors.first.id).to eq "4891"
+          expect(outright.competitors.first.superid).to eq "1645"
 
-          expect(outright.competitors.last[:name]).to eq "Olympique Marseille"
-          expect(outright.competitors.last[:id]).to eq "5380"
-          expect(outright.competitors.last[:superid]).to eq "1641"
+          expect(outright.competitors.last.names.first[:name]).to eq "Olympique Marseille"
+          expect(outright.competitors.last.id).to eq "5380"
+          expect(outright.competitors.last.superid).to eq "1641"
 
           expect(outright.aams_outright_ids.count).to eq 1
           expect(outright.aams_outright_ids.first).to eq "10697.120"
