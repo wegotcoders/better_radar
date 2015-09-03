@@ -1,0 +1,694 @@
+<BetradarBetData>
+  <Timestamp CreatedTime="2015-09-02T16:16:48" TimeZone="UTC"/>
+  <Sports>
+    <Sport BetradarSportID="1">
+      <Texts>
+        <Text Language="BET">
+          <Value>Soccer</Value>
+        </Text>
+        <Text Language="en">
+          <Value>Soccer</Value>
+        </Text>
+      </Texts>
+      <Category BetradarCategoryID="4">
+        <Texts>
+          <Text Language="BET">
+            <Value>International</Value>
+          </Text>
+          <Text Language="en">
+            <Value>International</Value>
+          </Text>
+        </Texts>
+        <Tournament BetradarTournamentID="7256">
+          <Texts>
+            <Text Language="BET">
+              <Value>World Cup Qualification, AFC, Round 2, Gr. E</Value>
+            </Text>
+            <Text Language="en">
+              <Value>World Cup Qualification, AFC 2rd round, Gr.E</Value>
+            </Text>
+          </Texts>
+          <Match BetradarMatchID="7261291">
+            <Fixture>
+              <Competitors>
+                <Texts>
+                  <Text ID="77730" SUPERID="4770" Type="1">
+                    <Text Language="BET">
+                      <Value>Japan</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Japan</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+                <Texts>
+                  <Text ID="146858" SUPERID="7929" Type="2">
+                    <Text Language="BET">
+                      <Value>Cambodia</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Cambodia</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+              </Competitors>
+              <DateInfo>
+                <MatchDate>2015-09-03T10:25:00</MatchDate>
+              </DateInfo>
+              <StatusInfo>
+                <Off>0</Off>
+              </StatusInfo>
+              <NeutralGround>0</NeutralGround>
+              <RoundInfo>
+                <Round>3</Round>
+              </RoundInfo>
+            </Fixture>
+            <MatchOdds>
+              <Bet OddsType="01">
+                <Odds OutCome="1" OutComeId="1" SpecialBetValue="0:1">1.06</Odds>
+                <Odds OutCome="X" OutComeId="2" SpecialBetValue="0:1">7.46</Odds>
+                <Odds OutCome="2" OutComeId="3" SpecialBetValue="0:1">18.2</Odds>
+              </Bet>
+              <Bet OddsType="02">
+                <Odds OutCome="0:0" OutComeId="39">100.0</Odds>
+                <Odds OutCome="1:0" OutComeId="20">19.81</Odds>
+                <Odds OutCome="0:1" OutComeId="43">100.0</Odds>
+                <Odds OutCome="2:0" OutComeId="21">8.61</Odds>
+                <Odds OutCome="1:1" OutComeId="40">58.05</Odds>
+                <Odds OutCome="0:2" OutComeId="44">100.0</Odds>
+                <Odds OutCome="2:1" OutComeId="22">14.04</Odds>
+                <Odds OutCome="3:0" OutComeId="23">5.61</Odds>
+                <Odds OutCome="0:3" OutComeId="46">100.0</Odds>
+                <Odds OutCome="1:2" OutComeId="45">100.0</Odds>
+                <Odds OutCome="3:1" OutComeId="24">9.01</Odds>
+                <Odds OutCome="4:0" OutComeId="26">4.78</Odds>
+                <Odds OutCome="2:2" OutComeId="41">81.01</Odds>
+                <Odds OutCome="0:4" OutComeId="49">100.0</Odds>
+                <Odds OutCome="1:3" OutComeId="47">100.0</Odds>
+                <Odds OutCome="3:2" OutComeId="25">28.84</Odds>
+                <Odds OutCome="4:1" OutComeId="27">7.62</Odds>
+                <Odds OutCome="5:0" OutComeId="29">4.97</Odds>
+                <Odds OutCome="0:5" OutComeId="52">100.0</Odds>
+                <Odds OutCome="1:4" OutComeId="50">100.0</Odds>
+                <Odds OutCome="2:3" OutComeId="48">100.0</Odds>
+                <Odds OutCome="4:2" OutComeId="28">24.19</Odds>
+                <Odds OutCome="5:1" OutComeId="30">7.94</Odds>
+                <Odds OutCome="6:0" OutComeId="31">6.08</Odds>
+                <Odds OutCome="3:3" OutComeId="42">100.0</Odds>
+                <Odds OutCome="0:6" OutComeId="54">100.0</Odds>
+                <Odds OutCome="1:5" OutComeId="53">100.0</Odds>
+                <Odds OutCome="2:4" OutComeId="51">100.0</Odds>
+              </Bet>
+              <Bet OddsType="208">
+                <Odds OutCome="-1">OFF</Odds>
+              </Bet>
+              <Bet OddsType="203">
+                <Odds OutCome="-1">OFF</Odds>
+              </Bet>
+              <Bet OddsType="209">
+                <Odds OutCome="-1">OFF</Odds>
+              </Bet>
+              <Bet OddsType="207">
+                <Odds OutCome="-1">OFF</Odds>
+              </Bet>
+              <Bet OddsType="220">
+                <Odds OutCome="-1">OFF</Odds>
+              </Bet>
+              <Bet OddsType="202">
+                <Odds OutCome="-1">OFF</Odds>
+              </Bet>
+            </MatchOdds>
+            <Probabilities>
+              <PR OddsType="01">
+                <P OutCome="1" OutComeId="1" SpecialBetValue="0:1">0.894</P>
+                <P OutCome="X" OutComeId="2" SpecialBetValue="0:1">0.076</P>
+                <P OutCome="2" OutComeId="3" SpecialBetValue="0:1">0.03</P>
+              </PR>
+              <PR OddsType="208">
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="3.5">0.192</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="3.5">0.01</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="3.5">0.008</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="3.5">0.779</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="3.5">0.007</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="3.5">0.004</P>
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="2.5">0.076</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="2.5">0.01</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="2.5">0.004</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="2.5">0.895</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="2.5">0.007</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="2.5">0.008</P>
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="1.5">0.022</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="1.5">0.003</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="1.5">0.003</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="1.5">0.949</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="1.5">0.015</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="1.5">0.009</P>
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="4.5">0.345</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="4.5">0.015</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="4.5">0.009</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="4.5">0.626</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="4.5">0.002</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="4.5">0.003</P>
+              </PR>
+              <PR OddsType="203">
+                <P OutCome="Others" OutComeId="-2">0.363</P>
+                <P OutCome="1:0" OutComeId="20">0.193</P>
+                <P OutCome="2:0" OutComeId="21">0.206</P>
+                <P OutCome="2:1" OutComeId="22">0.055</P>
+                <P OutCome="0:0" OutComeId="39">0.09</P>
+                <P OutCome="1:1" OutComeId="40">0.051</P>
+                <P OutCome="2:2" OutComeId="41">0.007</P>
+                <P OutCome="0:1" OutComeId="43">0.024</P>
+                <P OutCome="0:2" OutComeId="44">0.003</P>
+                <P OutCome="1:2" OutComeId="45">0.007</P>
+              </PR>
+              <PR OddsType="209">
+                <P OutCome="Hometeam scores first and home" OutComeId="108">0.881</P>
+                <P OutCome="Hometeam scores first and draw" OutComeId="109">0.007</P>
+                <P OutCome="Hometeam scores first and away" OutComeId="110">0.003</P>
+                <P OutCome="Awayteam scores first and home" OutComeId="111">0.09</P>
+                <P OutCome="Awayteam scores first and draw" OutComeId="112">0.007</P>
+                <P OutCome="Awayteam scores first and away" OutComeId="113">0.009</P>
+                <P OutCome="No goal" OutComeId="114">0.003</P>
+              </PR>
+              <PR OddsType="207">
+                <P OutCome="1st" OutComeId="93">0.308</P>
+                <P OutCome="2nd" OutComeId="94">0.524</P>
+                <P OutCome="Equal" OutComeId="95">0.168</P>
+              </PR>
+              <PR OddsType="220">
+                <P OutCome="Odd" OutComeId="9">0.496</P>
+                <P OutCome="Even" OutComeId="10">0.504</P>
+              </PR>
+              <PR OddsType="202">
+                <P OutCome="6+" OutComeId="79">0.456</P>
+                <P OutCome="0-1 goals" OutComeId="81">0.028</P>
+                <P OutCome="2-3 goals" OutComeId="82">0.183</P>
+                <P OutCome="4-5 goals" OutComeId="92">0.334</P>
+              </PR>
+            </Probabilities>
+          </Match>
+        </Tournament>
+      </Category>
+      <Category BetradarCategoryID="32">
+        <Texts>
+          <Text Language="BET">
+            <Value>Spain</Value>
+          </Text>
+          <Text Language="en">
+            <Value>Spain</Value>
+          </Text>
+        </Texts>
+        <Tournament BetradarTournamentID="150">
+          <Texts>
+            <Text Language="BET">
+              <Value>Copa del Rey</Value>
+            </Text>
+            <Text Language="en">
+              <Value>Copa del Rey</Value>
+            </Text>
+          </Texts>
+          <Match BetradarMatchID="7651754">
+            <Fixture>
+              <Competitors>
+                <Texts>
+                  <Text ID="8011138" SUPERID="215218" Type="1">
+                    <Text Language="BET">
+                      <Value>CD Ebro</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>CD Ebro</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+                <Texts>
+                  <Text ID="128361" SUPERID="2881" Type="2">
+                    <Text Language="BET">
+                      <Value>Real Union De Irun</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Real Union de Irun</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+              </Competitors>
+              <DateInfo>
+                <MatchDate>2015-09-02T16:30:00</MatchDate>
+              </DateInfo>
+              <StatusInfo>
+                <Off>0</Off>
+              </StatusInfo>
+              <NeutralGround>0</NeutralGround>
+              <RoundInfo>
+                <Cupround>Round 1</Cupround>
+                <ID>7</ID>
+              </RoundInfo>
+            </Fixture>
+            <MatchOdds>
+              <Bet OddsType="01">
+                <Odds OutCome="1" OutComeId="1" SpecialBetValue="1:0">1.47</Odds>
+                <Odds OutCome="X" OutComeId="2" SpecialBetValue="1:0">3.9</Odds>
+                <Odds OutCome="2" OutComeId="3" SpecialBetValue="1:0">5.11</Odds>
+              </Bet>
+              <Bet OddsType="02">
+                <Odds OutCome="0:0" OutComeId="39">6.44</Odds>
+                <Odds OutCome="1:0" OutComeId="20">6.26</Odds>
+                <Odds OutCome="0:1" OutComeId="43">5.77</Odds>
+                <Odds OutCome="2:0" OutComeId="21">11.02</Odds>
+                <Odds OutCome="1:1" OutComeId="40">4.9</Odds>
+                <Odds OutCome="0:2" OutComeId="44">9.3</Odds>
+                <Odds OutCome="2:1" OutComeId="22">9.18</Odds>
+                <Odds OutCome="3:0" OutComeId="23">29.22</Odds>
+                <Odds OutCome="0:3" OutComeId="46">22.53</Odds>
+                <Odds OutCome="1:2" OutComeId="45">8.43</Odds>
+                <Odds OutCome="3:1" OutComeId="24">24.23</Odds>
+                <Odds OutCome="4:0" OutComeId="26">100.0</Odds>
+                <Odds OutCome="2:2" OutComeId="41">13.91</Odds>
+                <Odds OutCome="0:4" OutComeId="49">73.68</Odds>
+                <Odds OutCome="1:3" OutComeId="47">20.38</Odds>
+                <Odds OutCome="3:2" OutComeId="25">39.83</Odds>
+                <Odds OutCome="4:1" OutComeId="27">86.54</Odds>
+                <Odds OutCome="5:0" OutComeId="29">100.0</Odds>
+                <Odds OutCome="0:5" OutComeId="52">100.0</Odds>
+                <Odds OutCome="1:4" OutComeId="50">66.57</Odds>
+                <Odds OutCome="2:3" OutComeId="48">36.51</Odds>
+                <Odds OutCome="4:2" OutComeId="28">100.0</Odds>
+                <Odds OutCome="5:1" OutComeId="30">100.0</Odds>
+                <Odds OutCome="6:0" OutComeId="31">100.0</Odds>
+                <Odds OutCome="3:3" OutComeId="42">91.41</Odds>
+                <Odds OutCome="0:6" OutComeId="54">100.0</Odds>
+                <Odds OutCome="1:5" OutComeId="53">100.0</Odds>
+                <Odds OutCome="2:4" OutComeId="51">100.0</Odds>
+              </Bet>
+              <Bet OddsType="203">
+                <Odds OutCome="Others" OutComeId="-2">26.17</Odds>
+                <Odds OutCome="1:0" OutComeId="20">4.88</Odds>
+                <Odds OutCome="2:0" OutComeId="21">19.02</Odds>
+                <Odds OutCome="2:1" OutComeId="22">34.94</Odds>
+                <Odds OutCome="0:0" OutComeId="39">2.28</Odds>
+                <Odds OutCome="1:1" OutComeId="40">8.83</Odds>
+                <Odds OutCome="2:2" OutComeId="41">100.0</Odds>
+                <Odds OutCome="0:1" OutComeId="43">4.49</Odds>
+                <Odds OutCome="0:2" OutComeId="44">15.99</Odds>
+                <Odds OutCome="1:2" OutComeId="45">32.02</Odds>
+              </Bet>
+              <Bet OddsType="220">
+                <Odds OutCome="Odd" OutComeId="9">2.17</Odds>
+                <Odds OutCome="Even" OutComeId="10">1.61</Odds>
+              </Bet>
+              <Bet OddsType="207">
+                <Odds OutCome="1st" OutComeId="93">3.21</Odds>
+                <Odds OutCome="2nd" OutComeId="94">2.07</Odds>
+                <Odds OutCome="Equal" OutComeId="95">3.16</Odds>
+              </Bet>
+              <Bet OddsType="222">
+                <Odds OutCome="X" OutComeId="2">2.88</Odds>
+                <Odds OutCome="HT &gt; 2" OutComeId="233">19.97</Odds>
+                <Odds OutCome="HT 2" OutComeId="234">8.97</Odds>
+                <Odds OutCome="HT 1" OutComeId="235">4.24</Odds>
+                <Odds OutCome="AT 1" OutComeId="236">3.9</Odds>
+                <Odds OutCome="AT 2" OutComeId="237">7.56</Odds>
+                <Odds OutCome="AT &gt; 2" OutComeId="238">14.97</Odds>
+              </Bet>
+              <Bet OddsType="202">
+                <Odds OutCome="6+" OutComeId="79">26.15</Odds>
+                <Odds OutCome="0-1 goals" OutComeId="81">2.64</Odds>
+                <Odds OutCome="2-3 goals" OutComeId="82">1.9</Odds>
+                <Odds OutCome="4-5 goals" OutComeId="92">4.82</Odds>
+              </Bet>
+              <Bet OddsType="208">
+                <Odds OutCome="Under and home" OutComeId="102" SpecialBetValue="3.5">3.24</Odds>
+                <Odds OutCome="Under and draw" OutComeId="103" SpecialBetValue="3.5">3.45</Odds>
+                <Odds OutCome="Under and away" OutComeId="104" SpecialBetValue="3.5">2.89</Odds>
+                <Odds OutCome="Over and home" OutComeId="105" SpecialBetValue="3.5">11.86</Odds>
+                <Odds OutCome="Over and draw" OutComeId="106" SpecialBetValue="3.5">14.73</Odds>
+                <Odds OutCome="Over and away" OutComeId="107" SpecialBetValue="3.5">9.78</Odds>
+                <Odds OutCome="Under and home" OutComeId="102" SpecialBetValue="2.5">4.99</Odds>
+                <Odds OutCome="Under and draw" OutComeId="103" SpecialBetValue="2.5">3.48</Odds>
+                <Odds OutCome="Under and away" OutComeId="104" SpecialBetValue="2.5">4.45</Odds>
+                <Odds OutCome="Over and home" OutComeId="105" SpecialBetValue="2.5">5.15</Odds>
+                <Odds OutCome="Over and draw" OutComeId="106" SpecialBetValue="2.5">14.91</Odds>
+                <Odds OutCome="Over and away" OutComeId="107" SpecialBetValue="2.5">4.42</Odds>
+                <Odds OutCome="Under and home" OutComeId="102" SpecialBetValue="1.5">7.64</Odds>
+                <Odds OutCome="Under and draw" OutComeId="103" SpecialBetValue="1.5">7.86</Odds>
+                <Odds OutCome="Under and away" OutComeId="104" SpecialBetValue="1.5">7.01</Odds>
+                <Odds OutCome="Over and home" OutComeId="105" SpecialBetValue="1.5">3.82</Odds>
+                <Odds OutCome="Over and draw" OutComeId="106" SpecialBetValue="1.5">4.32</Odds>
+                <Odds OutCome="Over and away" OutComeId="107" SpecialBetValue="1.5">3.27</Odds>
+                <Odds OutCome="Under and home" OutComeId="102" SpecialBetValue="4.5">2.86</Odds>
+                <Odds OutCome="Under and draw" OutComeId="103" SpecialBetValue="4.5">2.89</Odds>
+                <Odds OutCome="Under and away" OutComeId="104" SpecialBetValue="4.5">2.53</Odds>
+                <Odds OutCome="Over and home" OutComeId="105" SpecialBetValue="4.5">22.22</Odds>
+                <Odds OutCome="Over and draw" OutComeId="106" SpecialBetValue="4.5">100.0</Odds>
+                <Odds OutCome="Over and away" OutComeId="107" SpecialBetValue="4.5">18.53</Odds>
+              </Bet>
+            </MatchOdds>
+            <Probabilities>
+              <PR OddsType="01">
+                <P OutCome="1" OutComeId="1" SpecialBetValue="1:0">0.625</P>
+                <P OutCome="X" OutComeId="2" SpecialBetValue="1:0">0.214</P>
+                <P OutCome="2" OutComeId="3" SpecialBetValue="1:0">0.161</P>
+              </PR>
+              <PR OddsType="203">
+                <P OutCome="Others" OutComeId="-2">0.03</P>
+                <P OutCome="1:0" OutComeId="20">0.169</P>
+                <P OutCome="2:0" OutComeId="21">0.042</P>
+                <P OutCome="2:1" OutComeId="22">0.023</P>
+                <P OutCome="0:0" OutComeId="39">0.38</P>
+                <P OutCome="1:1" OutComeId="40">0.091</P>
+                <P OutCome="2:2" OutComeId="41">0.006</P>
+                <P OutCome="0:1" OutComeId="43">0.184</P>
+                <P OutCome="0:2" OutComeId="44">0.05</P>
+                <P OutCome="1:2" OutComeId="45">0.025</P>
+              </PR>
+              <PR OddsType="220">
+                <P OutCome="Odd" OutComeId="9">0.42</P>
+                <P OutCome="Even" OutComeId="10">0.58</P>
+              </PR>
+              <PR OddsType="207">
+                <P OutCome="1st" OutComeId="93">0.277</P>
+                <P OutCome="2nd" OutComeId="94">0.441</P>
+                <P OutCome="Equal" OutComeId="95">0.282</P>
+              </PR>
+              <PR OddsType="222">
+                <P OutCome="X" OutComeId="2">0.297</P>
+                <P OutCome="HT &gt; 2" OutComeId="233">0.04</P>
+                <P OutCome="HT 2" OutComeId="234">0.09</P>
+                <P OutCome="HT 1" OutComeId="235">0.196</P>
+                <P OutCome="AT 1" OutComeId="236">0.214</P>
+                <P OutCome="AT 2" OutComeId="237">0.108</P>
+                <P OutCome="AT &gt; 2" OutComeId="238">0.054</P>
+              </PR>
+              <PR OddsType="202">
+                <P OutCome="6+" OutComeId="79">0.031</P>
+                <P OutCome="0-1 goals" OutComeId="81">0.328</P>
+                <P OutCome="2-3 goals" OutComeId="82">0.469</P>
+                <P OutCome="4-5 goals" OutComeId="92">0.173</P>
+              </PR>
+              <PR OddsType="208">
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="2.5">0.166</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="2.5">0.243</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="2.5">0.187</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="2.5">0.161</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="2.5">0.054</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="2.5">0.189</P>
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="1.5">0.107</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="1.5">0.104</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="1.5">0.117</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="1.5">0.22</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="1.5">0.193</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="1.5">0.259</P>
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="4.5">0.292</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="4.5">0.289</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="4.5">0.334</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="4.5">0.035</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="4.5">0.008</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="4.5">0.042</P>
+                <P OutCome="Under and home" OutComeId="102" SpecialBetValue="3.5">0.26</P>
+                <P OutCome="Under and draw" OutComeId="103" SpecialBetValue="3.5">0.243</P>
+                <P OutCome="Under and away" OutComeId="104" SpecialBetValue="3.5">0.294</P>
+                <P OutCome="Over and home" OutComeId="105" SpecialBetValue="3.5">0.067</P>
+                <P OutCome="Over and draw" OutComeId="106" SpecialBetValue="3.5">0.054</P>
+                <P OutCome="Over and away" OutComeId="107" SpecialBetValue="3.5">0.082</P>
+              </PR>
+            </Probabilities>
+          </Match>
+        </Tournament>
+      </Category>
+      <Category BetradarCategoryID="252">
+        <Texts>
+          <Text Language="BET">
+            <Value>England Amateur</Value>
+          </Text>
+          <Text Language="en">
+            <Value>England Amateur</Value>
+          </Text>
+        </Texts>
+        <Tournament BetradarTournamentID="968">
+          <Texts>
+            <Text Language="BET">
+              <Value>Isthmian Football League, Premier Division</Value>
+            </Text>
+            <Text Language="en">
+              <Value>Isthmian Football League, Premier Division</Value>
+            </Text>
+          </Texts>
+          <Match BetradarMatchID="7743862">
+            <Fixture>
+              <Competitors>
+                <Texts>
+                  <Text ID="1367224" SUPERID="47114" Type="1">
+                    <Text Language="BET">
+                      <Value>Merstham FC</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Merstham</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+                <Texts>
+                  <Text ID="5541120" SUPERID="45370" Type="2">
+                    <Text Language="BET">
+                      <Value>Needham Market</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Needham Market FC</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+              </Competitors>
+              <DateInfo>
+                <MatchDate>2015-09-05T14:00:00</MatchDate>
+              </DateInfo>
+              <StatusInfo>
+                <Off>0</Off>
+              </StatusInfo>
+              <NeutralGround>0</NeutralGround>
+              <RoundInfo>
+                <Round>1</Round>
+              </RoundInfo>
+            </Fixture>
+            <MatchOdds>
+              <Bet OddsType="10">
+                <Odds OutCome="1" OutComeId="1">2.02</Odds>
+                <Odds OutCome="X" OutComeId="2">3.64</Odds>
+                <Odds OutCome="2" OutComeId="3">2.77</Odds>
+              </Bet>
+              <Bet OddsType="46">
+                <Odds OutCome="1X" OutComeId="69">1.36</Odds>
+                <Odds OutCome="12" OutComeId="70">1.24</Odds>
+                <Odds OutCome="X2" OutComeId="71">1.62</Odds>
+              </Bet>
+              <Bet OddsType="47">
+                <Odds OutCome="1" OutComeId="1">1.57</Odds>
+                <Odds OutCome="2" OutComeId="3">2.12</Odds>
+              </Bet>
+              <Bet OddsType="381">
+                <Odds OutCome="1" OutComeId="1">2.02</Odds>
+                <Odds OutCome="X" OutComeId="2">3.64</Odds>
+                <Odds OutCome="2" OutComeId="3">2.77</Odds>
+              </Bet>
+            </MatchOdds>
+            <Probabilities>
+              <PR OddsType="10">
+                <P OutCome="1" OutComeId="1">0.446</P>
+                <P OutCome="X" OutComeId="2">0.237</P>
+                <P OutCome="2" OutComeId="3">0.317</P>
+              </PR>
+              <PR OddsType="46">
+                <P OutCome="1X" OutComeId="69">0.683</P>
+                <P OutCome="12" OutComeId="70">0.763</P>
+                <P OutCome="X2" OutComeId="71">0.554</P>
+              </PR>
+              <PR OddsType="47">
+                <P OutCome="1" OutComeId="1">0.585</P>
+                <P OutCome="2" OutComeId="3">0.415</P>
+              </PR>
+              <PR OddsType="381">
+                <P OutCome="1" OutComeId="1">0.446</P>
+                <P OutCome="X" OutComeId="2">0.237</P>
+                <P OutCome="2" OutComeId="3">0.317</P>
+              </PR>
+            </Probabilities>
+          </Match>
+          <Match BetradarMatchID="7743860">
+            <Fixture>
+              <Competitors>
+                <Texts>
+                  <Text ID="5816779" SUPERID="25937" Type="1">
+                    <Text Language="BET">
+                      <Value>Leiston FC</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Leiston FC</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+                <Texts>
+                  <Text ID="167166" SUPERID="112" Type="2">
+                    <Text Language="BET">
+                      <Value>Grays Athletic</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Grays Athletic</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+              </Competitors>
+              <DateInfo>
+                <MatchDate>2015-09-05T14:00:00</MatchDate>
+              </DateInfo>
+              <StatusInfo>
+                <Off>0</Off>
+              </StatusInfo>
+              <NeutralGround>0</NeutralGround>
+              <RoundInfo>
+                <Round>1</Round>
+              </RoundInfo>
+            </Fixture>
+            <MatchOdds>
+              <Bet OddsType="10">
+                <Odds OutCome="1" OutComeId="1">2.12</Odds>
+                <Odds OutCome="X" OutComeId="2">3.58</Odds>
+                <Odds OutCome="2" OutComeId="3">2.65</Odds>
+              </Bet>
+            </MatchOdds>
+            <Probabilities>
+              <PR OddsType="10">
+                <P OutCome="1" OutComeId="1">0.424</P>
+                <P OutCome="X" OutComeId="2">0.242</P>
+                <P OutCome="2" OutComeId="3">0.333</P>
+              </PR>
+            </Probabilities>
+          </Match>
+        </Tournament>
+      </Category>
+    </Sport>
+    <Sport BetradarSportID="16">
+      <Texts>
+        <Text Language="BET">
+          <Value>Football</Value>
+        </Text>
+        <Text Language="en">
+          <Value>American Football</Value>
+        </Text>
+      </Texts>
+      <Category BetradarCategoryID="43">
+        <Texts>
+          <Text Language="BET">
+            <Value>USA</Value>
+          </Text>
+          <Text Language="en">
+            <Value>USA</Value>
+          </Text>
+        </Texts>
+        <Tournament BetradarTournamentID="85">
+          <Texts>
+            <Text Language="BET">
+              <Value>College</Value>
+            </Text>
+            <Text Language="en">
+              <Value>College</Value>
+            </Text>
+          </Texts>
+          <Match BetradarMatchID="7668228">
+            <Fixture>
+              <Competitors>
+                <Texts>
+                  <Text ID="61320" SUPERID="4344" Type="1">
+                    <Text Language="BET">
+                      <Value>Idaho Vandals</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Idaho Vandals</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+                <Texts>
+                  <Text ID="61334" SUPERID="4350" Type="2">
+                    <Text Language="BET">
+                      <Value>Ohio Bobcats</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Ohio Bobcats</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+              </Competitors>
+              <DateInfo>
+                <MatchDate>2015-09-04T01:00:00</MatchDate>
+              </DateInfo>
+              <StatusInfo>
+                <Off>0</Off>
+              </StatusInfo>
+              <NeutralGround>0</NeutralGround>
+              <RoundInfo>
+                <Round>1</Round>
+              </RoundInfo>
+            </Fixture>
+            <MatchOdds>
+              <Bet OddsType="60">
+                <Odds OutCome="Over" OutComeId="6" SpecialBetValue="55.5">1.81</Odds>
+                <Odds OutCome="Under" OutComeId="7" SpecialBetValue="55.5">1.73</Odds>
+              </Bet>
+            </MatchOdds>
+            <Probabilities>
+              <PR OddsType="60">
+                <P OutCome="Over" OutComeId="6" SpecialBetValue="55.5">0.486</P>
+                <P OutCome="Under" OutComeId="7" SpecialBetValue="55.5">0.514</P>
+              </PR>
+            </Probabilities>
+          </Match>
+          <Match BetradarMatchID="7540672">
+            <Fixture>
+              <Competitors>
+                <Texts>
+                  <Text ID="62798" SUPERID="4328" Type="1">
+                    <Text Language="BET">
+                      <Value>Tennessee Volunteers</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Tennessee Volunteers</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+                <Texts>
+                  <Text ID="61538" SUPERID="4315" Type="2">
+                    <Text Language="BET">
+                      <Value>Bowling Green Falcons</Value>
+                    </Text>
+                    <Text Language="en">
+                      <Value>Bowling Green Falcons</Value>
+                    </Text>
+                  </Text>
+                </Texts>
+              </Competitors>
+              <DateInfo>
+                <MatchDate>2015-09-05T20:00:00</MatchDate>
+              </DateInfo>
+              <StatusInfo>
+                <Off>0</Off>
+              </StatusInfo>
+              <NeutralGround>1</NeutralGround>
+              <RoundInfo>
+                <Round>1</Round>
+              </RoundInfo>
+            </Fixture>
+            <MatchOdds>
+              <Bet OddsType="60">
+                <Odds OutCome="Over" OutComeId="6" SpecialBetValue="68.5">1.78</Odds>
+                <Odds OutCome="Under" OutComeId="7" SpecialBetValue="68.5">1.76</Odds>
+              </Bet>
+            </MatchOdds>
+            <Probabilities>
+              <PR OddsType="60">
+                <P OutCome="Over" OutComeId="6" SpecialBetValue="68.5">0.497</P>
+                <P OutCome="Under" OutComeId="7" SpecialBetValue="68.5">0.503</P>
+              </PR>
+            </Probabilities>
+          </Match>
+        </Tournament>
+      </Category>
+    </Sport>
+  </Sports>
+</BetradarBetData>
