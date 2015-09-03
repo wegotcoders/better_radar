@@ -26,6 +26,8 @@ class BetterRadar::Element::Factory
       BetterRadar::Element::BetProbability.new
     when 'W'
       BetterRadar::Element::BetResult.new
+    when 'RoundInfo'
+      BetterRadar::Element::Round.new
     else
       raise "Element Not Supported"
     end

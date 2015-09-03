@@ -90,7 +90,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     variable_name = "@#{element_name.downcase}"
 
     case element_name
-    when 'Sport', 'Category', 'Tournament', 'Match', 'Outright', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR', 'OutrightOdds'
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Outright', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR', 'OutrightOdds', 'RoundInfo'
       instance_variable_set(variable_name, BetterRadar::Element::Factory.create_from_name(element_name))
     when 'Score', 'Bet', 'Competitors', 'P', 'Value'
       instance_variable_set("@#{element_name.downcase}", {})
@@ -162,6 +162,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Result'
       if @inside_outrightresult
         @outright.results << {}
+      end
+    when 'RoundInfo'
+      if @inside_match
+        @match.round = @roundinfo
       end
     when 'Value'
       if @inside_eventname

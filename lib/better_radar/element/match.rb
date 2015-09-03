@@ -1,6 +1,21 @@
 class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
-  attr_accessor :betradar_match_id, :off, :sport_id, :round, :live_multi_cast, :live_score, :competitors, :bets, :bet_results, :date, :scores, :result_comment, :goals, :cards, :probabilities, :neutral_ground
+  attr_accessor :betradar_match_id,
+                :off,
+                :sport_id,
+                :round,
+                :live_multi_cast,
+                :live_score,
+                :competitors,
+                :bets,
+                :bet_results,
+                :date,
+                :scores,
+                :result_comment,
+                :goals,
+                :cards,
+                :probabilities,
+                :neutral_ground
 
   def initialize
     self.competitors = []
@@ -130,15 +145,15 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     when "LiveScore"
       self.live_score = content
     when "Round"
-      self.round[:number] = content
+      self.round.number = content
     when "ID"
       if context.include?("RoundInfo")
-        self.round[:id] = content
+        self.round.id = content
       else
         warn "ID not supported in context : #{context}"
       end
     when "Cupround"
-      self.round[:cup_round] = content
+      self.round.cup_round = content
     when "NeutralGround"
       self.neutral_ground = content
     else
