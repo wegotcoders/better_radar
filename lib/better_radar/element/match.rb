@@ -38,15 +38,19 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       case attribute_name
       when "BetradarMatchID"
         self.betradar_match_id = attribute_value
-      when "ID", "SUPERID", "Language"
+      when "ID", "SUPERID"
         if context.include?("Competitors")
-          self.competitors.last[attribute_name.downcase.to_sym] = attribute_value
+          self.competitors.last.send("#{attribute_name.downcase}=".to_sym, attribute_value)
+        end
+      when "Language"
+        if context.include?("Competitors")
+          self.competitors.last.names.last[:language] = attribute_value
         end
       when "Type"
         if context.include?("Goal")
           self.goals.last.type = attribute_value
         elsif context.include?("Competitors")
-          self.competitors.last[:type] = attribute_value
+          self.competitors.last.type = attribute_value
         elsif context.include?("Score")
           self.scores.last[:type] = attribute_value
         elsif context.include?("Card")
@@ -129,7 +133,8 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       self.scores.last.merge!(value: content)
     when "Value"
       if context.include?("Competitors")
-        self.competitors.last[:name] = content
+        self.competitors.last.names << {} if self.competitors.last.names.empty?
+        self.competitors.last.names.last[:name] = content
       elsif context.include?("Comment")
         self.result_comment = content
       end

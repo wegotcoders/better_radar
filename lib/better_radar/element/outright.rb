@@ -16,16 +16,25 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       attribute_value = attribute.last
 
       case current_element
-      when "Outright"
-        self.betradar_outright_id = attribute_value if attribute_name == "BetradarOutrightID"
-      when "Text"
-        self.competitors.last[attribute_name.downcase.to_sym] = attribute_value if context.include?("Competitors")
-      when "OutrightOdds"
-        self.bet.type = attribute_value if attribute_name == "OddsType"
-      when "Odds"
-        self.bet.odds.last.id = attribute_value if attribute_name == "ID"
-      when "Result"
-        self.results.last[:id] = attribute_value if attribute_name =="ID"
+      when 'Outright'
+        self.betradar_outright_id = attribute_value if attribute_name == 'BetradarOutrightID'
+      when 'Text'
+        if context.include?('Competitors')
+          case attribute_name
+          when 'ID'
+            self.competitors.last.id = attribute_value
+          when 'SUPERID'
+            self.competitors.last.superid = attribute_value
+          when 'Language'
+            self.competitors.last.names.last[:language] = attribute_value
+          end
+        end
+      when 'OutrightOdds'
+        self.bet.type = attribute_value if attribute_name == 'OddsType'
+      when 'Odds'
+        self.bet.odds.last.id = attribute_value if attribute_name == 'ID'
+      when 'Result'
+        self.results.last[:id] = attribute_value if attribute_name =='ID'
       else
         warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
@@ -34,29 +43,31 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
 
   def assign_content(content, current_element, context)
     case current_element
-    when "EventDate"
+    when 'EventDate'
       # why do I need a space after the first part?
       self.event_date.nil? ? self.event_date = "#{content}" : self.event_date << content
-    when "EventEndDate"
+    when 'EventEndDate'
       self.event_end_date.nil? ? self.event_end_date = "#{content}" : self.event_end_date << content
-    when "Value"
-      if context.include?("EventName")
+    when 'Value'
+      if context.include?('EventName')
         self.event_names.last[:value].nil? ? self.event_names.last[:value] = "#{content} " : self.event_names.last[:value] << content
-      elsif context.include?("Competitors")
+      elsif context.include?('Competitors')
         # but not here
-        self.competitors.last[:name].nil? ? self.competitors.last[:name] = "#{content}" : self.event_names.last[:value] << content
+        self.competitors.last.names << {} if self.competitors.last.names.empty?
+        # binding.pry
+        self.competitors.last.names.last[:name].nil? ?  self.competitors.last.names.last[:name] = "#{content}" :  self.competitors.last.names.last[:name] << content
       end
-    when "AAMSOutrightId"
+    when 'AAMSOutrightId'
       self.aams_outright_ids << content
-    when "Off"
+    when 'Off'
       self.off = content
-    when "TournamentId"
+    when 'TournamentId'
       self.tournament_id = content
-    when "Odds"
+    when 'Odds'
       self.bet.odds.last.value = content
-    when "Off"
+    when 'Off'
       self.off = content
-    when "Result"
+    when 'Result'
       self.results.last[:position] = content
     else
       warn "#{self.class} :: Current Element: #{current_element} - content not supported"

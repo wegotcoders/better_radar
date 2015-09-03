@@ -92,7 +92,11 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     case element_name
     when 'Sport', 'Category', 'Tournament', 'Match', 'Outright', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR', 'OutrightOdds', 'RoundInfo'
       instance_variable_set(variable_name, BetterRadar::Element::Factory.create_from_name(element_name))
-    when 'Score', 'Bet', 'Competitors', 'P', 'Value'
+    when 'Text'
+      if @inside_competitors && @traversal_list[@traversal_list.length-2] != "Text"
+        instance_variable_set("@competitor", BetterRadar::Element::Factory.create_from_name("Competitor"))
+      end
+    when 'Score', 'Bet', 'P', 'Value'
       instance_variable_set("@#{element_name.downcase}", {})
     end
   end
@@ -151,7 +155,11 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'Text'
       # most nested first
       if @inside_competitors
-        @competitors << {}
+        if @traversal_list[@traversal_list.length-2] == "Text"
+          @competitor.names << {}
+        else
+          @competitors << @competitor
+        end
       elsif @inside_tournament
         @tournament.names << {}
       elsif @inside_category
