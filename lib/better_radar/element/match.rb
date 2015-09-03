@@ -10,6 +10,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     self.cards = []
     self.bet_results = []
     self.probabilities = []
+    self.round = {}
   end
 
    # Oh good god refactor this
@@ -52,6 +53,12 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.bet_results.last.outcome = attribute_value
         elsif context.include?("P")
           self.probabilities.last.outcome_probabilities.last[:outcome] = attribute_value
+        end
+      when "OutComeId"
+        if context.include?("Odds")
+          self.bets.last.odds.last.outcome_id = attribute_value
+        elsif context.include?("P")
+          self.probabilities.last.outcome_probabilities.last[:outcome_id] = attribute_value
         end
       when "Id"
         if current_element == "Goal"
@@ -123,7 +130,15 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     when "LiveScore"
       self.live_score = content
     when "Round"
-      self.round = content
+      self.round[:number] = content
+    when "ID"
+      if context.include?("RoundInfo")
+        self.round[:id] = content
+      else
+        warn "ID not supported in context : #{context}"
+      end
+    when "Cupround"
+      self.round[:cup_round] = content
     when "NeutralGround"
       self.neutral_ground = content
     else

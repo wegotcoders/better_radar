@@ -74,7 +74,11 @@ RSpec.describe BetterRadar::Parser do
           expect(match.off).to eq "0"
           expect(match.live_multi_cast).to eq "0"
           expect(match.live_score).to eq "0"
-          expect(match.round).to eq "19"
+
+          expect(match.round[:number]).to eq "19"
+          expect(match.round[:id]).to eq "7"
+          expect(match.round[:cup_round]).to eq "Round 1"
+
           expect(match.competitors.count).to eq 2
           expect(match.competitors.first[:id]).to eq "9373"
           expect(match.competitors.first[:superid]).to eq "9243"
@@ -97,12 +101,15 @@ RSpec.describe BetterRadar::Parser do
 
           expect(match.bets.first.odds[0].outcome).to eq "1"
           expect(match.bets.first.odds[0].value).to eq "2,15"
+          expect(match.bets.first.odds[0].outcome_id).to eq "1"
 
           expect(match.bets.first.odds[1].outcome).to eq "X"
           expect(match.bets.first.odds[1].value).to eq "2,85"
+          expect(match.bets.first.odds[1].outcome_id).to eq "2"
 
           expect(match.bets.first.odds[2].outcome).to eq "2"
           expect(match.bets.first.odds[2].value).to eq "2,9"
+          expect(match.bets.first.odds[2].outcome_id).to eq "3"
 
           expect(match.scores.count).to eq 2
           expect(match.scores.first).to eq({ type: "FT", value: "1:0" })
@@ -160,11 +167,11 @@ RSpec.describe BetterRadar::Parser do
 
           expect(match.probabilities.first.type).to eq "01"
           expect(match.probabilities.first.outcome_probabilities.count).to eq 3
-          expect(match.probabilities.first.outcome_probabilities.first).to eq({ outcome: "1", special_value: "1:0", value: "0,609" })
+          expect(match.probabilities.first.outcome_probabilities.first).to eq({ outcome: "1", special_value: "1:0", value: "0,609", outcome_id: "1" })
 
           expect(match.probabilities.last.type).to eq "60"
           expect(match.probabilities.last.outcome_probabilities.count).to eq 2
-          expect(match.probabilities.last.outcome_probabilities.last).to eq({ outcome: "Under", special_value: "2,5", value: "0,4775" })
+          expect(match.probabilities.last.outcome_probabilities.last).to eq({ outcome: "Under", special_value: "2,5", value: "0,4775", outcome_id: "300" })
         end
       end
 
@@ -219,7 +226,7 @@ RSpec.describe BetterRadar::Parser do
       end
     end
 
-    describe "parsing an example feed" do
+    describe "parsing an example feed2" do
       let(:xml) { File.read('spec/fixtures/example_feed2.xml') }
 
       before do
@@ -229,6 +236,22 @@ RSpec.describe BetterRadar::Parser do
         allow(handler).to receive(:handle_category).exactly(16).times
         allow(handler).to receive(:handle_sport).exactly(8).times do
         end
+      end
+
+      it "should find the correct number of components" do
+        BetterRadar::Parser.parse(xml, handler)
+      end
+    end
+
+    describe "parsing an example feed3" do
+      let(:xml) { File.read('spec/fixtures/example_feed3.xml') }
+
+      before do
+        allow(handler).to receive(:handle_match)
+        allow(handler).to receive(:handle_outright)
+        allow(handler).to receive(:handle_tournament)
+        allow(handler).to receive(:handle_category)
+        allow(handler).to receive(:handle_sport)
       end
 
       it "should find the correct number of components" do
