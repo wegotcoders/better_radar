@@ -15,26 +15,34 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       attribute_name = attribute.first
       attribute_value = attribute.last
 
-      case current_element
-      when 'Outright'
-        self.betradar_outright_id = attribute_value if attribute_name == 'BetradarOutrightID'
-      when 'Text'
-        if context.include?('Competitors')
-          case attribute_name
-          when 'ID'
-            self.competitors.last.id = attribute_value
-          when 'SUPERID'
-            self.competitors.last.superid = attribute_value
-          when 'Language'
-            self.competitors.last.names.last[:language] = attribute_value
-          end
+      case attribute_name
+      when 'BetradarOutrightID'
+        assign_variable(:betradar_outright_id, attribute_value)
+      when 'SUPERID'
+        if context.include? 'Competitors'
+          assign_variable :superid, attribute_value, :object => competitors.last
+        else
+          warn "#{attribute_value} not supported on #{current_element}"
         end
-      when 'OutrightOdds'
-        self.bet.type = attribute_value if attribute_name == 'OddsType'
-      when 'Odds'
-        self.bet.odds.last.id = attribute_value if attribute_name == 'ID'
-      when 'Result'
-        self.results.last[:id] = attribute_value if attribute_name =='ID'
+      when 'OddsType'
+        assign_variable :type, attribute_value, :object => bet
+      when 'ID'
+        case current_element
+        when 'Odds'
+          assign_variable :id, attribute_value, :object => bet.odds.last
+        when 'Result'
+          results.last[:id] = attribute_value
+        when 'Text'
+          assign_variable :id, attribute_value, :object => competitors.last
+        else
+          warn "#{attribute_value} not supported on #{current_element}"
+        end
+      when 'Language'
+        if context.include? 'Competitors'
+          competitors.last.names.last[:language] = attribute_value
+        else
+          warn "#{attribute_value} not supported on #{current_element}"
+        end
       else
         warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end

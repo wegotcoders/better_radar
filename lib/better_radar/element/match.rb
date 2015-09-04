@@ -39,7 +39,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
       case attribute_name
       when "BetradarMatchID"
-        self.betradar_match_id = attribute_value
+        assign_variable(:betradar_match_id, attribute_value)
       when "ID", "SUPERID"
         if context.include?("Competitors")
           self.competitors.last.send("#{attribute_name.downcase}=".to_sym, attribute_value)
