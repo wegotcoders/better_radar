@@ -160,12 +160,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
         else
           @competitors << @competitor
         end
-      elsif @inside_tournament
-        @tournament.names << {}
-      elsif @inside_category
-        @category.names << {}
-      elsif @inside_sport
-        @sport.names << {}
+      elsif @inside_eventname
+        current_level_data.event_names << {}
+      else
+        current_level_data.names << {} unless current_level_data == @match
       end
     when 'Result'
       if @inside_outrightresult

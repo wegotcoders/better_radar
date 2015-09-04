@@ -14,7 +14,7 @@ class BetterRadar::Element::Entity
     unless options[:append]
       object.instance_variable_set("@#{variable_name}", value)
     else
-      unless instance_variable_get("@#{variable_name}").nil?
+      if object.instance_variable_get("@#{variable_name}").nil?
         object.instance_variable_set("@#{variable_name}", value)
       else
         object.instance_variable_get("@#{variable_name}") << value

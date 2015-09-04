@@ -22,7 +22,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
         if context.include? 'Competitors'
           assign_variable :superid, attribute_value, :object => competitors.last
         else
-          warn "#{attribute_value} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when 'OddsType'
         assign_variable :type, attribute_value, :object => bet
@@ -35,13 +35,15 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
         when 'Text'
           assign_variable :id, attribute_value, :object => competitors.last
         else
-          warn "#{attribute_value} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when 'Language'
         if context.include? 'Competitors'
           competitors.last.names.last[:language] = attribute_value
+        elsif context.include? 'EventName'
+          self.event_names.last[:language] = attribute_value
         else
-          warn "#{attribute_value} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       else
         warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
@@ -52,31 +54,35 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
   def assign_content(content, current_element, context)
     case current_element
     when 'EventDate'
-      # why do I need a space after the first part?
-      self.event_date.nil? ? self.event_date = "#{content}" : self.event_date << content
+      assign_variable :event_date, content, :append => true
     when 'EventEndDate'
-      self.event_end_date.nil? ? self.event_end_date = "#{content}" : self.event_end_date << content
+      assign_variable :event_end_date, content, :append => true
     when 'Value'
       if context.include?('EventName')
-        self.event_names.last[:value].nil? ? self.event_names.last[:value] = "#{content} " : self.event_names.last[:value] << content
+        if self.event_names.last[:value].nil?
+          self.event_names.last[:value] = "#{content} "
+        else
+          self.event_names.last[:value] << content
+        end
       elsif context.include?('Competitors')
-        # but not here
+        # supporting single and multi language syntax
         self.competitors.last.names << {} if self.competitors.last.names.empty?
-        # binding.pry
-        self.competitors.last.names.last[:name].nil? ?  self.competitors.last.names.last[:name] = "#{content}" :  self.competitors.last.names.last[:name] << content
+        if self.competitors.last.names.last[:name].nil?
+          self.competitors.last.names.last[:name] = "#{content}"
+        else
+          self.competitors.last.names.last[:name] << content
+        end
       end
     when 'AAMSOutrightId'
       self.aams_outright_ids << content
     when 'Off'
-      self.off = content
+      assign_variable :off, content
     when 'TournamentId'
-      self.tournament_id = content
+      assign_variable :tournament_id, content
     when 'Odds'
-      self.bet.odds.last.value = content
-    when 'Off'
-      self.off = content
+      assign_variable :value, content, :object => bet.odds.last
     when 'Result'
-      self.results.last[:position] = content
+      results.last[:position] = content
     else
       warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
