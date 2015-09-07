@@ -35,8 +35,8 @@
   <MatchOdds>
     <Bet OddsType="10">
       <Odds OutCome="1" OutComeId="1" SpecialBetValue="0:1">2,15</Odds>
-      <Odds OutCome="X" OutComeId="2" SpecialBetValue="0:1">2,85</Odds>
-      <Odds OutCome="2" OutComeId="3" SpecialBetValue="0:1">2,9</Odds>
+      <Odds OutCome="X" OutComeId="2" SpecialBetValue="0:2">2,85</Odds>
+      <Odds OutCome="2" OutComeId="3" SpecialBetValue="0:3">2,9</Odds>
     </Bet>
   </MatchOdds>
   <Result>

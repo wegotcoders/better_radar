@@ -45,10 +45,14 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       when "ID", "SUPERID"
         if context.include?("Competitors")
           self.competitors.last.send("#{attribute_name.downcase}=".to_sym, attribute_value)
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "Language"
         if context.include?("Competitors")
           self.competitors.last.names.last[:language] = attribute_value
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "Type"
         if context.include?("Goal")
@@ -59,7 +63,8 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.scores.last[:type] = attribute_value
         elsif context.include?("Card")
           self.cards.last.type = attribute_value
-        elsif context.include?("PR")
+        else
+        warn "#{attribute_name} not supported on #{current_element}"
         end
       when "OddsType"
         if context.include?("MatchOdds")
@@ -68,6 +73,8 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.bet_results.last.type = attribute_value
         elsif context.include?("PR")
           self.probabilities.last.type = attribute_value
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "OutCome"
         if context.include?("MatchOdds")
@@ -76,12 +83,16 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.bet_results.last.outcome = attribute_value
         elsif context.include?("P")
           self.probabilities.last.outcome_probabilities.last[:outcome] = attribute_value
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "OutComeId"
         if context.include?("Odds")
           self.bets.last.odds.last.outcome_id = attribute_value
         elsif context.include?("P")
           self.probabilities.last.outcome_probabilities.last[:outcome_id] = attribute_value
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "Id"
         if current_element == "Goal"
@@ -93,7 +104,11 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
             self.goals.last.player.id = attribute_value
           elsif context.include?("Card")
             self.cards.last.player.id = attribute_value
+          else
+            warn "#{attribute_name} not supported on #{current_element}"
           end
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "ScoringTeam"
         self.goals.last.scoring_team = attribute_value
@@ -106,18 +121,26 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           self.goals.last.time = attribute_value
         elsif current_element == "Card"
           self.cards.last.time = attribute_value
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "Name"
         if context.include?("Goal")
           self.goals.last.player.name = attribute_value
         elsif context.include?("Card")
           self.cards.last.player.name = attribute_value
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "SpecialBetValue"
         if context.include?("BetResult")
           self.bet_results.last.special_value = attribute_value
         elsif context.include?("Probabilities")
           self.probabilities.last.outcome_probabilities.last[:special_value] = attribute_value
+        elsif current_element == "Odds"
+          self.bets.last.odds.last.special_bet_value = attribute_value
+        else
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "Status"
         self.bet_results.last.status = attribute_value

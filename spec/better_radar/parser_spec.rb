@@ -117,14 +117,17 @@ RSpec.describe BetterRadar::Parser do
           expect(match.bets.first.odds[0].outcome).to eq "1"
           expect(match.bets.first.odds[0].value).to eq "2,15"
           expect(match.bets.first.odds[0].outcome_id).to eq "1"
+          expect(match.bets.first.odds[0].special_bet_value).to eq "0:1"
 
           expect(match.bets.first.odds[1].outcome).to eq "X"
           expect(match.bets.first.odds[1].value).to eq "2,85"
           expect(match.bets.first.odds[1].outcome_id).to eq "2"
+          expect(match.bets.first.odds[1].special_bet_value).to eq "0:2"
 
           expect(match.bets.first.odds[2].outcome).to eq "2"
           expect(match.bets.first.odds[2].value).to eq "2,9"
           expect(match.bets.first.odds[2].outcome_id).to eq "3"
+          expect(match.bets.first.odds[2].special_bet_value).to eq "0:3"
 
           expect(match.scores.count).to eq 2
           expect(match.scores.first).to eq({ type: "FT", value: "1:0" })
