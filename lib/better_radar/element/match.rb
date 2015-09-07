@@ -17,7 +17,8 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
                 :cards,
                 :probabilities,
                 :neutral_ground,
-                :betfair_ids
+                :betfair_ids,
+                :has_statistics
 
   def initialize
     self.competitors = []
@@ -164,6 +165,10 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         self.competitors.last.names.last[:name] = content
       elsif context.include?("Comment")
         self.result_comment = content
+      elsif context.include?("HasStatistics")
+        self.has_statistics = content
+      else
+        warn "Content not supported in context -- #{context}"
       end
     when "MatchDate"
       self.date.nil? ? self.date = "#{content}" : self.date << content
@@ -182,7 +187,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       if context.include?("RoundInfo")
         self.round.id = content
       else
-        warn "ID not supported in context : #{context}"
+        warn "Content not supported in context -- #{context}"
       end
     when "Cupround"
       self.round.cup_round = content
@@ -203,7 +208,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     when "StartDate"
       self.tv_info[:start_date].nil? ? self.tv_info[:start_date] = "#{content} " : self.tv_info[:start_date] << content
     else
-      warn "#{self.class} :: Current Element: #{current_element} - content not supported"
+        warn "Content not supported in context -- #{context}"
     end
   end
 
