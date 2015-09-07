@@ -10,15 +10,21 @@ class BetterRadar::Element::Entity
 
   def assign_variable variable_name, value, options = {}
     object = options[:object] || self
-    raise "Method Name #{variable_name} Not Found on #{object}" unless object.respond_to?("#{variable_name}".to_sym)
-    unless options[:append]
-      object.instance_variable_set("@#{variable_name}", value)
-    else
-      if object.instance_variable_get("@#{variable_name}").nil?
+    unless object.class == Hash
+      unless object.respond_to?("#{variable_name}".to_sym)
+        raise "Method Name #{variable_name} Not Found on #{object}"
+      end
+      unless options[:append]
         object.instance_variable_set("@#{variable_name}", value)
       else
-        object.instance_variable_get("@#{variable_name}") << value
+        if object.instance_variable_get("@#{variable_name}").nil?
+          object.instance_variable_set("@#{variable_name}", value)
+        else
+          object.instance_variable_get("@#{variable_name}") << value
+        end
       end
+    else
+      object["#{variable_name}".to_sym] = value
     end
   end
 

@@ -42,112 +42,134 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       case attribute_name
       when "BetradarMatchID"
         assign_variable(:betradar_match_id, attribute_value)
-      when "ID", "SUPERID"
-        if context.include?("Competitors")
-          self.competitors.last.send("#{attribute_name.downcase}=".to_sym, attribute_value)
+      when "SUPERID"
+        if context.include? 'Competitors'
+          assign_variable :superid, attribute_value, :object => competitors.last
+        else
+          raise "#{attribute_value} not supported on #{current_element}"
+        end
+      when "ID"
+        if context.include? "Competitors"
+          assign_variable :id, attribute_value, :object => competitors.last
         else
           warn "#{attribute_name} not supported on #{current_element}"
         end
       when "Language"
-        if context.include?("Competitors")
-          self.competitors.last.names.last[:language] = attribute_value
+        if context.include? 'Competitors'
+          assign_variable(:language, attribute_value, :object => competitors.last.names.last)
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_value} not supported on #{current_element}"
         end
       when "Type"
-        if context.include?("Goal")
-          self.goals.last.type = attribute_value
-        elsif context.include?("Competitors")
-          self.competitors.last.type = attribute_value
-        elsif context.include?("Score")
-          self.scores.last[:type] = attribute_value
-        elsif context.include?("Card")
-          self.cards.last.type = attribute_value
+        object = case
+        when context.include?("Goal")
+          goals.last
+        when context.include?("Competitors")
+          competitors.last
+        when context.include?("Score")
+          scores.last
+        when context.include?("Card")
+          cards.last
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:type, attribute_value, :object => object)
       when "OddsType"
-        if context.include?("MatchOdds")
-          self.bets.last.type = attribute_value
-        elsif context.include?("BetResult")
-          self.bet_results.last.type = attribute_value
-        elsif context.include?("PR")
-          self.probabilities.last.type = attribute_value
+        object = case
+        when context.include?("MatchOdds")
+          bets.last
+        when context.include?("BetResult")
+          bet_results.last
+        when context.include?("PR")
+          probabilities.last
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:type, attribute_value, :object => object)
       when "OutCome"
-        if context.include?("MatchOdds")
-          self.bets.last.odds.last.outcome = attribute_value
-        elsif context.include?("BetResult")
-          self.bet_results.last.outcome = attribute_value
-        elsif context.include?("P")
-          self.probabilities.last.outcome_probabilities.last[:outcome] = attribute_value
+        object = case
+        when context.include?("MatchOdds")
+          bets.last.odds.last
+        when context.include?("BetResult")
+          bet_results.last
+        when context.include?("P")
+          probabilities.last.outcome_probabilities.last
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:outcome, attribute_value, :object => object)
       when "OutComeId"
-        if context.include?("Odds")
-          self.bets.last.odds.last.outcome_id = attribute_value
-        elsif context.include?("P")
-          self.probabilities.last.outcome_probabilities.last[:outcome_id] = attribute_value
+        object = case
+        when context.include?("Odds")
+          bets.last.odds.last
+        when context.include?("P")
+          probabilities.last.outcome_probabilities.last
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:outcome_id, attribute_value, :object => object)
       when "Id"
-        if current_element == "Goal"
-          self.goals.last.id = attribute_value
-        elsif current_element == "Card"
-          self.cards.last.id = attribute_value
-        elsif current_element == "Player"
+        object = case
+        when current_element == "Goal"
+          goals.last
+        when current_element == "Card"
+          cards.last
+        when current_element == "Player"
           if context.include?("Goal")
-            self.goals.last.player.id = attribute_value
+            goals.last.player
           elsif context.include?("Card")
-            self.cards.last.player.id = attribute_value
+            cards.last.player
           else
-            warn "#{attribute_name} not supported on #{current_element}"
+            raise "#{attribute_name} not supported on #{current_element}"
           end
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:id, attribute_value, :object => object)
       when "ScoringTeam"
-        self.goals.last.scoring_team = attribute_value
+        assign_variable(:scoring_team, attribute_value, :object => goals.last)
       when "Team1"
-        self.goals.last.team1 = attribute_value
+        assign_variable(:team1, attribute_value, :object => goals.last)
       when "Team2"
-        self.goals.last.team2 = attribute_value
+        assign_variable(:team2, attribute_value, :object => goals.last)
       when "Time"
-        if current_element == "Goal"
-          self.goals.last.time = attribute_value
-        elsif current_element == "Card"
-          self.cards.last.time = attribute_value
+        object = case
+        when current_element == "Goal"
+          goals.last
+        when current_element == "Card"
+          cards.last
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:time, attribute_value, :object => object)
       when "Name"
-        if context.include?("Goal")
-          self.goals.last.player.name = attribute_value
-        elsif context.include?("Card")
-          self.cards.last.player.name = attribute_value
+        object = case
+        when context.include?("Goal")
+          goals.last.player
+        when context.include?("Card")
+          cards.last.player
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:name, attribute_value, :object => object)
       when "SpecialBetValue"
-        if context.include?("BetResult")
-          self.bet_results.last.special_value = attribute_value
-        elsif context.include?("Probabilities")
-          self.probabilities.last.outcome_probabilities.last[:special_value] = attribute_value
-        elsif current_element == "Odds"
-          self.bets.last.odds.last.special_bet_value = attribute_value
+        object = case
+        when context.include?("BetResult")
+          bet_results.last
+        when context.include?("Probabilities")
+          probabilities.last.outcome_probabilities.last
+        when current_element == "Odds"
+          bets.last.odds.last
         else
-          warn "#{attribute_name} not supported on #{current_element}"
+          raise "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable(:special_value, attribute_value, :object => object)
       when "Status"
         self.bet_results.last.status = attribute_value
       when "VoidFactor"
         self.bet_results.last.void_factor = attribute_value
       else
-        warn "#{self.class} :: attribute: #{attribute_name} on #{current_element} not supported"
+        raise "#{self.class} :: attribute: #{attribute_name} on #{current_element} not supported"
       end
     end
   end
@@ -165,13 +187,13 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       elsif context.include?("NeutralGround")
         self.neutral_ground = content
       else
-        warn "Content not supported in context -- #{context}"
+        raise "Content not supported in context -- #{context}"
       end
     when "ID"
       if context.include?("RoundInfo")
         self.round.id = content
       else
-        warn "Content not supported in context -- #{context}"
+        raise "Content not supported in context -- #{context}"
       end
     when "MatchDate"
       self.date.nil? ? self.date = "#{content}" : self.date << content
@@ -208,7 +230,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     when "StartDate"
       self.tv_info[:start_date].nil? ? self.tv_info[:start_date] = "#{content} " : self.tv_info[:start_date] << content
     else
-        warn "Content not supported in context -- #{context}"
+        raise "Content not supported in context -- #{context}"
     end
   end
 
