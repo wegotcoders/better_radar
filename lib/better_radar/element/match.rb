@@ -28,14 +28,13 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     self.cards = []
     self.bet_results = []
     self.probabilities = []
-    self.round = {}
     self.betfair_ids = {}
     self.tv_info = {}
+    self.round = BetterRadar::Element::Round.new
   end
 
    # Oh good god refactor this
   def assign_attributes(attributes, current_element, context)
-
     attributes.each do |attribute|
       attribute_name = attribute.first
       attribute_value = attribute.last
