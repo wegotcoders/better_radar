@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 class BetterRadar::Element::Match < BetterRadar::Element::Entity
+=======
+class Match < Base
+>>>>>>> Stashed changes
 
   attr_accessor :betradar_match_id,
                 :off,
@@ -19,6 +23,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
                 :neutral_ground,
                 :betfair_ids
 
+<<<<<<< Updated upstream
   def initialize
     self.competitors = []
     self.bets = []
@@ -30,6 +35,14 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     self.round = {}
     self.betfair_ids = {}
     self.tv_info = {}
+=======
+  def initialize(attributes = [])
+    @fixture = { competitors: [], dateinfo: nil }
+    @match_odds = []
+    @result = {}
+    @goals = []
+    @cards = []
+>>>>>>> Stashed changes
   end
 
    # Oh good god refactor this
