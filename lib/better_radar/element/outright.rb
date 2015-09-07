@@ -27,24 +27,27 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       when 'OddsType'
         assign_variable :type, attribute_value, :object => bet
       when 'ID'
-        case current_element
+         object = case current_element
         when 'Odds'
-          assign_variable :id, attribute_value, :object => bet.odds.last
+          bet.odds.last
         when 'Result'
-          results.last[:id] = attribute_value
+          results.last
         when 'Text'
-          assign_variable :id, attribute_value, :object => competitors.last
+          competitors.last
         else
           warn "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable :id, attribute_value, :object => object
       when 'Language'
-        if context.include? 'Competitors'
-          competitors.last.names.last[:language] = attribute_value
-        elsif context.include? 'EventName'
-          self.event_names.last[:language] = attribute_value
+        object = case
+        when context.include?('Competitors')
+          competitors.last.names.last
+        when context.include?('EventName')
+         event_names.last
         else
           warn "#{attribute_name} not supported on #{current_element}"
         end
+        assign_variable :language, attribute_value, :object => object
       else
         warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
@@ -59,11 +62,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
       assign_variable :event_end_date, content, :append => true
     when 'Value'
       if context.include?('EventName')
-        if self.event_names.last[:value].nil?
-          self.event_names.last[:value] = "#{content} "
-        else
-          self.event_names.last[:value] << content
-        end
+        assign_variable(:value, content, :object => event_names.last, :append => true)
       elsif context.include?('Competitors')
         # supporting single and multi language syntax
         self.competitors.last.names << {} if self.competitors.last.names.empty?

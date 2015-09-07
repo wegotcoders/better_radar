@@ -24,7 +24,15 @@ class BetterRadar::Element::Entity
         end
       end
     else
-      object["#{variable_name}".to_sym] = value
+      if options[:append]
+        if object["#{variable_name}".to_sym].nil?
+          object["#{variable_name}".to_sym] = "#{value} "
+        else
+          object["#{variable_name}".to_sym] << value
+        end
+      else
+         object["#{variable_name}".to_sym] = value
+       end
     end
   end
 
