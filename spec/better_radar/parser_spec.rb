@@ -70,10 +70,13 @@ RSpec.describe BetterRadar::Parser do
       before do
         allow(handler).to receive(:handle_match).once do |match|
           expect(match.class).to eq BetterRadar::Element::Match
+
           expect(match.betradar_match_id).to eq "109379"
           expect(match.off).to eq "0"
           expect(match.live_multi_cast).to eq "0"
           expect(match.live_score).to eq "0"
+          expect(match.has_statistics).to eq "1"
+          expect(match.neutral_ground).to eq "0"
 
           expect(match.betfair_ids.length).to eq 4
 
@@ -102,7 +105,6 @@ RSpec.describe BetterRadar::Parser do
 
           expect(match.date).to eq "2004−8−23T16:40:00"
 
-          expect(match.has_statistics).to eq "1"
 
           expect(match.tv_info.class).to eq Hash
           expect(match.tv_info[:channel_id]). to eq "12731"

@@ -167,6 +167,8 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         self.result_comment = content
       elsif context.include?("HasStatistics")
         self.has_statistics = content
+      elsif context.include?("NeutralGround")
+        self.neutral_ground = content
       else
         warn "Content not supported in context -- #{context}"
       end
