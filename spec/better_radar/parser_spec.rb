@@ -102,6 +102,11 @@ RSpec.describe BetterRadar::Parser do
 
           expect(match.date).to eq "2004−8−23T16:40:00"
 
+          expect(match.tv_info.class).to eq Hash
+          expect(match.tv_info[:channel_id]). to eq "12731"
+          expect(match.tv_info[:channel_name]). to eq "Eurosport − Astra 1C...Astra − 3407"
+          expect(match.tv_info[:start_date]). to eq "2007 − 6 − 6T20:30:00"
+
           expect(match.bets.count).to eq 1
           expect(match.bets.first.class).to eq BetterRadar::Element::Bet
           expect(match.bets.first.type).to eq "10"
