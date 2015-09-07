@@ -12,6 +12,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
                 :date,
                 :scores,
                 :result_comment,
+                :tv_info,
                 :goals,
                 :cards,
                 :probabilities,
@@ -28,6 +29,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     self.probabilities = []
     self.round = {}
     self.betfair_ids = {}
+    self.tv_info = {}
   end
 
    # Oh good god refactor this

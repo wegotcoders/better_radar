@@ -153,8 +153,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     when 'P'
       @pr.outcome_probabilities << @p
     when 'Text'
-      # most nested first
       if @inside_competitors
+        #supporting single/multi competitor names
         if @traversal_list[@traversal_list.length-2] == "Text"
           @competitor.names << {}
         else
