@@ -65,7 +65,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         elsif context.include?("Card")
           self.cards.last.type = attribute_value
         else
-        warn "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
       when "OddsType"
         if context.include?("MatchOdds")
@@ -155,10 +155,6 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
   def assign_content(content, current_element, context)
     case current_element
-    when "Odds"
-      self.bets.last.odds.last.value = content
-    when "Score"
-      self.scores.last.merge!(value: content)
     when "Value"
       if context.include?("Competitors")
         self.competitors.last.names << {} if self.competitors.last.names.empty?
@@ -172,11 +168,20 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       else
         warn "Content not supported in context -- #{context}"
       end
+    when "ID"
+      if context.include?("RoundInfo")
+        self.round.id = content
+      else
+        warn "Content not supported in context -- #{context}"
+      end
     when "MatchDate"
       self.date.nil? ? self.date = "#{content}" : self.date << content
     when "P"
       self.probabilities.last.outcome_probabilities.last[:value] = content
-      #TODO: Dry this up
+    when "Odds"
+      self.bets.last.odds.last.value = content
+    when "Score"
+      self.scores.last.merge!(value: content)
     when "Off"
       self.off = content
     when "LiveMultiCast"
@@ -185,12 +190,6 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       self.live_score = content
     when "Round"
       self.round.number = content
-    when "ID"
-      if context.include?("RoundInfo")
-        self.round.id = content
-      else
-        warn "Content not supported in context -- #{context}"
-      end
     when "Cupround"
       self.round.cup_round = content
     when "NeutralGround"

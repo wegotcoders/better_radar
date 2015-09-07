@@ -72,6 +72,8 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
         else
           self.competitors.last.names.last[:name] << content
         end
+      else
+        warn "Content not supported in context -- #{context}"
       end
     when 'AAMSOutrightId'
       self.aams_outright_ids << content
