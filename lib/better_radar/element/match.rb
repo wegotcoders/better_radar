@@ -173,6 +173,12 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       self.betfair_ids[:runner1] = content
     when "Runner2"
       self.betfair_ids[:runner2] = content
+    when "ChannelID"
+      self.tv_info[:channel_id] = content
+    when "ChannelName"
+      self.tv_info[:channel_name].nil? ? self.tv_info[:channel_name] = "#{content} " : self.tv_info[:channel_name] << content
+    when "StartDate"
+      self.tv_info[:start_date].nil? ? self.tv_info[:start_date] = "#{content} " : self.tv_info[:start_date] << content
     else
       warn "#{self.class} :: Current Element: #{current_element} - content not supported"
     end
