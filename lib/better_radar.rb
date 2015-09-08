@@ -24,4 +24,5 @@ require "better_radar/element/bet_probability"
 require "better_radar/client"
 require "better_radar/parser"
 require "better_radar/document"
+require "better_radar/handler"
 
