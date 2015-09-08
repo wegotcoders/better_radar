@@ -1,5 +1,9 @@
-class BetterRadar::Element::Player < BetterRadar::Element::Base
+module BetterRadar::Element
 
-  attr_accessor :name, :id
+  class Player < BetterRadar::Element::Base
+
+    attr_accessor :name, :id
+
+  end
 
 end

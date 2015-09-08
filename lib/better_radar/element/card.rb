@@ -1,4 +1,7 @@
-class BetterRadar::Element::Card < BetterRadar::Element::Base
+module BetterRadar::Element
 
-  attr_accessor :id, :time, :type, :player
+  class Card < BetterRadar::Element::Base
+
+    attr_accessor :id, :time, :type, :player
+  end
 end

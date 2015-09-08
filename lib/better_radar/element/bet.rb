@@ -1,8 +1,12 @@
-class BetterRadar::Element::Bet < BetterRadar::Element::Base
+module BetterRadar::Element
 
-  attr_accessor :type, :odds, :outcome
+  class Bet < BetterRadar::Element::Base
 
-  def initialize
-    self.odds = []
+    attr_accessor :type, :odds, :outcome
+
+    def initialize
+      self.odds = []
+    end
   end
+
 end

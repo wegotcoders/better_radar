@@ -1,9 +1,12 @@
-class BetterRadar::Element::Competitor < BetterRadar::Element::Base
+module BetterRadar::Element
 
-  attr_accessor :id, :superid, :type, :names
+  class Competitor < BetterRadar::Element::Base
 
-  def initialize
-    @names = []
+    attr_accessor :id, :superid, :type, :names
+
+    def initialize
+      @names = []
+    end
   end
 
 end

@@ -1,2 +1,0 @@
-module BetterRadar::Element
-end

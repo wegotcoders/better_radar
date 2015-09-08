@@ -1,8 +1,12 @@
-class BetterRadar::Element::BetProbability < BetterRadar::Element::Base
+module BetterRadar::Element
 
-  attr_accessor :type, :outcome_probabilities
+  class BetProbability < BetterRadar::Element::Base
 
-  def initialize
-    self.outcome_probabilities = []
+    attr_accessor :type, :outcome_probabilities
+
+    def initialize
+      self.outcome_probabilities = []
+    end
   end
+
 end

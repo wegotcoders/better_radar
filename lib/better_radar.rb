@@ -3,7 +3,6 @@ require 'nokogiri'
 
 require "better_radar/version"
 require "better_radar/configuration"
-require "better_radar/element/element"
 require "better_radar/element/base"
 require "better_radar/element/factory"
 require "better_radar/element/entity"
