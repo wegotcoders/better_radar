@@ -247,11 +247,18 @@ RSpec.describe BetterRadar::Parser do
       end
     end
 
-    describe "parsing an example feed2" do
+    describe "nested associations" do
       let(:xml) { File.read('spec/fixtures/example_feed2.xml') }
 
       before do
-        allow(handler).to receive(:handle_match).once
+        # testing associations
+        allow(handler).to receive(:handle_match).once do |match|
+          expect(match.betradar_sport_id).to eq "3"
+          expect(match.betradar_category_id).to eq "16"
+          expect(match.betradar_tournament_id).to eq "25"
+          expect(match.betradar_match_id).to eq "6926872"
+        end
+
         allow(handler).to receive(:handle_outright).exactly(21).times
         allow(handler).to receive(:handle_tournament).once
         allow(handler).to receive(:handle_category).exactly(16).times
