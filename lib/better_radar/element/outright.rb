@@ -1,6 +1,6 @@
 class BetterRadar::Element::Outright < BetterRadar::Element::Entity
 
-  attr_accessor :off, :tournament_id, :betradar_outright_id, :competitors, :bet, :results, :event_date, :event_end_date, :event_names, :aams_outright_ids
+  attr_accessor :off, :tournament_id, :betradar_outright_id, :betradar_sport_id, :betradar_category_id, :competitors, :bet, :results, :event_date, :event_end_date, :event_names, :aams_outright_ids
 
   def initialize
     self.competitors = []

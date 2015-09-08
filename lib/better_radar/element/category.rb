@@ -1,5 +1,5 @@
 class BetterRadar::Element::Category < BetterRadar::Element::Entity
-  attr_accessor :betradar_category_id, :names
+  attr_accessor :betradar_category_id, :betradar_sport_id, :names
 
   def initialize
     self.names = []
