@@ -31,7 +31,7 @@ class BetterRadar::Element::Factory
     when 'Competitor'
       BetterRadar::Element::Competitor.new
     else
-      raise "Element Not Supported"
+      warn "Element Not Supported"
     end
   end
 end

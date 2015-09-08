@@ -1,18 +1,18 @@
 class BetterRadar::Element::Entity < BetterRadar::Element::Base
   # implement in subclasses
   def assign_attributes(attributes, current_element, context)
-    raise "TODO: implement in subclass"
+    warn "TODO: implement in subclass"
   end
 
   def assign_content(content, current_element, context)
-    raise "TODO: implement in subclass"
+    warn "TODO: implement in subclass"
   end
 
   def assign_variable variable_name, value, options = {}
     object = options[:object] || self
     unless object.class == Hash
       unless object.respond_to?("#{variable_name}".to_sym)
-        raise "Method Name #{variable_name} Not Found on #{object}"
+        warn "Method Name #{variable_name} Not Found on #{object}"
       end
       unless options[:append]
         object.instance_variable_set("@#{variable_name}", value)

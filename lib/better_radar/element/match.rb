@@ -49,7 +49,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         if context.include? 'Competitors'
           assign_variable :superid, attribute_value, object: competitors.last
         else
-          raise "#{attribute_value} not supported on #{current_element}"
+          warn "#{attribute_value} not supported on #{current_element}"
         end
       when "ID"
         if context.include? "Competitors"
@@ -61,7 +61,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         if context.include? 'Competitors'
           assign_variable(:language, attribute_value, object: competitors.last.names.last)
         else
-          raise "#{attribute_value} not supported on #{current_element}"
+          warn "#{attribute_value} not supported on #{current_element}"
         end
       when "Type"
         object = case
@@ -74,7 +74,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         when context.include?("Card")
           cards.last
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:type, attribute_value, object: object)
       when "OddsType"
@@ -86,7 +86,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         when context.include?("PR")
           probabilities.last
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:type, attribute_value, object: object)
       when "OutCome"
@@ -98,7 +98,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         when context.include?("P")
           probabilities.last.outcome_probabilities.last
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:outcome, attribute_value, object: object)
       when "OutComeId"
@@ -108,7 +108,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         when context.include?("P")
           probabilities.last.outcome_probabilities.last
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:outcome_id, attribute_value, object: object)
       when "Id"
@@ -123,10 +123,10 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
           elsif context.include?("Card")
             cards.last.player
           else
-            raise "#{attribute_name} not supported on #{current_element}"
+            warn "#{attribute_name} not supported on #{current_element}"
           end
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:id, attribute_value, object: object)
       when "ScoringTeam"
@@ -142,7 +142,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         when current_element == "Card"
           cards.last
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:time, attribute_value, object: object)
       when "Name"
@@ -152,7 +152,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         when context.include?("Card")
           cards.last.player
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:name, attribute_value, object: object)
       when "SpecialBetValue"
@@ -164,7 +164,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         when current_element == "Odds"
           bets.last.odds.last
         else
-          raise "#{attribute_name} not supported on #{current_element}"
+          warn "#{attribute_name} not supported on #{current_element}"
         end
         assign_variable(:special_value, attribute_value, object: object)
       when "Status"
@@ -172,7 +172,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       when "VoidFactor"
         self.bet_results.last.void_factor = attribute_value
       else
-        raise "#{self.class} :: attribute: #{attribute_name} on #{current_element} not supported"
+        warn "#{self.class} :: attribute: #{attribute_name} on #{current_element} not supported"
       end
     end
   end
@@ -190,13 +190,13 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
       elsif context.include?("NeutralGround")
         self.neutral_ground = content
       else
-        raise "Content not supported in context -- #{context}"
+        warn "Content not supported in context -- #{context}"
       end
     when "ID"
       if context.include?("RoundInfo")
         self.round.id = content
       else
-        raise "Content not supported in context -- #{context}"
+        warn "Content not supported in context -- #{context}"
       end
     when "MatchDate"
       self.date.nil? ? self.date = "#{content}" : self.date << content
@@ -233,7 +233,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
     when "StartDate"
       self.tv_info[:start_date].nil? ? self.tv_info[:start_date] = "#{content} " : self.tv_info[:start_date] << content
     else
-        raise "Content not supported in context -- #{context}"
+        warn "Content not supported in context -- #{context}"
     end
   end
 
