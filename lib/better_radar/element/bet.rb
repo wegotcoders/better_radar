@@ -1,4 +1,4 @@
-class BetterRadar::Element::Bet
+class BetterRadar::Element::Bet < BetterRadar::Element::Base
 
   attr_accessor :type, :odds, :outcome
 

@@ -8,6 +8,7 @@ RSpec.describe BetterRadar::Element::Entity do
 
     before do
       entity.instance_variable_set("@test", "value")
+      entity.instance_variable_set("@empty_array", [])
     end
 
     it "should return back all the variables which have been set" do
