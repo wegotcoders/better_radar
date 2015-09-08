@@ -47,19 +47,19 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         assign_variable(:betradar_match_id, attribute_value)
       when "SUPERID"
         if context.include? 'Competitors'
-          assign_variable :superid, attribute_value, :object => competitors.last
+          assign_variable :superid, attribute_value, object: competitors.last
         else
           raise "#{attribute_value} not supported on #{current_element}"
         end
       when "ID"
         if context.include? "Competitors"
-          assign_variable :id, attribute_value, :object => competitors.last
+          assign_variable :id, attribute_value, object: competitors.last
         else
           warn "#{attribute_name} not supported on #{current_element}"
         end
       when "Language"
         if context.include? 'Competitors'
-          assign_variable(:language, attribute_value, :object => competitors.last.names.last)
+          assign_variable(:language, attribute_value, object: competitors.last.names.last)
         else
           raise "#{attribute_value} not supported on #{current_element}"
         end
@@ -76,7 +76,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:type, attribute_value, :object => object)
+        assign_variable(:type, attribute_value, object: object)
       when "OddsType"
         object = case
         when context.include?("MatchOdds")
@@ -88,7 +88,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:type, attribute_value, :object => object)
+        assign_variable(:type, attribute_value, object: object)
       when "OutCome"
         object = case
         when context.include?("MatchOdds")
@@ -100,7 +100,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:outcome, attribute_value, :object => object)
+        assign_variable(:outcome, attribute_value, object: object)
       when "OutComeId"
         object = case
         when context.include?("Odds")
@@ -110,7 +110,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:outcome_id, attribute_value, :object => object)
+        assign_variable(:outcome_id, attribute_value, object: object)
       when "Id"
         object = case
         when current_element == "Goal"
@@ -128,13 +128,13 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:id, attribute_value, :object => object)
+        assign_variable(:id, attribute_value, object: object)
       when "ScoringTeam"
-        assign_variable(:scoring_team, attribute_value, :object => goals.last)
+        assign_variable(:scoring_team, attribute_value, object: goals.last)
       when "Team1"
-        assign_variable(:team1, attribute_value, :object => goals.last)
+        assign_variable(:team1, attribute_value, object: goals.last)
       when "Team2"
-        assign_variable(:team2, attribute_value, :object => goals.last)
+        assign_variable(:team2, attribute_value, object: goals.last)
       when "Time"
         object = case
         when current_element == "Goal"
@@ -144,7 +144,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:time, attribute_value, :object => object)
+        assign_variable(:time, attribute_value, object: object)
       when "Name"
         object = case
         when context.include?("Goal")
@@ -154,7 +154,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:name, attribute_value, :object => object)
+        assign_variable(:name, attribute_value, object: object)
       when "SpecialBetValue"
         object = case
         when context.include?("BetResult")
@@ -166,7 +166,7 @@ class BetterRadar::Element::Match < BetterRadar::Element::Entity
         else
           raise "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable(:special_value, attribute_value, :object => object)
+        assign_variable(:special_value, attribute_value, object: object)
       when "Status"
         self.bet_results.last.status = attribute_value
       when "VoidFactor"

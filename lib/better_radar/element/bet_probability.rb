@@ -1,4 +1,4 @@
-class BetterRadar::Element::BetProbability
+class BetterRadar::Element::BetProbability < BetterRadar::Element::Base
 
   attr_accessor :type, :outcome_probabilities
 

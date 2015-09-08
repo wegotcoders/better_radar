@@ -1,4 +1,4 @@
-class BetterRadar::Element::Round
+class BetterRadar::Element::Round < BetterRadar::Element::Base
 
   attr_accessor :cup_round, :id, :number
 

@@ -1,4 +1,4 @@
-class BetterRadar::Element::Entity
+class BetterRadar::Element::Entity < BetterRadar::Element::Base
   # implement in subclasses
   def assign_attributes(attributes, current_element, context)
     raise "TODO: implement in subclass"
@@ -39,7 +39,7 @@ class BetterRadar::Element::Entity
   def assigned_variables
     variables = {}
     instance_variables.each do |var|
-      variables[var] = instance_variable_get(var)
+      variables[var] = instance_variable_get(var) unless instance_variable_get(var).nil? || instance_variable_get(var).empty?
     end
     variables
   end

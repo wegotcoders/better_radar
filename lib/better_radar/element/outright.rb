@@ -20,12 +20,12 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
         assign_variable(:betradar_outright_id, attribute_value)
       when 'SUPERID'
         if context.include? 'Competitors'
-          assign_variable :superid, attribute_value, :object => competitors.last
+          assign_variable :superid, attribute_value, object: competitors.last
         else
           warn "#{attribute_name} not supported on #{current_element}"
         end
       when 'OddsType'
-        assign_variable :type, attribute_value, :object => bet
+        assign_variable :type, attribute_value, object: bet
       when 'ID'
          object = case current_element
         when 'Odds'
@@ -37,7 +37,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
         else
           warn "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable :id, attribute_value, :object => object
+        assign_variable :id, attribute_value, object: object
       when 'Language'
         object = case
         when context.include?('Competitors')
@@ -47,7 +47,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
         else
           warn "#{attribute_name} not supported on #{current_element}"
         end
-        assign_variable :language, attribute_value, :object => object
+        assign_variable :language, attribute_value, object: object
       else
         warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
       end
@@ -57,12 +57,12 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
   def assign_content(content, current_element, context)
     case current_element
     when 'EventDate'
-      assign_variable :event_date, content, :append => true
+      assign_variable :event_date, content, append: true
     when 'EventEndDate'
-      assign_variable :event_end_date, content, :append => true
+      assign_variable :event_end_date, content, append: true
     when 'Value'
       if context.include?('EventName')
-        assign_variable(:value, content, :object => event_names.last, :append => true)
+        assign_variable(:value, content, object: event_names.last, append: true)
       elsif context.include?('Competitors')
         # supporting single and multi language syntax
         self.competitors.last.names << {} if self.competitors.last.names.empty?
@@ -81,7 +81,7 @@ class BetterRadar::Element::Outright < BetterRadar::Element::Entity
     when 'TournamentId'
       assign_variable :tournament_id, content
     when 'Odds'
-      assign_variable :value, content, :object => bet.odds.last
+      assign_variable :value, content, object: bet.odds.last
     when 'Result'
       results.last[:position] = content
     else
