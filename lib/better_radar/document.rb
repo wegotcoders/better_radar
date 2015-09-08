@@ -1,5 +1,6 @@
 class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
+  attr_accessor :hierarchy_levels, :sport, :category, :tournament, :outright, :match
   # These elements have their own classes to container their respective data
 
   ENTITY_ELEMENTS = [:Sport, :Category, :Outright, :Tournament, :Match]
@@ -79,6 +80,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def current_level_data
     instance_variable_get("@#{@hierarchy_levels.last.downcase}")
+  end
+
+  def get_level_data(name)
+    instance_variable_get("@#{name.downcase}")
   end
 
   def current_level_name
@@ -182,8 +187,17 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def send_handler_data(name)
     if ENTITY_ELEMENTS.include?(name.to_sym)
+      assign_parent_data(current_level_data)
       method_name = "handle_#{name.downcase}".to_sym
       @handler.send(method_name, instance_variable_get("@#{name.downcase}"))
+    end
+  end
+
+  def assign_parent_data(entity)
+    @hierarchy_levels.each do |level|
+      break if level == @hierarchy_levels.last
+      variable_name = "@betradar_#{level.downcase}_id"
+      current_level_data.instance_variable_set(variable_name, get_level_data(level).instance_variable_get(variable_name))
     end
   end
 end

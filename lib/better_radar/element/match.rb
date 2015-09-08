@@ -1,6 +1,9 @@
 class BetterRadar::Element::Match < BetterRadar::Element::Entity
 
   attr_accessor :betradar_match_id,
+                :betradar_sport_id,
+                :betradar_category_id,
+                :betradar_tournament_id,
                 :off,
                 :sport_id,
                 :round,
