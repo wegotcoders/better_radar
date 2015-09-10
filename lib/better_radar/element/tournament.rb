@@ -2,6 +2,8 @@ module BetterRadar::Element
 
   class Tournament < Entity
 
+    include BetterRadar::Element::CategoricalInformation
+
     attr_accessor :names, :betradar_tournament_id, :betradar_sport_id, :betradar_category_id
 
     def initialize

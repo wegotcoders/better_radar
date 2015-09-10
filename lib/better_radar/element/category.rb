@@ -1,6 +1,9 @@
 module BetterRadar::Element
 
   class Category < Entity
+
+    include BetterRadar::Element::CategoricalInformation
+
     attr_accessor :betradar_category_id, :betradar_sport_id, :names
 
     def initialize
