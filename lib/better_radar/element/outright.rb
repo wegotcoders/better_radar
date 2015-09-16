@@ -2,13 +2,33 @@ module BetterRadar::Element
 
   class Outright < Entity
 
-    attr_accessor :off, :tournament_id, :betradar_outright_id, :betradar_sport_id, :betradar_category_id, :competitors, :bet, :results, :event_date, :event_end_date, :event_names, :aams_outright_ids
+    attr_accessor :betradar_id,
+      :off,
+      :tournament_id,
+      :betradar_outright_id,
+      :betradar_sport_id,
+      :betradar_category_id,
+      :competitors,
+      :bet,
+      :results,
+      :event_date,
+      :event_end_date,
+      :event_names,
+      :aams_outright_ids
 
     def initialize
       self.competitors = []
       self.event_names = []
       self.aams_outright_ids = []
       self.results = []
+    end
+
+    def key_name
+      "Outright"
+    end
+
+    def betradar_id
+      betradar_outright_id
     end
 
     def assign_attributes(attributes, current_element, context)
@@ -22,24 +42,27 @@ module BetterRadar::Element
           assign_variable(:betradar_outright_id, attribute_value)
         when 'SUPERID'
           if context.include? 'Competitors'
-            assign_variable :superid, attribute_value, object: competitors.last
+            assign_variable :betradar_super_id, attribute_value, object: competitors.last
           else
             warn "#{attribute_name} not supported on #{current_element}"
           end
         when 'OddsType'
           assign_variable :type, attribute_value, object: bet
         when 'ID'
+          variable_name = :betradar_id
            object = case current_element
           when 'Odds'
             bet.odds.last
           when 'Result'
+            variable_name = :winning_team_id
             results.last
           when 'Text'
+            variable_name = :context_id
             competitors.last
           else
             warn "#{attribute_name} not supported on #{current_element}"
           end
-          assign_variable :id, attribute_value, object: object
+          assign_variable variable_name, attribute_value, object: object
         when 'Language'
           object = case
           when context.include?('Competitors')

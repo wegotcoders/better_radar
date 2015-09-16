@@ -4,10 +4,14 @@ module BetterRadar::Element
 
     include BetterRadar::Element::CategoricalInformation
 
-    attr_accessor :betradar_category_id, :betradar_sport_id, :names
+    attr_accessor :betradar_category_id, :betradar_sport_id, :names, :betradar_id
 
     def initialize
       self.names = []
+    end
+
+    def key_name
+      "category"
     end
 
     def assign_attributes(attributes, current_element, context)
@@ -22,6 +26,10 @@ module BetterRadar::Element
           warn "#{self.class} :: attribute: #{attribute.first} on #{current_element} not supported"
         end
       end
+    end
+
+    def betradar_id
+      betradar_category_id
     end
 
     def assign_content(content, current_element, context)

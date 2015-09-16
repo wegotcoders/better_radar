@@ -93,13 +93,13 @@ RSpec.describe BetterRadar::Parser do
 
           expect(match.competitors.count).to eq 2
           expect(match.competitors.first.class).to eq BetterRadar::Element::Competitor
-          expect(match.competitors.first.id).to eq "9373"
-          expect(match.competitors.first.superid).to eq "9243"
+          expect(match.competitors.first.context_id).to eq "9373"
+          expect(match.competitors.first.betradar_super_id).to eq "9243"
           expect(match.competitors.first.type).to eq "1"
           expect(match.competitors.first.names.first[:name]).to eq "1. FC BRNO"
 
-          expect(match.competitors.last.id).to eq "371400"
-          expect(match.competitors.last.superid).to eq "1452"
+          expect(match.competitors.last.context_id).to eq "371400"
+          expect(match.competitors.last.betradar_super_id).to eq "1452"
           expect(match.competitors.last.type).to eq "2"
           expect(match.competitors.last.names.first[:name]).to eq "FC SLOVACKO"
 
@@ -216,12 +216,12 @@ RSpec.describe BetterRadar::Parser do
           expect(outright.competitors.count).to eq 2
 
           expect(outright.competitors.first.names.first[:name]).to eq "Girondins Bordeaux"
-          expect(outright.competitors.first.id).to eq "4891"
-          expect(outright.competitors.first.superid).to eq "1645"
+          expect(outright.competitors.first.context_id).to eq "4891"
+          expect(outright.competitors.first.betradar_super_id).to eq "1645"
 
           expect(outright.competitors.last.names.first[:name]).to eq "Olympique Marseille"
-          expect(outright.competitors.last.id).to eq "5380"
-          expect(outright.competitors.last.superid).to eq "1641"
+          expect(outright.competitors.last.context_id).to eq "5380"
+          expect(outright.competitors.last.betradar_super_id).to eq "1641"
 
           expect(outright.aams_outright_ids.count).to eq 1
           expect(outright.aams_outright_ids.first).to eq "10697.120"
@@ -230,14 +230,14 @@ RSpec.describe BetterRadar::Parser do
           expect(outright.bet.odds.count).to eq 2
 
           expect(outright.bet.type).to eq "30"
-          expect(outright.bet.odds.first.id).to eq "4891"
+          expect(outright.bet.odds.first.betradar_id).to eq "4891"
           expect(outright.bet.odds.first.value).to eq "1,12"
-          expect(outright.bet.odds.last.id).to eq "5380"
+          expect(outright.bet.odds.last.betradar_id).to eq "5380"
           expect(outright.bet.odds.last.value).to eq "6,5"
 
-          expect(outright.results.first[:id]).to eq "135998"
+          expect(outright.results.first[:winning_team_id]).to eq "135998"
           expect(outright.results.first[:position]).to eq "1"
-          expect(outright.results.last[:id]).to eq "938682"
+          expect(outright.results.last[:winning_team_id]).to eq "938682"
           expect(outright.results.last[:position]).to eq "3"
         end
       end

@@ -23,7 +23,8 @@ module BetterRadar::Element
                   :probabilities,
                   :neutral_ground,
                   :betfair_ids,
-                  :has_statistics
+                  :has_statistics,
+                  :betradar_id
 
     def initialize
       self.competitors = []
@@ -38,6 +39,13 @@ module BetterRadar::Element
       self.round = BetterRadar::Element::Round.new
     end
 
+    def key_name
+      "match"
+    end
+
+    def betradar_id
+      betradar_match_id
+    end
      # Oh good god refactor this
     def assign_attributes(attributes, current_element, context)
       attributes.each do |attribute|
@@ -49,13 +57,13 @@ module BetterRadar::Element
           assign_variable(:betradar_match_id, attribute_value)
         when "SUPERID"
           if context.include? 'Competitors'
-            assign_variable :superid, attribute_value, object: competitors.last
+            assign_variable :betradar_super_id, attribute_value, object: competitors.last
           else
             warn "#{attribute_value} not supported on #{current_element}"
           end
         when "ID"
           if context.include? "Competitors"
-            assign_variable :id, attribute_value, object: competitors.last
+            assign_variable :context_id, attribute_value, object: competitors.last
           else
             warn "#{attribute_name} not supported on #{current_element}"
           end
