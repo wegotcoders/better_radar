@@ -28,4 +28,20 @@ RSpec.describe BetterRadar::Element::Match do
       end
     end
   end
+
+  describe '#retrieve_name' do
+    before do
+      match.competitors << BetterRadar::Element::Competitor.new
+      match.competitors.first.names << { language: 'BET', name: 'Dothraki Chargers' }
+      match.competitors.first.names << { language: 'Dothraki', name: 'Dothraki Tusatah' }
+
+      match.competitors << BetterRadar::Element::Competitor.new
+      match.competitors.last.names << { language: 'BET', name: 'Valyrian Flyers' }
+      match.competitors.last.names << { language: 'Valyrian', name: 'Valyrian Inglurais' }
+    end
+
+    it 'should return a simplified name value' do
+      expect(match.retrieve_name).to eq 'Dothraki Chargers vs Valyrian Flyers'
+    end
+  end
 end

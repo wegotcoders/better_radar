@@ -24,7 +24,8 @@ module BetterRadar::Element
                   :neutral_ground,
                   :betfair_ids,
                   :has_statistics,
-                  :betradar_id
+                  :betradar_id,
+                  :name
 
     def initialize
       self.competitors = []
@@ -185,6 +186,12 @@ module BetterRadar::Element
           warn "#{self.class} :: attribute: #{attribute_name} on #{current_element} not supported"
         end
       end
+    end
+
+    def retrieve_name
+      home_team_name = competitors.first.names.select { |name| name[:language] == BetterRadar.configuration.language }
+      away_team_name = competitors.last.names.select { |name| name[:language] == BetterRadar.configuration.language }
+      self.name = "#{home_team_name.first[:name]} vs #{away_team_name.first[:name]}"
     end
 
     def assign_content(content, current_element, context)
