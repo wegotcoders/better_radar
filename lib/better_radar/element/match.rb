@@ -2,6 +2,8 @@ module BetterRadar::Element
 
   class Match < Entity
 
+    include BetterRadar::Element::Storable
+
     attr_accessor :betradar_match_id,
                   :betradar_sport_id,
                   :betradar_category_id,

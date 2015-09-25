@@ -3,6 +3,7 @@ module BetterRadar::Element
   class Category < Entity
 
     include BetterRadar::Element::CategoricalInformation
+    include BetterRadar::Element::Storable
 
     attr_accessor :betradar_category_id, :betradar_sport_id, :names, :betradar_id
 

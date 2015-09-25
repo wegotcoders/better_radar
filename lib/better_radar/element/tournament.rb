@@ -3,6 +3,8 @@ module BetterRadar::Element
   class Tournament < Entity
 
     include BetterRadar::Element::CategoricalInformation
+    include BetterRadar::Element::Storable
+
 
     attr_accessor :names, :betradar_tournament_id, :betradar_sport_id, :betradar_category_id, :betradar_id
 

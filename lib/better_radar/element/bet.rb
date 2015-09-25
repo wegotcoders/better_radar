@@ -7,6 +7,10 @@ module BetterRadar::Element
     def initialize
       self.odds = []
     end
+
+    def key_name
+      'bet'
+    end
   end
 
 end

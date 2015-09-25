@@ -10,6 +10,7 @@ require "better_radar/element/base"
 require "better_radar/element/factory"
 require "better_radar/element/entity"
 require "better_radar/element/categorical_information"
+require "better_radar/element/storable"
 
 # Entities
 require "better_radar/element/sport"
@@ -33,5 +34,4 @@ require "better_radar/element/bet_probability"
 require "better_radar/client"
 require "better_radar/parser"
 require "better_radar/document"
-require "better_radar/entity_handler"
 

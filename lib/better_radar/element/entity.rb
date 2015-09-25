@@ -47,14 +47,6 @@ module BetterRadar::Element
       variables
     end
 
-    def as_storable
-      {
-        entity_type: self.key_name.downcase,
-        name: self.retrieve_name,
-        betradar_id: self.betradar_id
-      }
-    end
-
     def key
       :"br_#{self.key_name}_#{self.betradar_id}"
     end

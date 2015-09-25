@@ -2,6 +2,8 @@ module BetterRadar::Element
 
   class Outright < Entity
 
+    include BetterRadar::Element::Storable
+
     attr_accessor :betradar_id,
       :off,
       :tournament_id,
