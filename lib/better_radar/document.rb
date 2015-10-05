@@ -54,7 +54,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def handle_element(name, attributes)
     case name
-    when "Timestamp", "Sports"
+    when 'Timestamp', 'Sports', 'BetradarBetData'
       #skip?
     else
       create_variable(name)
