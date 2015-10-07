@@ -2,8 +2,16 @@ require 'spec_helper'
 
 RSpec.describe BetterRadar::Client do
 
+  before do
+    BetterRadar.configure do |config|
+      config.username = "username"
+      config.key = "123456"
+      config.feed_name = "Fixtures"
+    end
+  end
+
   let!(:client) do
-    BetterRadar::Client.new("Fixtures", "username", "123456", deleteAfterTransfer: "no")
+    BetterRadar::Client.new
   end
 
   let!(:xml_data) do

@@ -1,16 +1,6 @@
 class BetterRadar::Client
   URL = "https://www.betradar.com/betradar/getXmlFeed.php"
 
-  attr_accessor :feed_name, :user, :key, :options
-
-  def initialize(feed_name, bookmaker, key, options = {})
-    self.feed_name = feed_name
-    self.user = bookmaker
-    self.key = key
-
-    self.options = options
-  end
-
   def get_xml_feed
     Tempfile.open('better_radar', Dir.tmpdir, 'w') do |f|
       f.write open(build_url).string
@@ -31,11 +21,19 @@ class BetterRadar::Client
 
   def feed_arguments
     args = {
-      bookmakerName: self.user,
-      xmlFeedName: self.feed_name,
-      key: self.key
+      bookmakerName: BetterRadar.configuration.username,
+      xmlFeedName: BetterRadar.configuration.feed_name,
+      key: BetterRadar.configuration.key,
+      deleteAfterTransfer: url_friendly(:deleteAfterTransfer)
     }
-    args.merge!(options)
+  end
+
+  def url_friendly(variable)
+
+    case variable
+    when :deleteAfterTransfer
+      BetterRadar.configuration.delete_after_transfer ? "yes" : "no"
+    end
   end
 
 end

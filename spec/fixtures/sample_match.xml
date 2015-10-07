@@ -13,7 +13,7 @@
       </Texts>
     </Competitors>
     <DateInfo>
-      <MatchDate>2004 − 8 − 23T16:40:00</MatchDate>
+      <MatchDate>2004−8−23T16:40:00</MatchDate>
     </DateInfo>
     <StatusInfo>
       <Off>0</Off>
@@ -27,14 +27,16 @@
     <LiveMultiCast>0</LiveMultiCast>
     <LiveScore>0</LiveScore>
     <RoundInfo>
+      <Cupround>Round 1</Cupround>
+      <ID>7</ID>
       <Round>19</Round>
     </RoundInfo>
   </Fixture>
   <MatchOdds>
     <Bet OddsType="10">
-      <Odds OutCome="1">2,15</Odds>
-      <Odds OutCome="X">2,85</Odds>
-      <Odds OutCome="2">2,9</Odds>
+      <Odds OutCome="1" OutComeId="1" SpecialBetValue="0:1">2,15</Odds>
+      <Odds OutCome="X" OutComeId="2" SpecialBetValue="0:2">2,85</Odds>
+      <Odds OutCome="2" OutComeId="3" SpecialBetValue="0:3">2,9</Odds>
     </Bet>
   </MatchOdds>
   <Result>
@@ -76,4 +78,49 @@
       <Player Id="39584" Name="Lazic, Djordje"/>
     </Card>
   </Cards>
+  <BetResult>
+    <W OddsType="01" OutCome="X" SpecialBetValue="0:1"/>
+    <W OddsType="02" OutCome="3:2"/>
+    <W OddsType="10" OutCome="1"/>
+    <W OddsType="60" OutCome="Over" SpecialBetValue="2.5"/>
+    <W OddsType="41" OutCome="2"/>
+    <W OddsType="42" OutCome="2"/>
+    <W OddsType="43" OutCome="Yes"/>
+    <W OddsType="44" OutCome="2/1"/>
+    <W OddsType="45" OutCome="Odd"/>
+    <W OddsType="46" OutCome="1X"/>
+    <W OddsType="46" OutCome="12"/>
+    <W OddsType="47" OutCome="1"/>
+    <W OddsType="48" OutCome="3+"/>
+    <W OddsType="49" OutCome="2"/>
+    <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,75" Status="W" VoidFactor="0,5"/>
+    <W OddsType="51" OutCome="2" SpecialBetValue=" − 0,75" Status="L" VoidFactor="0,5"/>
+    <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,5"/>
+    <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,25"/>
+    <W OddsType="52" OutCome="Over" SpecialBetValue="2"/>
+    <W OddsType="52" OutCome="Over" SpecialBetValue="2,25"/>
+    <W OddsType="52" OutCome="Over" SpecialBetValue="2,5"/>
+    <W OddsType="53" OutCome="2" SpecialBetValue="0"/>
+    <W OddsType="53" OutCome="2" SpecialBetValue=" − 0,5"/>
+    <W OddsType="53" OutCome="2" SpecialBetValue=" − 0,25"/>
+    <W OddsType="54" OutCome="Over" SpecialBetValue="0,75"/>
+    <W OddsType="54" OutCome="Over" SpecialBetValue="1"/>
+    <W OddsType="54" OutCome="Over" SpecialBetValue="1,25"/>
+  </BetResult>
+  <Probabilities>
+    <PR OddsType="01">
+      <P OutCome="1" SpecialBetValue="1:0" OutComeId="1">0,609</P>
+      <P OutCome="X" SpecialBetValue="1:0" OutComeId="2">0,213</P>
+      <P OutCome="2" SpecialBetValue="1:0" OutComeId="3" >0,1781</P>
+    </PR>
+    <PR OddsType="10">
+      <P OutCome="1">0,3186</P>
+      <P OutCome="X">0,2914</P>
+      <P OutCome="2">0,3899</P>
+    </PR>
+    <PR OddsType="60">
+      <P OutCome="Over" SpecialBetValue="2,5">0,5225</P>
+      <P OutCome="Under" SpecialBetValue="2,5" OutComeId="300">0,4775</P>
+    </PR>
+  </Probabilities>
 </Match>

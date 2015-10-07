@@ -1,189 +1,203 @@
 class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
-  # Main hierarchy of the data, these should be the focus of what to handle
-  HIERARCHY_LEVELS = [:Sport, :Category, :Tournament, :Match]
+  attr_accessor :hierarchy_levels, :sport, :category, :tournament, :outright, :match
+  # These elements have their own classes to container their respective data
+
+  ENTITY_ELEMENTS = [:Sport, :Category, :Outright, :Tournament, :Match]
 
   def initialize(handler)
     @handler = handler
   end
 
+  # Parsing Events
+
   def start_document
+    @hierarchy_levels = []
     @traversal_list = []
   end
 
-  # need to notify the handler of this so they can prepare for nested elements?
   def start_element(name, attributes)
-    @current_element_name = name
-    descend_level(name)
-    instance_variable_set("@inside_#{name.downcase}", true)
-
-    case name
-    when 'Sport'
-      @sport = {}
-    when 'Category'
-      @category = {}
-    when 'Tournament'
-      @tournament = {}
-    when 'Match'
-      @match = {}
-    when 'Fixture'
-      @fixture = {}
-      if @inside_match
-        @match[:fixture] = @fixture
-      end
-    when 'Competitors'
-      @competitors = []
-      if @inside_fixture
-        @fixture[:competitors] = @competitors
-      end
-    when 'DateInfo'
-      @date_info = {}
-      if @inside_fixture
-        @fixture[:date_info] = @date_info
-      end
-    when 'MatchDate'
-      @match_date = nil
-      @date_info[:match_date] = @match_date
-    when 'MatchOdds'
-      @match_odds = []
-      @match[:match_odds] = @match_odds
-    when 'Bet'
-      @bet = {}
-      if @inside_match
-        @match_odds << @bet
-      end
-    when 'Odds'
-      @odds = {}
-      if @inside_bet
-        @bet[:odds] ||= []
-        @bet[:odds] << @odds
-      end
-    when 'Text'
-      # most nested first
-      if @inside_competitors
-        @competitors << {}
-      elsif @inside_tournament
-        @tournament[:names] ||= []
-        @tournament[:names] << {}
-      elsif @inside_category
-        @category[:names] ||= []
-        @category[:names] << {}
-      elsif @inside_sport
-        @sport[:names] ||= []
-        @sport[:names] << {}
-      end
-    end
-    assign_attributes(name, attributes)
+    descend_into_element(name)
+    handle_element(name, attributes)
   end
 
   def end_element(name)
-    case name
-    when 'Sport', 'Category', 'Tournament', 'Match'
-      method_name = "handle_#{current_level_name}".to_sym
-      @handler.send(method_name, current_level_data) if @handler.respond_to? method_name
-    when 'Fixture'
-      if @inside_match
-        @match[:fixture] = @fixture
-      end
-    when 'Competitors'
-      if @inside_fixture
-        @fixture[:competitors] = @competitors
-      end
-    when 'DateInfo'
-      if @inside_fixture
-        @fixture[:date_info] = @date_info
-      end
-    when 'MatchDate'
-      @date_info[:match_date] = @match_date
-    when 'MatchOdds'
-      @match[:match_odds] = @match_odds
-    when 'Bet'
-      #
-    when 'Odd'
-      if @inside_bet
-        @bet[:odds] << @odds
-      end
-    when 'Text'
-      # Needed?
-    end
-
-    instance_variable_set("@inside_#{name.downcase}", false)
-    instance_variable_set("@#{name.downcase}", nil)
-    ascend_level(name)
+    ascend_depth(name)
+    send_handler_data(name)
   end
 
   def characters(text)
     content = text.strip.chomp
     unless content.empty?
-      if @inside_competitors
-        @competitors.last.merge!({ name: content })
-      elsif @inside_matchodds
-        @odds.merge!({ value: content })
-      elsif @inside_statusinfo
-        #TODO
-      elsif @inside_neutralground
-        #TODO
-      elsif @inside_round
-        #TODO
-      elsif @inside_probabilities
-        #TODO
-      elsif @inside_matchdate
-        @match_date.nil? ? @match_date = "#{content} " : @match_date << content
-      elsif @inside_tournament
-        @tournament[:names].last.merge!({ name: content })
-      elsif @inside_category
-        @category[:names].last.merge!({ name: content })
-      elsif @inside_sport
-        @sport[:names].last.merge!({ name: content })
-      else
-        #to fix
-        # current_level_data[:texts].last.merge!({ name: content }) unless current_level_data.nil? || current_level_data[:texts].nil?
-      end
+      current_level_data.assign_content(content, @current_element, @traversal_list)
     end
   end
 
-
   private
 
-    #attributes are stored as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
-  def assign_attributes(name, attrs)
-    unless attrs.empty?
-      path = case name
-      when 'Text'
-        if @inside_competitors
-          @competitors.last
-        elsif @inside_tournament
-          @tournament[:names].last
-        elsif @inside_category
-          @category[:names].last
-        elsif @inside_sport
-          @sport[:names].last
-        end
+  # Traversal representations
+
+  def descend_into_element(name)
+    @current_element = name
+    instance_variable_set("@inside_#{@current_element.downcase}", true)
+    @traversal_list << @current_element
+    @hierarchy_levels << @current_element if ENTITY_ELEMENTS.include?(@current_element.to_sym)
+  end
+
+  def ascend_depth(name)
+    instance_variable_set("@inside_#{name.downcase}", false)
+    @traversal_list.pop
+    @hierarchy_levels.pop if ENTITY_ELEMENTS.include?(@current_element.to_sym)
+  end
+
+  # Establishing data structures
+
+  def handle_element(name, attributes)
+    case name
+    when 'Timestamp', 'Sports', 'BetradarBetData'
+      #skip?
+    else
+      create_variable(name)
+      establish_assocation(name)
+      assign_attributes(name, attributes)
+    end
+  end
+
+  # Attributes are parsed as an assoc_list e.g. [["language", "BET"], ["language", "en"]]
+  # TODO: convert to hash for easier use?
+
+  def assign_attributes(name, attributes)
+    unless attributes.empty?
+      @element = current_level_data
+
+      if @element.respond_to?(:assign_attributes)
+        @element.assign_attributes(attributes, @current_element, @traversal_list)
       else
-        v = instance_variable_get("@#{name.downcase}")
-        return if v.nil?
-        v
-      end
-      attrs.each do |assoc_list|
-        path.merge!({assoc_list.first.downcase.to_sym => assoc_list.last})
+        warn("#{name} - #{attributes} not being assigned")
       end
     end
   end
 
   def current_level_data
-    instance_variable_get("@#{@traversal_list.last.downcase}")
+    instance_variable_get("@#{@hierarchy_levels.last.downcase}")
+  end
+
+  def get_level_data(name)
+    instance_variable_get("@#{name.downcase}")
   end
 
   def current_level_name
-    @traversal_list.last.downcase
+    @hierarchy_levels.last.downcase
   end
 
+  def create_variable(element_name)
 
-  def descend_level(element_name)
-    @traversal_list << element_name if HIERARCHY_LEVELS.include?(element_name.to_sym)
+    variable_name = "@#{element_name.downcase}"
+
+    case element_name
+    when 'Sport', 'Category', 'Tournament', 'Match', 'Outright', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR', 'OutrightOdds', 'RoundInfo'
+      instance_variable_set(variable_name, BetterRadar::Element::Factory.create_from_name(element_name))
+    when 'Text'
+      if @inside_competitors && @traversal_list[@traversal_list.length-2] != "Text"
+        instance_variable_set("@competitor", BetterRadar::Element::Factory.create_from_name("Competitor"))
+      end
+    when 'Score', 'Bet', 'P', 'Value'
+      instance_variable_set("@#{element_name.downcase}", {})
+    end
   end
 
-  def ascend_level(element_name)
-    @traversal_list.pop if HIERARCHY_LEVELS.include?(element_name.to_sym)
+  # TODO: Refactor approach to this
+  def establish_assocation(name)
+    case name
+    when 'Competitors'
+      if @inside_match
+        @competitors = @match.competitors
+      elsif @inside_tournament
+        @competitors = @tournament.competitors
+      elsif @inside_outright
+        @competitors = @outright.competitors
+      end
+    when 'OutrightOdds'
+      @outright.bet = @outrightodds
+    when 'Bet'
+      if @inside_match
+        @match.bets << @bet
+      end
+    when 'Odds'
+      if @inside_bet
+        @bet.odds << @odds
+      elsif @inside_outrightodds
+        @outright.bet.odds << @odds
+      end
+    when 'Score'
+      if @inside_match
+        @match.scores << @score
+      end
+    when 'Goal'
+      if @inside_match
+        @match.goals << @goal
+      end
+    when 'Player'
+      if @inside_goals
+        @goal.player = @player
+      elsif @inside_cards
+        @card.player = @player
+      end
+    when 'Card'
+      if @inside_match
+        @match.cards << @card
+      end
+    when 'W'
+      if @inside_match
+        @match.bet_results << @w
+      end
+    when 'PR'
+      if @inside_match
+        @match.probabilities << @pr
+      end
+    when 'P'
+      @pr.outcome_probabilities << @p
+    when 'Text'
+      if @inside_competitors
+        #supporting single/multi competitor names
+        if @traversal_list[@traversal_list.length-2] == "Text"
+          @competitor.names << {}
+        else
+          @competitors << @competitor
+        end
+      elsif @inside_eventname
+        current_level_data.event_names << {}
+      else
+        current_level_data.names << {} unless current_level_data == @match
+      end
+    when 'Result'
+      if @inside_outrightresult
+        @outright.results << {}
+      end
+    when 'RoundInfo'
+      if @inside_match
+        @match.round = @roundinfo
+      end
+    when 'Value'
+      if @inside_eventname
+        @outright.event_names << @value
+      end
+    end
+  end
+
+  def send_handler_data(name)
+    if ENTITY_ELEMENTS.include?(name.to_sym)
+      assign_parent_data(current_level_data)
+      method_name = "handle_#{name.downcase}".to_sym
+      @handler.send(method_name, instance_variable_get("@#{name.downcase}"))
+    end
+  end
+
+  def assign_parent_data(entity)
+    @hierarchy_levels.each do |level|
+      break if level == @hierarchy_levels.last
+      variable_name = "@betradar_#{level.downcase}_id"
+      current_level_data.instance_variable_set(variable_name, get_level_data(level).instance_variable_get(variable_name))
+    end
   end
 end
