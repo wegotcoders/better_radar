@@ -116,6 +116,8 @@ module BetterRadar::Element
           assign_variable(:outcome, attribute_value, object: object)
         when "OutComeId"
           object = case
+          when context.include?("W")
+            bet_results.last
           when context.include?("Odds")
             bets.last.odds.last
           when context.include?("P")

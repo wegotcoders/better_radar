@@ -70,7 +70,6 @@ RSpec.describe BetterRadar::Parser do
       before do
         allow(handler).to receive(:handle_match).once do |match|
           expect(match.class).to eq BetterRadar::Element::Match
-
           expect(match.betradar_match_id).to eq "109379"
           expect(match.off).to eq "0"
           expect(match.live_multi_cast).to eq "0"
@@ -174,10 +173,11 @@ RSpec.describe BetterRadar::Parser do
           expect(match.bet_results.first.outcome).to eq "X"
           expect(match.bet_results.first.special_value).to eq "0:1"
 
-
           expect(match.bet_results[10].type).to eq "46"
           expect(match.bet_results[10].outcome).to eq "12"
           expect(match.bet_results[10].special_value).to eq nil
+          expect(match.bet_results.last.outcome_id). to eq "6"
+
 
           expect(match.bet_results.last.type).to eq "54"
           expect(match.bet_results.last.outcome).to eq "Over"

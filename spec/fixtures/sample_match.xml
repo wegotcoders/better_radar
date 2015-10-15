@@ -97,15 +97,15 @@
     <W OddsType="51" OutCome="2" SpecialBetValue=" − 0,75" Status="L" VoidFactor="0,5"/>
     <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,5"/>
     <W OddsType="51" OutCome="1" SpecialBetValue=" − 0,25"/>
-    <W OddsType="52" OutCome="Over" SpecialBetValue="2"/>
-    <W OddsType="52" OutCome="Over" SpecialBetValue="2,25"/>
-    <W OddsType="52" OutCome="Over" SpecialBetValue="2,5"/>
+    <W OddsType="52" OutCome="Over" OutComeId="6" SpecialBetValue="2"/>
+    <W OddsType="52" OutCome="Over" OutComeId="6" SpecialBetValue="2,25"/>
+    <W OddsType="52" OutCome="Over" OutComeId="6" SpecialBetValue="2,5"/>
     <W OddsType="53" OutCome="2" SpecialBetValue="0"/>
     <W OddsType="53" OutCome="2" SpecialBetValue=" − 0,5"/>
     <W OddsType="53" OutCome="2" SpecialBetValue=" − 0,25"/>
     <W OddsType="54" OutCome="Over" SpecialBetValue="0,75"/>
     <W OddsType="54" OutCome="Over" SpecialBetValue="1"/>
-    <W OddsType="54" OutCome="Over" SpecialBetValue="1,25"/>
+    <W OddsType="54" OutCome="Over" OutComeId="6" SpecialBetValue="1,25"/>
   </BetResult>
   <Probabilities>
     <PR OddsType="01">
