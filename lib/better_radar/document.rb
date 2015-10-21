@@ -97,8 +97,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     case element_name
     when 'Sport', 'Category', 'Tournament', 'Match', 'Outright', 'Bet', 'Odds', 'Goal', 'Player', 'Card', 'W', 'PR', 'OutrightOdds', 'RoundInfo'
       instance_variable_set(variable_name, BetterRadar::Element::Factory.create_from_name(element_name))
-    when 'Text'
-      if @inside_competitors && @traversal_list[@traversal_list.length-2] != "Text"
+    when 'Texts'
+      if @inside_competitors
         instance_variable_set("@competitor", BetterRadar::Element::Factory.create_from_name("Competitor"))
       end
     when 'Score', 'Bet', 'P', 'Value'
@@ -157,18 +157,17 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       end
     when 'P'
       @pr.outcome_probabilities << @p
-    when 'Text'
+    when 'Texts'
       if @inside_competitors
-        #supporting single/multi competitor names
-        if @traversal_list[@traversal_list.length-2] == "Text"
-          @competitor.names << {}
-        else
-          @competitors << @competitor
-        end
-      elsif @inside_eventname
+        @competitors << @competitor
+      end
+    when 'Text'
+      if @inside_eventname
         current_level_data.event_names << {}
+      elsif @inside_competitors
+        @competitors.last.names << {}
       else
-        current_level_data.names << {} unless current_level_data == @match
+        current_level_data.names << {} unless current_level_data == @match || current_level_data == @outright
       end
     when 'Result'
       if @inside_outrightresult

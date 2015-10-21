@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     better_radar (0.0.0)
-      better_radar
       nokogiri
 
 GEM
