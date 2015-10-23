@@ -171,16 +171,13 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       end
     when 'Result'
       if @inside_outrightresult
-        @outright.results << {}
+        @outright.bet_results << {}
       end
     when 'RoundInfo'
       if @inside_match
         @match.round = @roundinfo
       end
     when 'Value'
-      if @inside_eventname
-        @outright.event_names << @value
-      end
     end
   end
 

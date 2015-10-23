@@ -12,7 +12,7 @@ module BetterRadar::Element
       :betradar_category_id,
       :competitors,
       :bet,
-      :results,
+      :bet_results,
       :event_date,
       :event_end_date,
       :event_names,
@@ -22,11 +22,15 @@ module BetterRadar::Element
       self.competitors = []
       self.event_names = []
       self.aams_outright_ids = []
-      self.results = []
+      self.bet_results = []
     end
 
     def key_name
-      "Outright"
+      "outright"
+    end
+
+    def retrieve_name
+      name = event_names.select { |name| name[:language] == BetterRadar.configuration.language }.first[:value]
     end
 
     def betradar_id
@@ -57,7 +61,7 @@ module BetterRadar::Element
             bet.odds.last
           when 'Result'
             variable_name = :winning_team_id
-            results.last
+            bet_results.last
           when 'Text'
             variable_name = :context_id
             competitors.last
@@ -110,7 +114,7 @@ module BetterRadar::Element
       when 'Odds'
         assign_variable :value, content, object: bet.odds.last
       when 'Result'
-        results.last[:position] = content
+        bet_results.last[:position] = content
       else
         warn "#{self.class} :: Current Element: #{current_element} - content not supported"
       end

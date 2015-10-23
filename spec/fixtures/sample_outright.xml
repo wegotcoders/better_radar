@@ -5,7 +5,9 @@
       <EventEndDate>2016-05-07T14:00:00</EventEndDate>
       <EventName>
         <Texts>
-          <Value>France Ligue 1 2011/12 − Outright Winner</Value>
+          <Text>
+            <Value>France Ligue 1 2011/12 − Outright Winner</Value>
+          </Text>
         </Texts>
       </EventName>
       <Off>0</Off>
