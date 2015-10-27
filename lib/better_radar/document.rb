@@ -183,9 +183,10 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def send_handler_data(name)
     if ENTITY_ELEMENTS.include?(name.to_sym)
-      assign_parent_data(current_level_data)
+      entity = instance_variable_get("@#{name.downcase}")
+      assign_parent_data(entity)
       method_name = "handle_#{name.downcase}".to_sym
-      @handler.send(method_name, instance_variable_get("@#{name.downcase}"))
+      @handler.send(method_name, entity)
     end
   end
 
