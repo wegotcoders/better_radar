@@ -194,7 +194,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     @hierarchy_levels.each do |level|
       break if level == @hierarchy_levels.last
       variable_name = "@betradar_#{level.downcase}_id"
-      current_level_data.instance_variable_set(variable_name, get_level_data(level).instance_variable_get(variable_name))
+      entity.instance_variable_set(variable_name, get_level_data(level).instance_variable_get(variable_name))
     end
   end
 end
