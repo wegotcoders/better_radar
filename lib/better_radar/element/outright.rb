@@ -55,7 +55,7 @@ module BetterRadar::Element
         when 'OddsType'
           assign_variable :type, attribute_value, object: bet
         when 'ID'
-          variable_name = :betradar_id
+          variable_name = :competitor_context_id
            object = case current_element
           when 'Odds'
             bet.odds.last

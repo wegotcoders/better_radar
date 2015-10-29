@@ -230,9 +230,9 @@ RSpec.describe BetterRadar::Parser do
           expect(outright.bet.odds.count).to eq 2
 
           expect(outright.bet.type).to eq "30"
-          expect(outright.bet.odds.first.betradar_id).to eq "4891"
+          expect(outright.bet.odds.first.competitor_context_id).to eq "4891"
           expect(outright.bet.odds.first.value).to eq "1,12"
-          expect(outright.bet.odds.last.betradar_id).to eq "5380"
+          expect(outright.bet.odds.last.competitor_context_id).to eq "5380"
           expect(outright.bet.odds.last.value).to eq "6,5"
 
           expect(outright.bet_results.first[:winning_team_id]).to eq "135998"
