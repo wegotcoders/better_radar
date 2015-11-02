@@ -6,5 +6,7 @@ class BetterRadar::Configuration
     @feed_name = "Fixtures"
     @delete_after_transfer = false
     @language = "BET"
+    @log_filename = "parser.log"
+    @log_path = "#{Rails.root}/log/better_radar"
   end
 end

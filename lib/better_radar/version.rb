@@ -8,6 +8,10 @@ module BetterRadar
     yield(self.configuration)
   end
 
+  def self.logger
+    @logger ||= BetterRAdar::Logger.new
+  end
+
   def self.configuration
     @config ||= BetterRadar::Configuration.new
   end
