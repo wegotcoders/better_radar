@@ -35,3 +35,5 @@ require "better_radar/client"
 require "better_radar/parser"
 require "better_radar/document"
 
+# Utility
+require "better_radar/logger"

@@ -1,6 +1,6 @@
 class BetterRadar::Configuration
 
-  attr_accessor :feed_name, :delete_after_transfer, :username, :key, :language
+  attr_accessor :feed_name, :delete_after_transfer, :username, :key, :language, :log_filename, :log_path
 
   def initialize
     @feed_name = "Fixtures"

@@ -1,6 +1,6 @@
-class BetterRAdar::Logger
+class BetterRadar::Logger
 
-  attr_accessor :file_name, :directory_path
+  attr_accessor :file_name, :directory_path, :logger
 
   def initialize
     @file_name = BetterRadar::configuration.log_filename
@@ -21,7 +21,7 @@ class BetterRAdar::Logger
     end
     @logger ||= Logger.new(file)
     @logger.info(message)
-    logger.close
+    @logger.close
   end
 
   def directory_path=(path)

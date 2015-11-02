@@ -9,7 +9,7 @@ module BetterRadar
   end
 
   def self.logger
-    @logger ||= BetterRAdar::Logger.new
+    @logger ||= BetterRadar::Logger.new
   end
 
   def self.configuration
