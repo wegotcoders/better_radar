@@ -191,7 +191,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def send_data?
-    if BetterRadar.configuration.only_recent
+    if BetterRadar.configuration.only_recent?
       recent_data?
     else
       true

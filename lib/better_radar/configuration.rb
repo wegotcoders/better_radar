@@ -10,4 +10,8 @@ class BetterRadar::Configuration
     @log_path = "#{Rails.root}/log/better_radar"
     @only_recent = false
   end
+
+  def only_recent?
+    @only_recent
+  end
 end
