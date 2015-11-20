@@ -3,6 +3,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   attr_accessor :hierarchy_levels, :sport, :category, :tournament, :outright, :match
   # These elements have their own classes to container their respective data
 
+  attr_reader :start_time
+
   ENTITY_ELEMENTS = [:Sport, :Category, :Outright, :Tournament, :Match]
 
   def initialize(handler)
@@ -12,6 +14,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   # Parsing Events
 
   def start_document
+    @start_time = Time.now
     @hierarchy_levels = []
     @traversal_list = []
   end
@@ -187,7 +190,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def recent_data?
-    Time.parse(@time_stamp[:CreatedAt]) > Time.now - 1.days
+    Time.parse(@time_stamp[:CreatedAt]) > @start_time - 1.days
   end
 
   def send_data?
