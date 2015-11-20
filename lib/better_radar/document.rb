@@ -187,7 +187,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def recent_data?
-    Time.parse(@time_stamp[:CreatedAt]) > Time.now - 3.days
+    Time.parse(@time_stamp[:CreatedAt]) > Time.now - 1.days
   end
 
   def send_data?
