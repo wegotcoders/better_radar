@@ -3,6 +3,8 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   attr_accessor :hierarchy_levels, :sport, :category, :tournament, :outright, :match
   # These elements have their own classes to container their respective data
 
+  attr_reader :start_time
+
   ENTITY_ELEMENTS = [:Sport, :Category, :Outright, :Tournament, :Match]
 
   def initialize(handler)
@@ -12,6 +14,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   # Parsing Events
 
   def start_document
+    @start_time = Time.now
     @hierarchy_levels = []
     @traversal_list = []
   end
@@ -54,7 +57,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def handle_element(name, attributes)
     case name
-    when 'Timestamp', 'Sports', 'BetradarBetData'
+    when 'Sports', 'BetradarBetData'
       #skip?
     else
       create_variable(name)
@@ -68,12 +71,18 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
 
   def assign_attributes(name, attributes)
     unless attributes.empty?
-      @element = current_level_data
+      unless name == 'Timestamp'
+        @element = current_level_data
 
-      if @element.respond_to?(:assign_attributes)
-        @element.assign_attributes(attributes, @current_element, @traversal_list)
+        if @element.respond_to?(:assign_attributes)
+          @element.assign_attributes(attributes, @current_element, @traversal_list)
+        else
+          warn("#{name} - #{attributes} not being assigned")
+        end
       else
-        warn("#{name} - #{attributes} not being assigned")
+        attributes.each do |attribute|
+          @timestamp[attribute.first.to_sym] = attribute.last
+        end
       end
     end
   end
@@ -91,7 +100,6 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
   end
 
   def create_variable(element_name)
-
     variable_name = "@#{element_name.downcase}"
 
     case element_name
@@ -101,7 +109,7 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
       if @inside_competitors
         instance_variable_set("@competitor", BetterRadar::Element::Factory.create_from_name("Competitor"))
       end
-    when 'Score', 'Bet', 'P', 'Value'
+    when 'Score', 'Bet', 'P', 'Value', 'Timestamp'
       instance_variable_set("@#{element_name.downcase}", {})
     end
   end
@@ -181,8 +189,20 @@ class BetterRadar::Document < Nokogiri::XML::SAX::Document
     end
   end
 
+  def recent_data?
+    Time.parse(@time_stamp[:CreatedAt]) > @start_time - 1.days
+  end
+
+  def send_data?
+    if BetterRadar.configuration.only_recent?
+      recent_data?
+    else
+      true
+    end
+  end
+
   def send_handler_data(name)
-    if ENTITY_ELEMENTS.include?(name.to_sym)
+    if ENTITY_ELEMENTS.include?(name.to_sym) && send_data?
       entity = instance_variable_get("@#{name.downcase}")
       assign_parent_data(entity)
       method_name = "handle_#{name.downcase}".to_sym

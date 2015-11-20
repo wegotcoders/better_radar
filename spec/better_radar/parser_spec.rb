@@ -62,7 +62,6 @@ RSpec.describe BetterRadar::Parser do
       end
     end
 
-
     describe "parsing a match" do
 
       let(:xml) { File.read('spec/fixtures/sample_match.xml') }
@@ -286,6 +285,5 @@ RSpec.describe BetterRadar::Parser do
         BetterRadar::Parser.parse(xml, handler)
       end
     end
-
   end
 end
