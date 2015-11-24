@@ -20,7 +20,7 @@ Jeweler::Tasks.new do |gem|
   gem.summary = %Q{A Ruby client for the BetRadar API}
   gem.description = %Q{SAX Parser that allows you to respond to information in the BetRadar XML feed}
   gem.email = "dan@dangarland.co.uk"
-  gem.authors = ["Dan Garland"]
+  gem.authors = ["Dan Garland, Kristian Knevitt, Joe Dickinson"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
